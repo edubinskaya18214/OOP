@@ -15,8 +15,8 @@ public class findDist {
                 graph[i][j] = scanner.nextInt();
 
         fw.floydWarshall(graph, n);
-        if (fw.takeDist(v1 - 1 , v2 - 1)!= -1)
-            System.out.println(fw.takeDist(v1 - 1, v2 - 1));
+        if (fw.takeDist(v1 - 1 , v2 -1 )!= -1)
+            System.out.println(fw.takeDist(v1, v2 ));
         else System.out.println("impossible to get from v1 to v2");
     }
 
