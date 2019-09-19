@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ru.nsu.fit.g18214.dubinskaya.tests" tests="6" skipped="0" failures="0" errors="0" timestamp="2019-09-19T11:36:39" hostname="villanellex2" time="0.008">
+  <properties/>
+  <testcase name="test1" classname="ru.nsu.fit.g18214.dubinskaya.tests" time="0.002"/>
+  <testcase name="test2" classname="ru.nsu.fit.g18214.dubinskaya.tests" time="0.0"/>
+  <testcase name="test3" classname="ru.nsu.fit.g18214.dubinskaya.tests" time="0.0"/>
+  <testcase name="test4" classname="ru.nsu.fit.g18214.dubinskaya.tests" time="0.0"/>
+  <testcase name="test5" classname="ru.nsu.fit.g18214.dubinskaya.tests" time="0.005"/>
+  <testcase name="test6" classname="ru.nsu.fit.g18214.dubinskaya.tests" time="0.0"/>
+  <system-out><![CDATA[test 1 is successful
+test 2 is successful
+test 3 is successful
+test 4 is successful
+test 5 is successful
+test 3 is successful
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
