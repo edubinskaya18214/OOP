@@ -21,6 +21,18 @@ public class Graph {
       pos[i] = 0;
     }
   }
+  public int addList(int[][] list){
+    if (list == null)
+      return -1;
+    for(int i = 0; i < list.length; ++i) {
+      if (list[i].length != 3){
+        System.out.println("Error: incorrect list!\n");
+        return -1;
+      }
+      addEdge(list[i][0], list[i][1], list[i][2]);
+    }
+    return 0;
+  }
 
   public int getNumv() {
     return numv;

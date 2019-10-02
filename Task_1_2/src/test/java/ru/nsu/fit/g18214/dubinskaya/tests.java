@@ -6,7 +6,6 @@ import org.junit.Test;
 public class tests {
   Graph g = new Graph();
 
-
   @Test
   public void test1() {
     g.setNumv(5);
@@ -90,13 +89,53 @@ public class tests {
     Assert.assertEquals(10, dist);
     System.out.println("test 7 is successful");
   }
+
   @Test
-    public void test8(){
-      g.setNumv(5);
-      for (int i = 0; i < 4; ++i)
-          g.addEdge(i,i+1,3);
-      int dist = GetDist.get(g, 0, 4);
-      Assert.assertEquals(12, dist);
-      System.out.println("test 8 is successful");
+  public void test8() {
+    g.setNumv(5);
+    for (int i = 0; i < 4; ++i)
+      g.addEdge(i, i + 1, 3);
+    int dist = GetDist.get(g, 0, 4);
+    Assert.assertEquals(12, dist);
+    System.out.println("test 8 is successful");
+  }
+
+  @Test
+  public void test9() {
+    Graph t9 = null;
+    int dist = GetDist.get(g, 0, 4);
+    Assert.assertEquals(-1, dist);
+    System.out.println("test 9 is successful");
+  }
+
+  @Test
+  public void test10() {
+    g.setNumv(8);
+    //Graph from test 7
+    int[][] list = {
+        {1, 2, 3},
+        {1, 3, 5},
+        {2, 3, 1},
+        {2, 7, 11},
+        {5, 1, 6},
+        {4, 5, 5},
+        {3, 4, 0},
+        {3, 6, 4},
+        {6, 7, 2},
+        {7, 6, 15},
+        {2, 7, 11},
+    };
+    g.addList(list);
+    int dist = GetDist.get(g, 1, 7);
+    Assert.assertEquals(10, dist);
+    System.out.println("test 10 is successful");
+  }
+  @Test
+  public void test11() {
+    g.setNumv(8);
+    g.addList(null);
+    int dist = GetDist.get(g, 1, 7);
+    Assert.assertEquals(-1, dist);
+    System.out.println("test 11 is successful");
   }
 }
