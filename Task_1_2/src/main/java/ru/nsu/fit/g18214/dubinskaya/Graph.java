@@ -1,68 +1,47 @@
 package ru.nsu.fit.g18214.dubinskaya;
-
 import java.util.Arrays;
 
+/* class Graph can create and change graph, this class input number of vertex */
 public class Graph {
   private int numv;
-  private int[][] edges;
-  private int[][] dist;
-  private int[] size;
+  private NeighboringVertices[] vertices;
   private int[] pos;
 
-  public void setNumv(int n) {
+  Graph (int n){
     numv = n;
-    int x = (int) Math.sqrt(n);
-    edges = new int[n][x];
-    size = new int[numv];
-    dist = new int[n][x];
+    vertices = new NeighboringVertices[n];
     pos = new int[n];
     for (int i = 0; i < numv; ++i) {
-      size[i] = x;
       pos[i] = 0;
+      vertices[i] = new NeighboringVertices();
     }
   }
-  public int addList(int[][] list){
-    if (list == null)
-      return -1;
-    for(int i = 0; i < list.length; ++i) {
-      if (list[i].length != 3){
-        System.out.println("Error: incorrect list!\n");
-        return -1;
-      }
-      addEdge(list[i][0], list[i][1], list[i][2]);
-    }
-    return 0;
-  }
-
+  // return number of vertex in graph
   public int getNumv() {
     return numv;
   }
-
+  // input vertex v ,return number of neighborhood vertex for v
+  public int getNumNeighVertex(int v){
+    return pos[v];
+  }
+  // input vertex v and number of her neighbor, return arr, arr[0] == num v1, arr[1] == dist between v and v1
+  // if this neighbor doesn't exist return -1 in arr[0]
   public int[] getNextVertex(int v, int p) {
     int[] r = new int[2];
     if (pos[v] > p) {
-      r[0] = edges[v][p];
-      r[1] = dist[v][p];
+      r[0] = vertices[v].edges.get(p);
+      r[1] = vertices[v].dist.get(p);
     } else r[0] = -1;
     return r;
   }
-
-  private void extendSize(int v) {
-    int[] newArr = new int[size[v] * 2];
-    newArr = Arrays.copyOf(edges[v], size[v]);
-    edges[v] = Arrays.copyOf(newArr, size[v] * 2);
-    newArr = Arrays.copyOf(dist[v], size[v]);
-    dist[v] = Arrays.copyOf(newArr, size[v] * 2);
-    size[v] *= 2;
-  }
-
+  // input v1 and v2 - vertexes and distant between them
   public void addEdge(int v1, int v2, int d) {
     if (v1 >= numv || v2 >= numv) {
       System.out.println("error: graph size exceeded");
     } else {
-      if (size[v1] - 1 == pos[v1]) extendSize(v1);
-      edges[v1][pos[v1]] = v2;
-      dist[v1][pos[v1]++] = d;
+      vertices[v1].edges.add(v2);
+      vertices[v1].dist.add(d);
+      ++pos[v1];
     }
   }
 }
