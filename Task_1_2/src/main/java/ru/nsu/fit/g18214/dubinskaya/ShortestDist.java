@@ -5,7 +5,7 @@ package ru.nsu.fit.g18214.dubinskaya;
  * object FindShortestDist input graph where find shortest distant
  * and vertex where the algorithm will start finding
  */
-public class FindShortestDist {
+class ShortestDist {
   private int v1;
   private int n;
   private int[] distFromV1ToVi;
@@ -13,7 +13,7 @@ public class FindShortestDist {
       mark; // 0==doesn't checked, 1==find dist (not finish version), 2==checked and find dist
 
   /* here we initialise object */
-  public FindShortestDist(int from, Graph g) {
+  ShortestDist(int from, Graph g) {
     if (g == null || g.getNumv() <= 0 ) {
       n = -1;
       v1 = -1;

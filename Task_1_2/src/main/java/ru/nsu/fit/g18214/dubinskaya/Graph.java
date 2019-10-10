@@ -6,7 +6,7 @@ public class Graph {
   private NeighboringVertices[] vertices;
   private int[] pos;
 
-  Graph(int n) {
+  public Graph(int n, Edge[] arr, int reverse) {
     numv = n;
     vertices = new NeighboringVertices[n];
     pos = new int[n];
@@ -14,6 +14,18 @@ public class Graph {
       pos[i] = 0;
       vertices[i] = new NeighboringVertices();
     }
+    if (arr != null)
+      for (int i = 0; i < arr.length; ++i) {
+        if (arr[i] == null) {
+          System.out.println("edge " + i + " wasn't initialised\n");
+          continue;
+        }
+        int v1 = arr[i].getVFrom();
+        int v2 = arr[i].getVTo();
+        int dist = arr[i].getDist();
+        addEdge(v1, v2, dist);
+        if (reverse == 1) addEdge(v2, v1, dist);
+      }
   }
   // return number of vertex in graph
   public int getNumv() {
@@ -35,7 +47,7 @@ public class Graph {
     return r;
   }
   // input v1 and v2 - vertexes and distant between them
-  public void addEdge(int v1, int v2, int d) {
+  private void addEdge(int v1, int v2, int d) {
     if (v1 >= numv || v2 >= numv) {
       System.out.println("error: graph size exceeded");
     } else {

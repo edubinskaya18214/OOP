@@ -7,19 +7,19 @@ public class Main {
     Scanner scanner = new Scanner(System.in);
     System.out.print("number of vertex: ");
     int n = scanner.nextInt();
-    Graph g = new Graph(n);
     System.out.print("v1, v2: \n");
     int v1 = scanner.nextInt();
     int v2 = scanner.nextInt();
     System.out.print("num edges: \n");
     int numEdges = scanner.nextInt();
-    int[][] list = new int[numEdges][3];
+    Edge[] arr = new Edge[numEdges];
     for (int i = 0; i < numEdges; ++i) {
       System.out.print("edge " + (i+1) + ":\n");
-      g.addEdge(scanner.nextInt() - 1, scanner.nextInt() - 1, scanner.nextInt());
+      arr[i] = new Edge(scanner.nextInt() - 1, scanner.nextInt() - 1, scanner.nextInt());
     }
+    Graph g = new Graph(n,arr, 0);
     System.out.println("\n\n");
-    FindShortestDist d = new FindShortestDist(v1 - 1, g);
+    ShortestDist d = new ShortestDist(v1 - 1, g);
     int dist = d.getDist(v2 - 1);
     System.out.println(dist);
   }
