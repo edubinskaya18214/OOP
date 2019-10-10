@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="ru.nsu.fit.g18214.dubinskaya.tests" tests="9" skipped="0" failures="0" errors="0" timestamp="2019-10-05T09:25:31" hostname="villanellex2" time="0.007">
+<testsuite name="ru.nsu.fit.g18214.dubinskaya.tests" tests="9" skipped="0" failures="0" errors="0" timestamp="2019-10-10T06:49:59" hostname="villanellex2" time="0.01">
   <properties/>
-  <testcase name="test1" classname="ru.nsu.fit.g18214.dubinskaya.tests" time="0.003"/>
+  <testcase name="test1" classname="ru.nsu.fit.g18214.dubinskaya.tests" time="0.007"/>
   <testcase name="test2" classname="ru.nsu.fit.g18214.dubinskaya.tests" time="0.0"/>
-  <testcase name="test3" classname="ru.nsu.fit.g18214.dubinskaya.tests" time="0.001"/>
+  <testcase name="test3" classname="ru.nsu.fit.g18214.dubinskaya.tests" time="0.0"/>
   <testcase name="test4" classname="ru.nsu.fit.g18214.dubinskaya.tests" time="0.0"/>
-  <testcase name="test5" classname="ru.nsu.fit.g18214.dubinskaya.tests" time="0.001"/>
+  <testcase name="test5" classname="ru.nsu.fit.g18214.dubinskaya.tests" time="0.0"/>
   <testcase name="test6" classname="ru.nsu.fit.g18214.dubinskaya.tests" time="0.0"/>
-  <testcase name="test7" classname="ru.nsu.fit.g18214.dubinskaya.tests" time="0.0"/>
-  <testcase name="test8" classname="ru.nsu.fit.g18214.dubinskaya.tests" time="0.001"/>
+  <testcase name="test7" classname="ru.nsu.fit.g18214.dubinskaya.tests" time="0.001"/>
+  <testcase name="test8" classname="ru.nsu.fit.g18214.dubinskaya.tests" time="0.0"/>
   <testcase name="test9" classname="ru.nsu.fit.g18214.dubinskaya.tests" time="0.0"/>
   <system-out><![CDATA[test 1 is successful
 test 2 is successful

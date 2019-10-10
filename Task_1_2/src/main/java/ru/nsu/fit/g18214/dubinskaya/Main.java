@@ -15,12 +15,12 @@ public class Main {
     int numEdges = scanner.nextInt();
     int[][] list = new int[numEdges][3];
     for (int i = 0; i < numEdges; ++i) {
-      System.out.print("edge " + i + ":\n");
-      g.addEdge( scanner.nextInt() - 1, scanner.nextInt() - 1,scanner.nextInt());
+      System.out.print("edge " + (i+1) + ":\n");
+      g.addEdge(scanner.nextInt() - 1, scanner.nextInt() - 1, scanner.nextInt());
     }
     System.out.println("\n\n");
-    FindShortestDist d = new FindShortestDist(v1-1, g);
-    int dist = d.getDist(v2-1);
+    FindShortestDist d = new FindShortestDist(v1 - 1, g);
+    int dist = d.getDist(v2 - 1);
     System.out.println(dist);
   }
 }

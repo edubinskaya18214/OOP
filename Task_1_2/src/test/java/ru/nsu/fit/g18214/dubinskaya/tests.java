@@ -7,8 +7,7 @@ public class tests {
   @Test
   public void test1() {
     Graph g = new Graph(5);
-    for (int i = 0; i < 4; ++i)
-      g.addEdge(i, i + 1, 1);
+    for (int i = 0; i < 4; ++i) g.addEdge(i, i + 1, 1);
     FindShortestDist d = new FindShortestDist(0, g);
     int dist = d.getDist(4);
     Assert.assertEquals(4, dist);
@@ -20,7 +19,7 @@ public class tests {
     Graph g = new Graph(5);
     g.addEdge(0, 2, 3);
     g.addEdge(4, 2, 3);
-    FindShortestDist d = new FindShortestDist(0,g);
+    FindShortestDist d = new FindShortestDist(0, g);
     int dist = d.getDist(4);
     Assert.assertEquals(-1, dist);
     System.out.println("test 2 is successful");
@@ -31,7 +30,7 @@ public class tests {
     Graph g = new Graph(0);
     g.addEdge(0, 2, 3);
     g.addEdge(4, 2, 3);
-    FindShortestDist d = new FindShortestDist(0,g);
+    FindShortestDist d = new FindShortestDist(0, g);
     int dist = d.getDist(0);
     Assert.assertEquals(-1, dist);
     System.out.println("test 3 is successful");
@@ -42,8 +41,8 @@ public class tests {
     Graph g = new Graph(0);
     g.addEdge(0, 2, 3);
     g.addEdge(4, 2, 3);
-    FindShortestDist d = new FindShortestDist(0,g);
-    int dist = d.getDist( 4);
+    FindShortestDist d = new FindShortestDist(0, g);
+    int dist = d.getDist(4);
     Assert.assertEquals(-1, dist);
     System.out.println("test 4 is successful");
   }
@@ -56,8 +55,8 @@ public class tests {
     g.addEdge(2, 3, 3);
     g.addEdge(3, 4, 3);
     g.addEdge(4, 0, 3);
-    FindShortestDist d = new FindShortestDist(0,g);
-    int dist = d.getDist( 4);
+    FindShortestDist d = new FindShortestDist(0, g);
+    int dist = d.getDist(4);
     Assert.assertEquals(12, dist);
     System.out.println("test 5 is successful");
   }
@@ -99,9 +98,8 @@ public class tests {
   @Test
   public void test8() {
     Graph g = new Graph(5);
-    for (int i = 0; i < 4; ++i)
-      g.addEdge(i, i + 1, 3);
-    FindShortestDist d = new FindShortestDist(0,g);
+    for (int i = 0; i < 4; ++i) g.addEdge(i, i + 1, 3);
+    FindShortestDist d = new FindShortestDist(0, g);
     int dist = d.getDist(4);
     Assert.assertEquals(12, dist);
     System.out.println("test 8 is successful");
@@ -110,10 +108,9 @@ public class tests {
   @Test
   public void test9() {
     Graph t9 = null;
-    FindShortestDist d = new FindShortestDist(0,t9);
-    int dist = d.getDist( 4);
+    FindShortestDist d = new FindShortestDist(0, t9);
+    int dist = d.getDist(4);
     Assert.assertEquals(-1, dist);
     System.out.println("test 9 is successful");
   }
-
 }

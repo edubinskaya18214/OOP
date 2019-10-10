@@ -1,23 +1,23 @@
 package ru.nsu.fit.g18214.dubinskaya;
 
-
-/* This class find and save shortest distance from vertex v1 to each vertex in graph 1 using Dijkstra's algorithm
- * object FindShortestDist input graph where find shortest distant and vertex where
- * algorithm will start finding
+/* This class find and save the shortest distance from
+ * vertex v1 to each vertex in graph 1 using Dijkstra's algorithm
+ * object FindShortestDist input graph where find shortest distant
+ * and vertex where the algorithm will start finding
  */
 public class FindShortestDist {
-  public int v1;
-  public int n;
+  private int v1;
+  private int n;
   private int[] distFromV1ToVi;
-  private int[] mark; // 0==doesn't checked, 1==find dist (not finish version), 2==checked and find dist
+  private int[]
+      mark; // 0==doesn't checked, 1==find dist (not finish version), 2==checked and find dist
 
   /* here we initialise object */
-  public FindShortestDist(int from, Graph g){
-    if (g == null || g.getNumv() <= 0 ){
+  public FindShortestDist(int from, Graph g) {
+    if (g == null || g.getNumv() <= 0 ) {
       n = -1;
       v1 = -1;
-    }
-    else {
+    } else {
       n = g.getNumv();
       v1 = from;
       distFromV1ToVi = new int[n];
@@ -32,40 +32,40 @@ public class FindShortestDist {
     DijkstraAlg(g);
   }
 
-  /* FindMinEdge - find vertex with shortest distance from v1,
+  /* FindMinEdge - find vertex with the shortest distance from v1,
    * finding vertex - never been checked before
    */
-  private int FindMinEdge(){
+  private int FindMinEdge() {
     int min = Integer.MAX_VALUE;
     int minInd = -1;
-    for(int i = 0; i < n; ++i)
+    for (int i = 0; i < n; ++i)
       if (mark[i] == 1 && distFromV1ToVi[i] < min) {
         min = distFromV1ToVi[i];
         minInd = i;
       }
-    if (min != Integer.MAX_VALUE)
-      return minInd;
+    if (min != Integer.MAX_VALUE) return minInd;
     return -1;
   }
 
-  private void DijkstraAlg(Graph g){
+  private void DijkstraAlg(Graph g) {
     int from;
-    while((from = FindMinEdge())!= -1){
+    while ((from = FindMinEdge()) != -1) {
       mark[from] = 2;
-      for (int i = 0; i < g.getNumNeighVertex(from); ++i){
+      for (int i = 0; i < g.getNumNeighVertex(from); ++i) {
         int vTo = g.getNextVertex(from, i)[0];
         if (mark[vTo] == 2) continue;
-        int distTo = g.getNextVertex(from,i)[1];
+        int distTo = g.getNextVertex(from, i)[1];
         mark[vTo] = 1;
         if (distFromV1ToVi[vTo] > distTo + distFromV1ToVi[from])
           distFromV1ToVi[vTo] = distTo + distFromV1ToVi[from];
       }
     }
   }
-  // This method accept vertex and return shortest distance from v1 to this vertex if it exist else method return -1
-  public int getDist(int v2){
-    if (v2 < n && mark[v2] == 2)
-      return distFromV1ToVi[v2];
+
+  // This method accept vertex and return the shortest distance from v1 to this vertex if it exists
+  // else method return -1
+  public int getDist(int v2) {
+    if (v2 < n && mark[v2] == 2) return distFromV1ToVi[v2];
     else return -1;
   }
 }

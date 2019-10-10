@@ -1,5 +1,4 @@
 package ru.nsu.fit.g18214.dubinskaya;
-import java.util.Arrays;
 
 /* class Graph can create and change graph, this class input number of vertex */
 public class Graph {
@@ -7,7 +6,7 @@ public class Graph {
   private NeighboringVertices[] vertices;
   private int[] pos;
 
-  Graph (int n){
+  Graph(int n) {
     numv = n;
     vertices = new NeighboringVertices[n];
     pos = new int[n];
@@ -21,12 +20,13 @@ public class Graph {
     return numv;
   }
   // input vertex v ,return number of neighborhood vertex for v
-  public int getNumNeighVertex(int v){
+  public int getNumNeighVertex(int v) {
     return pos[v];
   }
-  // input vertex v and number of her neighbor, return arr, arr[0] == num v1, arr[1] == dist between v and v1
+  // input vertex v and number of her neighbor, return arr, arr[0] == num v1, arr[1] == dist between
+  // v and v1
   // if this neighbor doesn't exist return -1 in arr[0]
-  public int[] getNextVertex(int v, int p) {
+  int[] getNextVertex(int v, int p) {
     int[] r = new int[2];
     if (pos[v] > p) {
       r[0] = vertices[v].edges.get(p);
