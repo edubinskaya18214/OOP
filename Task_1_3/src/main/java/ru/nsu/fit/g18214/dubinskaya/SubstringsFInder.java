@@ -1,7 +1,8 @@
 package ru.nsu.fit.g18214.dubinskaya;
 
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.Reader;
+
 /*
  * class which receive string or file and substring which it should search,
  * and count and contain all substrings in the file or string.
@@ -17,18 +18,16 @@ public class FindAllSubstring {
    * @param sub - String that class will find in frStr
    * if frStr or sub equals null func returnSubsID will return empty array
    */
-  public FindAllSubstring(FileReader frStr, String sub) throws IOException {
+  public FindAllSubstring(Reader frStr, String sub) throws IOException {
     if (frStr != null && sub != null) {
       char[] buffer = new char[sub.length() * 7];
       frStr.read(buffer, 0, buffer.length);
+      int bufSize = sub.length() * 7;
       String s;
-      while (1 == 1) {
+      while (frStr.read(buffer, 0, buffer.length) > 0) {
         countNextStr(String.valueOf(buffer), sub);
         System.arraycopy(buffer, sub.length() * 6 + 1, buffer, 0, sub.length() - 1);
-        char d[] = new char[sub.length() * 6 + 1];
         delta -= sub.length();
-        if (frStr.read(buffer, sub.length(), sub.length() * 6) <= 0) break;
-        if (buffer[0] == '\0') break;
       }
     } else {
       idEntry = new int[0];
