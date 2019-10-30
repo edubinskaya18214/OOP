@@ -7,23 +7,23 @@ import java.io.Reader;
  * class which receive string or file and substring which it should search,
  * and count and contain all substrings in the file or string.
  */
-public class SubstringsFInder {
+public class SubstringsFinder {
 
-  private int numSubs;  
+  private int numSubs, delta = 0;
   private int[] idEntry = new int[0];
-  private int delta = 0;
   /*
    * Initialize class FindAllSubstring
    * @param frStr - File Reader that contain text
    * @param sub - String that class will find in frStr
    * if frStr or sub equals null func returnSubsID will return empty array
    */
-  public SubstringsFInder(Reader frStr, String sub) throws IOException {
+  public SubstringsFinder(Reader frStr, String sub) throws IOException {
     if (frStr != null && sub != null) {
-      char[] buffer = new char[sub.length() * 7];
+      int buffSize = sub.length() * 7;
+      char[] buffer = new char[buffSize];
       while (frStr.read(buffer, 0, buffer.length) > 0) {
         countNextStr(String.valueOf(buffer), sub);
-        System.arraycopy(buffer, sub.length() * 6 + 1, buffer, 0, sub.length() - 1);
+        System.arraycopy(buffer, buffSize / 7 * 6 + 1, buffer, 0, sub.length() - 1);
         delta -= sub.length();
       }
     } else {
@@ -37,7 +37,7 @@ public class SubstringsFInder {
    * @param sub - String that class will find in frStr
    * if frStr or sub equals null func returnSubsID will return empty array
    */
-  public SubstringsFInder(String str, String sub) {
+  public SubstringsFinder(String str, String sub) {
     if (str != null && sub != null) countNextStr(str, sub);
     else{
       idEntry = new int[0];

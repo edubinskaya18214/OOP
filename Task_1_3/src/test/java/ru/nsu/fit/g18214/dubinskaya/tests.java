@@ -13,7 +13,7 @@ public class tests {
   public void test1() {
     String s = "Я, конечно, люблю яблоки, но я думаю, они меня преследуют";
     String sub = "Я, конечно, люблю яблоки, но я думаю, они меня преследуют";
-    SubstringsFInder f = new SubstringsFInder(s,sub);
+    SubstringsFinder f = new SubstringsFinder(s,sub);
     int[] checkArr = {0};
     Assert.assertArrayEquals(checkArr, f.returnSubsID());
     System.out.println("test 1 is successful");
@@ -24,7 +24,7 @@ public class tests {
     //0123456789012345678901234567890123456789012345678901234567
     String s = "Я, конечно, люблю яблоки, но я думаю, они меня преследуют";
     String sub = "яблоки";
-    SubstringsFInder f = new SubstringsFInder(s,sub);
+    SubstringsFinder f = new SubstringsFinder(s,sub);
     int[] checkArr = {18};
     Assert.assertArrayEquals(checkArr, f.returnSubsID());
     System.out.println("test 2 is successful");
@@ -36,7 +36,7 @@ public class tests {
     String s = "Я, конечно, люблю яблоки, но я думаю, они меня преследуют";
     String sub = "Карл у Клары украл кораллы, а Клара у Карла украла Кларнет, жалко мне клару, как она будет без кораллов, хоспаде, что я пишу";
     int[] checkArr = {};
-    SubstringsFInder f = new SubstringsFInder(s,sub);
+    SubstringsFinder f = new SubstringsFinder(s,sub);
     Assert.assertArrayEquals(checkArr, f.returnSubsID());
     System.out.println("test 3 is successful");
   }
@@ -47,7 +47,7 @@ public class tests {
     String s = "Я, конечно, люблю яблоки, но я думаю, они меня преследуют";
     String sub = "Я, конечно, люблю яблоки, но я думаю, они меня преследуют. Хотя, наверное, неплохо иметь поклонников";
     int[] checkArr = {};
-    SubstringsFInder f = new SubstringsFInder(s,sub);
+    SubstringsFinder f = new SubstringsFinder(s,sub);
     Assert.assertArrayEquals(checkArr, f.returnSubsID());
     System.out.println("test 4 is successful");
   }
@@ -57,7 +57,7 @@ public class tests {
     String s = "";
     String sub = "Карл у Клары украл кораллы";
     int[] checkArr = {};
-    SubstringsFInder f = new SubstringsFInder(s,sub);
+    SubstringsFinder f = new SubstringsFinder(s,sub);
     Assert.assertArrayEquals(checkArr, f.returnSubsID());
     System.out.println("test 5 is successful");
   }
@@ -74,8 +74,8 @@ public class tests {
     Scanner s = new Scanner(r2);
     while(s.hasNextLine())
       AllText +=  s.nextLine() + "\n";
-    SubstringsFInder f1 = new SubstringsFInder(AllText,i);
-    SubstringsFInder f = new SubstringsFInder(r1,i);
+    SubstringsFinder f1 = new SubstringsFinder(AllText,i);
+    SubstringsFinder f = new SubstringsFinder(r1,i);
     int[] ans = f.returnSubsID();
     Assert.assertArrayEquals(f1.returnSubsID(), f.returnSubsID());
     System.out.println("test 6 is successful");
@@ -85,7 +85,7 @@ public class tests {
   public void test7() throws IOException {
     FileReader r1 = null;
     String i = null;
-    SubstringsFInder f = new SubstringsFInder(r1, i);
+    SubstringsFinder f = new SubstringsFinder(r1, i);
     int[] ans = new int[0];
     Assert.assertArrayEquals(ans, f.returnSubsID());
     System.out.println("test 7 is successful");
