@@ -1,10 +1,17 @@
 package ru.nsu.fit.g18214.dubinskaya;
 
+/*
+ * This class can contain elements. Stack can contain objects with any type, but all objects
+ * in stack should have the same type.
+ * It work like simple stack: has methods push, pop and count.
+ */
 public class Stack<T> {
-
   private StackElem<T> posStackElem = null;
   private int pos = -1;
-
+/*
+ * Function push take an object and store it in stack. Increase size of stack.
+ * @param n - object that stored in stack. If n == NULL stack size will not increase.
+ */
   public void push (T n) {
     if (n == null) return;
     pos++;
@@ -16,7 +23,10 @@ public class Stack<T> {
       posStackElem = next;
     }
   }
-
+  /*
+   * Function pop return and delete last object in stack.
+   * @return last object in stack.
+   */
   public T pop() {
     if (pos == -1){
       System.out.println("Stack is empty");
@@ -27,6 +37,10 @@ public class Stack<T> {
     pos--;
     return ret;
   }
+  /*
+   * Function count return number of elements in stack. It doesn't change stack size.
+   * @return number of objects in stack.
+   */
   public int count(){
     return pos+1;
   }

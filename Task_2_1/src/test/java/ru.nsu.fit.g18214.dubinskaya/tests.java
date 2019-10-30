@@ -111,8 +111,6 @@ public class tests {
     for (int i = 0; i < 10; ++i)
       stack.pop();Assert.assertEquals(0,stack.count());
     Assert.assertEquals(0,stack.count());
-
-
     Stack<Stack<Float>> newStack = new Stack<Stack<Float>>();
     newStack.push(stack);
     Assert.assertEquals(1,newStack.count());
