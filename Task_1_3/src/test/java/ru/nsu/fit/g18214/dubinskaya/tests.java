@@ -1,10 +1,9 @@
 package ru.nsu.fit.g18214.dubinskaya;
 
+import java.io.IOException;
 import org.junit.Assert;
 import org.junit.Test;
-import ru.nsu.fit.g18214.dubinskaya.zFunction;
 
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.Scanner;
 
@@ -14,8 +13,9 @@ public class tests {
   public void test1() {
     String s = "Я, конечно, люблю яблоки, но я думаю, они меня преследуют";
     String sub = "Я, конечно, люблю яблоки, но я думаю, они меня преследуют";
+    SubstringsFinder f = new SubstringsFinder(s,sub);
     int[] checkArr = {0};
-    Assert.assertArrayEquals(checkArr, zFunction.returnNumSubs(s, sub));
+    Assert.assertArrayEquals(checkArr, f.returnSubsID());
     System.out.println("test 1 is successful");
   }
 
@@ -24,8 +24,9 @@ public class tests {
     //0123456789012345678901234567890123456789012345678901234567
     String s = "Я, конечно, люблю яблоки, но я думаю, они меня преследуют";
     String sub = "яблоки";
+    SubstringsFinder f = new SubstringsFinder(s,sub);
     int[] checkArr = {18};
-    Assert.assertArrayEquals(checkArr, zFunction.returnNumSubs(s, sub));
+    Assert.assertArrayEquals(checkArr, f.returnSubsID());
     System.out.println("test 2 is successful");
   }
 
@@ -35,7 +36,8 @@ public class tests {
     String s = "Я, конечно, люблю яблоки, но я думаю, они меня преследуют";
     String sub = "Карл у Клары украл кораллы, а Клара у Карла украла Кларнет, жалко мне клару, как она будет без кораллов, хоспаде, что я пишу";
     int[] checkArr = {};
-    Assert.assertArrayEquals(checkArr, zFunction.returnNumSubs(s, sub));
+    SubstringsFinder f = new SubstringsFinder(s,sub);
+    Assert.assertArrayEquals(checkArr, f.returnSubsID());
     System.out.println("test 3 is successful");
   }
 
@@ -45,54 +47,48 @@ public class tests {
     String s = "Я, конечно, люблю яблоки, но я думаю, они меня преследуют";
     String sub = "Я, конечно, люблю яблоки, но я думаю, они меня преследуют. Хотя, наверное, неплохо иметь поклонников";
     int[] checkArr = {};
-    Assert.assertArrayEquals(checkArr, zFunction.returnNumSubs(s, sub));
+    SubstringsFinder f = new SubstringsFinder(s,sub);
+    Assert.assertArrayEquals(checkArr, f.returnSubsID());
     System.out.println("test 4 is successful");
   }
 
   @Test
   public void test5() {
-    //0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789
-    String s = "аааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааа" +
-        "аааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааа" +
-        "аааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааа" +
-        "аааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааа" +
-        "аааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааа" +
-        "аааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааа";
-    String sub = "а";
-    int[] checkArr = new int[600];
-    for (int i = 0; i < 600; ++i)
-      checkArr[i] = i;
-    Assert.assertArrayEquals(checkArr, zFunction.returnNumSubs(s, sub));
-    System.out.println("test 5 is successful");
-  }
-
-  @Test
-  public void test6() {
     String s = "";
     String sub = "Карл у Клары украл кораллы";
     int[] checkArr = {};
-    Assert.assertArrayEquals(checkArr, zFunction.returnNumSubs(s, sub));
+    SubstringsFinder f = new SubstringsFinder(s,sub);
+    Assert.assertArrayEquals(checkArr, f.returnSubsID());
+    System.out.println("test 5 is successful");
+  }
+  @Test
+  public void test6() throws IOException {
+    FileReader r1 = new FileReader("res/Main_str.txt");
+    String i =
+        "ROMEO \n"
+            + "And stay, good nurse, behind the abbey wall.\n"
+            + "Within this hour my man shall be with thee\n"
+            + "And bring thee cords made like a tackled stair,";
+    FileReader r2 = new FileReader("res/Main_str.txt");
+    String AllText = "";
+    Scanner s = new Scanner(r2);
+    while(s.hasNextLine())
+      AllText +=  s.nextLine() + "\n";
+    SubstringsFinder f1 = new SubstringsFinder(AllText,i);
+    SubstringsFinder f = new SubstringsFinder(r1,i);
+    int[] ans = f.returnSubsID();
+    Assert.assertArrayEquals(f1.returnSubsID(), f.returnSubsID());
     System.out.println("test 6 is successful");
   }
 
   @Test
-  public void test7() throws FileNotFoundException {
-    FileReader frStr = new FileReader("res/7_str.txt");
-    FileReader frSub = new FileReader("res/7_sub.txt");
-    Scanner scan1 = new Scanner(frStr);
-    Scanner scan2 = new Scanner(frSub);
-    String sub = scan2.nextLine();
-    String str = scan1.nextLine();
-    int delta = 0;
-    int[] ans ={};
-    while (1==1) {
-      ans = Main.arrConcat(ans, zFunction.returnNumSubs(str,sub,delta));
-      if (!scan1.hasNextLine()) break;
-      delta += str.length();
-      str = scan1.nextLine();
-    }
-    int[] checkArr = {0,1,2,3};
-    Assert.assertArrayEquals(checkArr, ans);
+  public void test7() throws IOException {
+    FileReader r1 = null;
+    String i = null;
+    SubstringsFinder f = new SubstringsFinder(r1, i);
+    int[] ans = new int[0];
+    Assert.assertArrayEquals(ans, f.returnSubsID());
     System.out.println("test 7 is successful");
   }
+
 }
