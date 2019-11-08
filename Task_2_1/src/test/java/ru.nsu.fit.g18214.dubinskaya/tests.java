@@ -13,15 +13,11 @@ public class tests {
     Stack<Integer> s;
     s = new Stack<Integer>();
     ArrayList<Integer> a = new ArrayList<Integer>();
-    int n = (int) (Math.random() * 1000);
-    for (int i = 0; i < n; ++i){
-      int count = (int) (Math.random() * 100);
-      if (count < Math.random() * 300){
-        int num = (int) (Math.random() * 1000000);
-        s.push(num);
-        a.add(num);
-      }
-      else{
+    for (int i = 1; i < Integer.MAX_VALUE; ++i) {
+      if (i / 3 == 0) {
+        s.push(i);
+        a.add(i);
+      } else {
         if (a.size() != 0) {
           int a1 = a.remove(a.size() - 1);
           int a2 = s.pop();
@@ -34,44 +30,38 @@ public class tests {
   }
 
   @Test
-  public void floatTest(){
+  public void floatTest() {
     Stack<Float> s;
     s = new Stack<Float>();
     ArrayList<Float> a = new ArrayList<Float>();
-    int n = (int) (Math.random() * 1000);
-    for (int i = 0; i < n; ++i){
-      int count = (int) (Math.random() * 100);
-      if (count < Math.random() * 300){
-        float num = (float)Math.random();
+
+    for (int i = 0; i < Integer.MAX_VALUE; ++i) {
+      if (i / 5 == 0) {
+        float num = (float) Math.random();
         s.push(num);
         a.add(num);
-      }
-      else{
+      } else {
         if (a.size() != 0) {
           int size = a.size() - 1;
           float a1 = a.remove(size);
           float a2 = s.pop();
-          Assert.assertEquals(a1, a2, 0.00001);
+          Assert.assertEquals(a1, a2, 0.0001);
         }
       }
     }
     Assert.assertEquals(a.size(), s.count());
     System.out.println("float test is successful");
   }
+
   @Test
-  public void stringTest(){
-    Random rnd = new Random(System.currentTimeMillis());
-    int min = 1;
-    int max = 4;
+  public void stringTest() {
     Stack<String> s;
     s = new Stack<String>();
     ArrayList<String> a = new ArrayList<String>();
-    int n = (int) (Math.random() * 1000);
-    for (int i = 0; i < n; ++i) {
-      int count = (int) (Math.random() * 100);
-      if (count < Math.random() * 300) {
-        int number = min + rnd.nextInt(max - min + 1);
-        switch(number) {
+    for (int i = 1; i < 1001; ++i) {
+      int number = i % 5;
+      if (i % 5 != 0)
+        switch (number) {
           case 1:
             s.push("aaa");
             a.add("aaa");
@@ -89,14 +79,8 @@ public class tests {
             a.add("O_O");
             break;
         }
-      } else {
-        int size = a.size() - 1;
-        if (size > 0) {
-          String a1 = a.remove(size);
-          String a2 = s.pop();
-          boolean cmp = a1.equals(a2);
-          Assert.assertTrue(cmp);
-        }
+      else {
+        if (!s.pop().equals(a.remove(a.size() - 1))) Assert.fail();
       }
     }
     Assert.assertEquals(a.size(), s.count());
@@ -104,40 +88,36 @@ public class tests {
   }
 
   @Test
-  public void tryToKillTest(){
+  public void tryToKillTest() {
     Stack<Float> stack = new Stack<Float>();
     stack.push(null);
     stack.pop();
-    Assert.assertEquals(0,stack.count());
-    for (int i = 0; i < 10; ++i)
-      stack.pop();Assert.assertEquals(0,stack.count());
-    Assert.assertEquals(0,stack.count());
+    Assert.assertEquals(0, stack.count());
+    for (int i = 0; i < 10; ++i) stack.pop();
+    Assert.assertEquals(0, stack.count());
+    Assert.assertEquals(0, stack.count());
     Stack<Stack<Float>> newStack = new Stack<Stack<Float>>();
     newStack.push(stack);
-    Assert.assertEquals(1,newStack.count());
+    Assert.assertEquals(1, newStack.count());
     stack = newStack.pop();
-    Assert.assertEquals(0,stack.count());
+    Assert.assertEquals(0, stack.count());
   }
 
   @Test
-  public void IteratorTest(){
-    Random rnd = new Random(System.currentTimeMillis());
-    int count = 2 + rnd.nextInt(98);
-
-    for (int j = 0; j < count; ++j) {
+  public void IteratorTest() {
+    for (int j = 0; j < 100; ++j) {
       Stack<Integer> s = new Stack<Integer>();
       ArrayList<Integer> l = new ArrayList<Integer>();
-      int n = rnd.nextInt(100);
-      for (int i = 0; i < n; ++i) {
-        int number =Integer.MIN_VALUE + rnd.nextInt(Integer.MAX_VALUE);
+      for (int i = 0; i < 110; ++i) {
+        int number = j*i;
         s.push(number);
         l.add(number);
       }
       Iterator<Integer> iter = s.iterator();
       Iterator<Integer> iter2 = l.iterator();
-       while (iter.hasNext()){
-         Assert.assertEquals(iter.next(), iter2.next());
-       }
+      while (iter.hasNext()) {
+        Assert.assertEquals(iter.next(), iter2.next());
+      }
     }
     System.out.print("Iterator test successful\n");
   }
