@@ -7,19 +7,18 @@ import java.util.Iterator;
  * in stack should have the same type.
  * It work like simple stack: has methods push, pop and count.
  */
-public class Stack<T> implements Iterable<T>{
+public class Stack<T> implements Iterable<T> {
   private StackElem<T> posStackElem = null;
   private int pos = -1;
-/*
- * Function push take an object and store it in stack. Increase size of stack.
- * @param n - object that stored in stack. If n == NULL stack size will not increase.
- */
-  public void push (T n) {
+  /*
+   * Function push take an object and store it in stack. Increase size of stack.
+   * @param n - object that stored in stack. If n == NULL stack size will not increase.
+   */
+  public void push(T n) {
     if (n == null) return;
     pos++;
-    if (posStackElem == null)
-      posStackElem = new StackElem<T> (n, null);
-    else{
+    if (posStackElem == null) posStackElem = new StackElem<T>(n, null);
+    else {
       StackElem<T> next = posStackElem.CreateNextElem(n);
       posStackElem.addNextElem(next);
       posStackElem = next;
@@ -27,48 +26,54 @@ public class Stack<T> implements Iterable<T>{
   }
   /*
    * Function pop return and delete last object in stack.
-   * @return last object in stack.
+   * @return last object in stack. If stack is empty return null pointer and print error.
    */
   public T pop() {
-    if (pos == -1){
-      //System.out.println("Stack is empty");
+    if (pos == -1) {
+      System.err.println("End of stack");
       return null;
+    } else {
+      T ret = posStackElem.getElem();
+      posStackElem = posStackElem.getPreElem();
+      pos--;
+      return ret;
     }
-    T ret = posStackElem.getElem();
-    posStackElem = posStackElem.getPreElem();
-    pos--;
-    return ret;
   }
   /*
    * Function count return number of elements in stack. It doesn't change stack size.
    * @return number of objects in stack.
    */
-  public int count(){
-    return pos+1;
+  public int count() {
+    return pos + 1;
   }
 
-  private StackElem<T> FindFirstElem(){
+  private StackElem<T> FindFirstElem() {
     if (posStackElem == null) return null;
     StackElem<T> elem = posStackElem;
-    while (elem.getPreElem() != null)
-      elem = elem.getPreElem();
+    while (elem.getPreElem() != null) elem = elem.getPreElem();
     return elem;
   }
+
   public Iterator<T> iterator() {
     return new Iterator<T>() {
       private StackElem<T> current = FindFirstElem();
-
+      /*
+       function hasNext check stack have new element
+       @return true if we have next element else return false.
+      */
       public boolean hasNext() {
         return current.getNextElem() != null;
       }
-
+      /*
+       * Function next return value of next element in stack
+       * @return next element if it exist else it throw OutOfBoundsExeption
+       */
       public T next() throws IndexOutOfBoundsException {
         T result = current.getElem();
-        if (current.getNextElem() == null ) throw new IndexOutOfBoundsException("End of list.");
+        if (current.getNextElem() == null) throw new IndexOutOfBoundsException("End of list.");
         current = current.getNextElem();
         return result;
       }
     };
   }
 }
-
