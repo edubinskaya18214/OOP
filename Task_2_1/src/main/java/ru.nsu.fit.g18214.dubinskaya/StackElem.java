@@ -10,19 +10,24 @@ class StackElem<T> {
     preElem = pre;
     a = newElem;
   }
-  void addNextElem(StackElem<T> next){
+
+  void addNextElem(StackElem<T> next) {
     nextElem = next;
   }
+
   T getElem(){
     return a;
   }
-  StackElem<T> getPreElem(){
+
+  StackElem<T> getPreElem() {
     return preElem;
   }
-  StackElem<T> getNextElem(){
+
+  StackElem<T> getNextElem() {
     return nextElem;
   }
-  StackElem<T> CreateNextElem(T next){
+
+  StackElem<T> CreateNextElem(T next) {
     nextElem = new StackElem<T>(next, this);
     return nextElem;
   }

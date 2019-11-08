@@ -1,6 +1,7 @@
 package ru.nsu.fit.g18214.dubinskaya;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Random;
 import org.junit.Assert;
 import org.junit.Test;
@@ -90,7 +91,7 @@ public class tests {
         }
       } else {
         int size = a.size() - 1;
-        if (size != 0) {
+        if (size > 0) {
           String a1 = a.remove(size);
           String a2 = s.pop();
           boolean cmp = a1.equals(a2);
@@ -116,5 +117,28 @@ public class tests {
     Assert.assertEquals(1,newStack.count());
     stack = newStack.pop();
     Assert.assertEquals(0,stack.count());
+  }
+
+  @Test
+  public void IteratorTest(){
+    Random rnd = new Random(System.currentTimeMillis());
+    int count = 2 + rnd.nextInt(98);
+
+    for (int j = 0; j < count; ++j) {
+      Stack<Integer> s = new Stack<Integer>();
+      ArrayList<Integer> l = new ArrayList<Integer>();
+      int n = rnd.nextInt(100);
+      for (int i = 0; i < n; ++i) {
+        int number =Integer.MIN_VALUE + rnd.nextInt(Integer.MAX_VALUE);
+        s.push(number);
+        l.add(number);
+      }
+      Iterator<Integer> iter = s.iterator();
+      Iterator<Integer> iter2 = l.iterator();
+       while (iter.hasNext()){
+         Assert.assertEquals(iter.next(), iter2.next());
+       }
+    }
+    System.out.print("Iterator test successful\n");
   }
 }

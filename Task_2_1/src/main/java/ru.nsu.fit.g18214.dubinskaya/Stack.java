@@ -1,11 +1,13 @@
 package ru.nsu.fit.g18214.dubinskaya;
 
+import java.util.Iterator;
+
 /*
  * This class can contain elements. Stack can contain objects with any type, but all objects
  * in stack should have the same type.
  * It work like simple stack: has methods push, pop and count.
  */
-public class Stack<T> {
+public class Stack<T> implements Iterable<T>{
   private StackElem<T> posStackElem = null;
   private int pos = -1;
 /*
@@ -29,7 +31,7 @@ public class Stack<T> {
    */
   public T pop() {
     if (pos == -1){
-      System.out.println("Stack is empty");
+      //System.out.println("Stack is empty");
       return null;
     }
     T ret = posStackElem.getElem();
@@ -43,6 +45,30 @@ public class Stack<T> {
    */
   public int count(){
     return pos+1;
+  }
+
+  private StackElem<T> FindFirstElem(){
+    if (posStackElem == null) return null;
+    StackElem<T> elem = posStackElem;
+    while (elem.getPreElem() != null)
+      elem = elem.getPreElem();
+    return elem;
+  }
+  public Iterator<T> iterator() {
+    return new Iterator<T>() {
+      private StackElem<T> current = FindFirstElem();
+
+      public boolean hasNext() {
+        return current.getNextElem() != null;
+      }
+
+      public T next() throws IndexOutOfBoundsException {
+        T result = current.getElem();
+        if (current.getNextElem() == null ) throw new IndexOutOfBoundsException("End of list.");
+        current = current.getNextElem();
+        return result;
+      }
+    };
   }
 }
 
