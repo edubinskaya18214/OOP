@@ -9,6 +9,7 @@ import java.util.Iterator;
  */
 public class Stack<T> implements Iterable<T> {
   private StackElem<T> posStackElem = null;
+  private StackElem<T> head = null;
   private int pos = -1;
   /*
    * Function push take an object and store it in stack. Increase size of stack.
@@ -17,8 +18,10 @@ public class Stack<T> implements Iterable<T> {
   public void push(T n) {
     if (n == null) return;
     pos++;
-    if (posStackElem == null) posStackElem = new StackElem<T>(n, null);
-    else {
+    if (posStackElem == null){
+      posStackElem = new StackElem<T>(n, null);
+      head = posStackElem;
+    } else {
       StackElem<T> next = posStackElem.CreateNextElem(n);
       posStackElem.addNextElem(next);
       posStackElem = next;
@@ -56,7 +59,7 @@ public class Stack<T> implements Iterable<T> {
 
   public Iterator<T> iterator() {
     return new Iterator<T>() {
-      private StackElem<T> current = FindFirstElem();
+      private StackElem<T> current = head;
       /*
        function hasNext check stack have new element
        @return true if we have next element else return false.
@@ -70,7 +73,7 @@ public class Stack<T> implements Iterable<T> {
        */
       public T next() throws IndexOutOfBoundsException {
         T result = current.getElem();
-        if (current.getNextElem() == null) throw new IndexOutOfBoundsException("End of list.");
+        if (!hasNext()) throw new IndexOutOfBoundsException("End of list.");
         current = current.getNextElem();
         return result;
       }
