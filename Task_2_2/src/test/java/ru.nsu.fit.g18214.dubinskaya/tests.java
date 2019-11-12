@@ -49,11 +49,11 @@ public class tests {
   }
 
   @Test
-  public void IteratorTest(){
+  public void IteratorTest() {
     Queue<Integer, Integer> q = new Queue<>();
     for (int i = 0; i < 100; ++i) {
-        q.insert(i, i-100);
-      }
+      q.insert(i, i - 100);
+    }
     Iterator<Integer> iter = q.iterator();
     for (int i = 0; i < 100; ++i) {
       int next = iter.next();
@@ -61,5 +61,44 @@ public class tests {
     }
     Assert.assertFalse(iter.hasNext());
     System.out.println("    Iterator test is successful.");
+  }
+
+  @Test
+  public void OrderTest() {
+    Queue<Integer, Integer> q = new Queue<>();
+    for (int i = 0; i < 10; ++i) {
+      q.insert(15, i);
+    }
+    for (int i = 0; i < 10; ++i) {
+      int num = q.extractMax();
+      Assert.assertEquals(num, i);
+    }
+    q.insert(15, 5);
+    q.insert(15, 4);
+    q.insert(16, 7);
+    q.insert(16, 6);
+    q.insert(17, 8);
+    for (int i = 4; i <= 8; ++i ){
+      int num = q.extractMin();
+      Assert.assertEquals(num, i);
+    }
+    System.out.println("    Order test is successful.");
+  }
+
+  @Test(expected = IndexOutOfBoundsException.class)
+  public void EmptyTest() {
+    Queue<Integer, Integer> q = new Queue<>();
+    q.extractMax();
+    q.extractMin();
+    System.out.println("    Empty test is successful.");
+  }
+  @Test
+  public void nullptrTest(){
+    Queue<Integer, Integer> q = new Queue<>();
+    q.insert(20, null);
+    q.insert(null, 20);
+    q.insert(null,null);
+    Assert.assertTrue(q.empty());
+    System.out.println("    \"Null pointer\" test is successful.");
   }
 }

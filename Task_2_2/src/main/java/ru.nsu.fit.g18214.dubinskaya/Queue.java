@@ -19,11 +19,15 @@ public class Queue<K extends Comparable<K>, O> {
     return queueSize;
   }
   /*
-   * Method insert - add element in queue, this method increase queueSize
-   * @param O obj - obj will add to queue, position off object will be ascending order of the @param key
-   * @param K key - in order to keys objects are sets in queue, key should be comparable
+   * Method insert - add element in queue, this method increase queueSize.
+   * if obj with the same key exist, new object will push before old object.
+   * @param O obj - obj will add to queue, position off object will be ascending order of the @param key,
+   *                if obj == null, obj will not be added to queue, queueSize isn't change.
+   * @param K key - in order to keys objects are sets in queue, key should be comparable.
+   *                if key == null, obj will not be added to queue, queueSize isn't change.
    */
   public void insert(K key, O obj) {
+    if (obj == null || key == null) return;
     if (head == null) {
       head = new Elem<O, K>(key, obj, null);
       tail = head;
@@ -37,7 +41,7 @@ public class Queue<K extends Comparable<K>, O> {
       ++queueSize;
       return;
     }
-    if (key.compareTo(tail.key) >= 0) {
+    if (key.compareTo(tail.key) > 0) {
       Elem<O, K> newTail = new Elem<O, K>(key, obj, tail);
       tail.addNextElem(newTail);
       tail = newTail;
@@ -61,9 +65,9 @@ public class Queue<K extends Comparable<K>, O> {
   }
   /*
    * Method extractMax delete and return element with max key from queue, decrease queueSize
-   * @return O obj - obj that have max key, it queue is empty return nullptr and print err
+   * @return O obj - obj that have max key, if queue is empty throw IndexOutOfBoundsException
    */
-  public O extractMax() {
+  public O extractMax() throws IndexOutOfBoundsException {
     queueSize--;
     if (tail!= null && tail == head){
       Elem<O, K> nTail = tail;
@@ -79,13 +83,12 @@ public class Queue<K extends Comparable<K>, O> {
       tail.addNextElem(null);
       return nTail.getElem();
     } else {
-      System.err.println("Query is empty!");
-      return null;
+      throw new IndexOutOfBoundsException("Queue is empty");
     }
   }
   /*
    * Method extractMin delete and return element with max key from queue, decrease queueSize
-   * @return O obj - obj that have min key, it queue is empty return nullptr and print err
+   * @return O obj - obj that have min key,  queue is empty throw IndexOutOfBoundsException
    */
   public O extractMin() {
     queueSize--;
@@ -100,8 +103,7 @@ public class Queue<K extends Comparable<K>, O> {
       head = head.getNextElem();
       return nTail.getElem();
     } else {
-      System.err.println("Query is empty!");
-      return null;
+      throw new IndexOutOfBoundsException("Queue is empty");
     }
   }
 
