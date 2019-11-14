@@ -2,43 +2,37 @@ package ru.nsu.fit.g18214.dubinskaya;
 
 import java.util.Iterator;
 
-/*
- * This class can contain elements. Stack can contain objects with any type, but all objects
- * in stack should have the same type.
- * It work like simple stack: has methods push, pop and count.
- */
 public class Stack<T> implements Iterable<T> {
-  private StackElem<T> posStackElem = null;
-  private StackElem<T> head = null;
-  private int pos = -1;
+  private StackElement<T> posStackElem = null;
+  private StackElement<T> head = null;
+  private int pos = 0;
   /*
-   * Function push take an object and store it in stack. Increase size of stack.
-   * @param n - object that stored in stack. If n == NULL stack size will not increase.
+   * Function add take an object and store it in stack. Increase size of stack.
+   * @param n - object stored in stack. If n == NULL throw NullPointerException, n will not be added to stack.
    */
-  public void push(T n) {
-    if (n == null) return;
+  public void add(T n) throws NullPointerException {
+    if (n == null) throw new NullPointerException();
     pos++;
-    if (posStackElem == null){
-      posStackElem = new StackElem<T>(n, null);
+    if (posStackElem == null) {
+      posStackElem = new StackElement<T>(n, null);
       head = posStackElem;
     } else {
-      StackElem<T> next = posStackElem.CreateNextElem(n);
-      posStackElem.addNextElem(next);
-      posStackElem = next;
+      posStackElem = new StackElement<>(n, posStackElem);
     }
   }
   /*
    * Function pop return and delete last object in stack.
-   * @return last object in stack. If stack is empty return null pointer and print error.
+   * @return last object in stack. If stack is empty throw IndexOutOfBoundException (recommended use method empty()
+   * before pop()).
    */
-  public T pop() {
-    if (pos == -1) {
-      System.err.println("End of stack");
-      return null;
+  public T pop() throws IndexOutOfBoundsException{
+    if (pos == 0) {
+      throw new IndexOutOfBoundsException();
     } else {
       T ret = posStackElem.getElem();
       posStackElem = posStackElem.getPreElem();
       pos--;
+      if (pos == 0) head = null;
       return ret;
     }
   }
@@ -47,29 +41,28 @@ public class Stack<T> implements Iterable<T> {
    * @return number of objects in stack.
    */
   public int count() {
-    return pos + 1;
+    return pos;
   }
-
-  private StackElem<T> FindFirstElem() {
-    if (posStackElem == null) return null;
-    StackElem<T> elem = posStackElem;
-    while (elem.getPreElem() != null) elem = elem.getPreElem();
-    return elem;
+  /*
+   * @return true if stack is empty else return false.
+   */
+  public boolean empty() {
+    return pos == 0;
   }
 
   public Iterator<T> iterator() {
     return new Iterator<T>() {
-      private StackElem<T> current = head;
+      private StackElement<T> current = head;
       /*
        function hasNext check stack have new element
        @return true if we have next element else return false.
       */
       public boolean hasNext() {
-        return current.getNextElem() != null;
+        return current != null;
       }
       /*
        * Function next return value of next element in stack
-       * @return next element if it exist else it throw OutOfBoundsExeption
+       * @return next element if it exist else it throw IndexOutOfBoundsException
        */
       public T next() throws IndexOutOfBoundsException {
         T result = current.getElem();

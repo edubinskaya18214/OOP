@@ -2,11 +2,10 @@ package ru.nsu.fit.g18214.dubinskaya;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Random;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class tests {
+public class Tests {
 
   @Test
   public void testInt() {
@@ -15,7 +14,7 @@ public class tests {
     ArrayList<Integer> a = new ArrayList<Integer>();
     for (int i = 1; i < Integer.MAX_VALUE; ++i) {
       if (i / 3 == 0) {
-        s.push(i);
+        s.add(i);
         a.add(i);
       } else {
         if (a.size() != 0) {
@@ -26,7 +25,6 @@ public class tests {
       }
     }
     Assert.assertEquals(a.size(), s.count());
-    System.out.println("int test is successful");
   }
 
   @Test
@@ -38,7 +36,7 @@ public class tests {
     for (int i = 0; i < Integer.MAX_VALUE; ++i) {
       if (i / 5 == 0) {
         float num = (float) Math.random();
-        s.push(num);
+        s.add(num);
         a.add(num);
       } else {
         if (a.size() != 0) {
@@ -50,7 +48,6 @@ public class tests {
       }
     }
     Assert.assertEquals(a.size(), s.count());
-    System.out.println("float test is successful");
   }
 
   @Test
@@ -63,45 +60,51 @@ public class tests {
       if (i % 5 != 0)
         switch (number) {
           case 1:
-            s.push("aaa");
+            s.add("aaa");
             a.add("aaa");
             break;
           case 2:
-            s.push("lalalala");
+            s.add("lalalala");
             a.add("lalalala");
             break;
           case 3:
-            s.push("Dog love meat. Dog love me. Am I meat?");
+            s.add("Dog love meat. Dog love me. Am I meat?");
             a.add("Dog love meat. Dog love me. Am I meat?");
             break;
           case 4:
-            s.push("O_O");
+            s.add("O_O");
             a.add("O_O");
             break;
         }
       else {
-        if (!s.pop().equals(a.remove(a.size() - 1))) Assert.fail();
+        Assert.assertEquals(s.pop(), a.remove(a.size() - 1));
       }
     }
     Assert.assertEquals(a.size(), s.count());
-    System.out.println("string test is successful");
   }
 
   @Test
-  public void tryToKillTest() {
-    Stack<Float> stack = new Stack<Float>();
-    stack.push(null);
-    stack.pop();
-    Assert.assertEquals(0, stack.count());
-    for (int i = 0; i < 10; ++i) stack.pop();
-    Assert.assertEquals(0, stack.count());
-    Assert.assertEquals(0, stack.count());
+  public void throwNullptrException() {
+    Stack<String> s = new Stack<>();
+    try {
+      s.add(null);
+      Assert.fail("Expected NullPointerException");
+    } catch (NullPointerException ignored) {
+    }
+  }
 
-    Stack<Stack<Float>> newStack = new Stack<Stack<Float>>();
-    newStack.push(stack);
-    Assert.assertEquals(1, newStack.count());
-    stack = newStack.pop();
-    Assert.assertEquals(0, stack.count());
+  @Test
+  public void throwOutOfBoundsException() {
+    Stack<String> s = new Stack<String>();
+    s.add("Laallala");
+    s.add("uuuuuuuu");
+    s.pop();
+    s.pop();
+    try {
+      s.pop();
+      Assert.fail("Expected OutOfBoundsException");
+    } catch (IndexOutOfBoundsException ignored) {
+    }
   }
 
   @Test
@@ -110,8 +113,8 @@ public class tests {
       Stack<Integer> s = new Stack<Integer>();
       ArrayList<Integer> l = new ArrayList<Integer>();
       for (int i = 0; i < 110; ++i) {
-        int number = j*i;
-        s.push(number);
+        int number = j * i;
+        s.add(number);
         l.add(number);
       }
       Iterator<Integer> iter = s.iterator();
@@ -120,6 +123,31 @@ public class tests {
         Assert.assertEquals(iter.next(), iter2.next());
       }
     }
-    System.out.print("Iterator test successful\n");
+  }
+
+  @Test
+  public void usingIteratorAfterDeleteFirstElem() {
+    Stack<String> s = new Stack<String>();
+    s.add("Laallala");
+    s.add("uuuuuuuu");
+    s.pop();
+    s.pop();
+    Iterator<String> iter = s.iterator();
+    Assert.assertFalse(iter.hasNext());
+    s.add(
+        "Люцифер уже cмыл кондиционер\n"
+            + "В зеркало посмотрел, видит - располнел\n"
+            + "Полотенце снял c крючка на стене\n"
+            + "Вытер голову и тело, халат надел\n"
+            + "Сел за cтол, налил для аппетита cто\n"
+            + "Из большой бутылки с перевёрнутым крестом");
+    iter = s.iterator();
+    Assert.assertEquals("Люцифер уже cмыл кондиционер\n"
+        + "В зеркало посмотрел, видит - располнел\n"
+        + "Полотенце снял c крючка на стене\n"
+        + "Вытер голову и тело, халат надел\n"
+        + "Сел за cтол, налил для аппетита cто\n"
+        + "Из большой бутылки с перевёрнутым крестом" , iter.next());
+    Assert.assertFalse(iter.hasNext());
   }
 }
