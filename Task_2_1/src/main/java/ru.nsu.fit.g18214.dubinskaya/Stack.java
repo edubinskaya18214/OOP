@@ -1,6 +1,7 @@
 package ru.nsu.fit.g18214.dubinskaya;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class Stack<T> implements Iterable<T> {
   private StackElement<T> posStackElem = null;
@@ -8,10 +9,9 @@ public class Stack<T> implements Iterable<T> {
   private int pos = 0;
   /*
    * Function add take an object and store it in stack. Increase size of stack.
-   * @param n - object stored in stack. If n == NULL throw NullPointerException, n will not be added to stack.
+   * @param n - object stored in stack.
    */
-  public void add(T n) throws NullPointerException {
-    if (n == null) throw new NullPointerException();
+  public void add(T n) {
     pos++;
     if (posStackElem == null) {
       posStackElem = new StackElement<T>(n, null);
@@ -25,12 +25,13 @@ public class Stack<T> implements Iterable<T> {
    * @return last object in stack. If stack is empty throw IndexOutOfBoundException (recommended use method empty()
    * before pop()).
    */
-  public T pop() throws IndexOutOfBoundsException{
+  public T pop() throws IndexOutOfBoundsException {
     if (pos == 0) {
       throw new IndexOutOfBoundsException();
     } else {
       T ret = posStackElem.getElem();
       posStackElem = posStackElem.getPreElem();
+      if (posStackElem != null) posStackElem.setNextElem(null);
       pos--;
       if (pos == 0) head = null;
       return ret;
@@ -62,11 +63,11 @@ public class Stack<T> implements Iterable<T> {
       }
       /*
        * Function next return value of next element in stack
-       * @return next element if it exist else it throw IndexOutOfBoundsException
+       * @return next element if it exist else it throw NoSuchElementException
        */
-      public T next() throws IndexOutOfBoundsException {
+      public T next() throws NoSuchElementException {
         T result = current.getElem();
-        if (!hasNext()) throw new IndexOutOfBoundsException("End of list.");
+        if (!hasNext()) throw new NoSuchElementException("End of list.");
         current = current.getNextElem();
         return result;
       }

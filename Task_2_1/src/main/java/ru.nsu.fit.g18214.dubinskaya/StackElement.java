@@ -14,17 +14,17 @@ class StackElement<T> {
     }
   }
 
-  void addNextElem(StackElement<T> next) {
+  void setNextElem(StackElement<T> next) {
     nextElem = next;
-    next.preElem = this;
+    if (next != null) next.preElem = this;
   }
 
-  void addPreviousElem(StackElement<T> pred) {
+  void setPreviousElem(StackElement<T> pred) {
     preElem = pred;
     pred.nextElem = this;
   }
 
-  T getElem(){
+  T getElem() {
     return a;
   }
 

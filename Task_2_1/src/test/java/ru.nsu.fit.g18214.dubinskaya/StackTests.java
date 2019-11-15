@@ -5,7 +5,7 @@ import java.util.Iterator;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class Tests {
+public class StackTests {
 
   @Test
   public void testInt() {
@@ -68,8 +68,8 @@ public class Tests {
             a.add("lalalala");
             break;
           case 3:
-            s.add("Dog love meat. Dog love me. Am I meat?");
-            a.add("Dog love meat. Dog love me. Am I meat?");
+            s.add("Dog loves meat. Dog love me. Am I meat?");
+            a.add("Dog loves meat. Dog love me. Am I meat?");
             break;
           case 4:
             s.add("O_O");
@@ -86,15 +86,14 @@ public class Tests {
   @Test
   public void throwNullptrException() {
     Stack<String> s = new Stack<>();
-    try {
-      s.add(null);
-      Assert.fail("Expected NullPointerException");
-    } catch (NullPointerException ignored) {
-    }
+    s.add(null);
+    String testStr = s.pop();
+    Assert.assertNull(testStr);
+    Assert.assertTrue(s.empty());
   }
 
   @Test
-  public void throwOutOfBoundsException() {
+  public void throwNoSuchElementException() {
     Stack<String> s = new Stack<String>();
     s.add("Laallala");
     s.add("uuuuuuuu");
@@ -102,7 +101,7 @@ public class Tests {
     s.pop();
     try {
       s.pop();
-      Assert.fail("Expected OutOfBoundsException");
+      Assert.fail("Expected NoSuchElementException");
     } catch (IndexOutOfBoundsException ignored) {
     }
   }
