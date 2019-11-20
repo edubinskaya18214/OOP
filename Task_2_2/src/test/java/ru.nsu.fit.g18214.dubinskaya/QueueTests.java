@@ -1,11 +1,11 @@
 package ru.nsu.fit.g18214.dubinskaya;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class tests {
-
+public class QueueTests {
   @Test
   public void intTest() {
     Queue<Integer, Integer> q = new Queue<>();
@@ -19,19 +19,16 @@ public class tests {
     int min = q.extractMin();
     Assert.assertEquals(-9, min);
     Assert.assertEquals(98, q.size());
-    System.out.println("    Int test is successful.");
   }
-
   @Test
   public void charAndStringTest() {
     Queue<Character, String> q = new Queue<>();
     for (char i = 'a'; i <= 'z'; ++i) {
-      q.insert(i, i + "  ! " + i + " , farewell");
+      q.insert(i, i + "  ! " + i + " , la-la-la-la");
     }
     Assert.assertEquals(q.size(), 'z' - 'a' + 1);
-    Assert.assertEquals(q.extractMax(), "z  ! z , farewell");
+    Assert.assertEquals(q.extractMax(), "z  ! z , la-la-la-la");
     Assert.assertEquals(q.size(), 'z' - 'a');
-    System.out.println("    Char test is successful.");
   }
 
   @Test
@@ -45,9 +42,7 @@ public class tests {
     Assert.assertEquals('Ï' - 1, max);
     Assert.assertEquals('k', min);
     Assert.assertEquals(q.size(), 98);
-    System.out.println("    Float test is successful.");
   }
-
   @Test
   public void IteratorTest() {
     Queue<Integer, Integer> q = new Queue<>();
@@ -60,9 +55,20 @@ public class tests {
       Assert.assertEquals(i-100, next);
     }
     Assert.assertFalse(iter.hasNext());
-    System.out.println("    Iterator test is successful.");
-  }
 
+    for (int i = 0; i < 100; ++i){
+      q.extractMax();
+    }
+    for(int i = 0; i < 5; ++i){
+      q.insert(i, 10 - i);
+    }
+    iter = q.iterator();
+    for (int i = 0; i < 5; ++i) {
+      int next = iter.next();
+      Assert.assertEquals(10-i, next);
+    }
+    Assert.assertFalse(iter.hasNext());
+  }
   @Test
   public void OrderTest() {
     Queue<Integer, Integer> q = new Queue<>();
@@ -82,23 +88,22 @@ public class tests {
       int num = q.extractMin();
       Assert.assertEquals(num, i);
     }
-    System.out.println("    Order test is successful.");
   }
-
-  @Test(expected = IndexOutOfBoundsException.class)
+  @Test(expected = NoSuchElementException.class)
   public void EmptyTest() {
     Queue<Integer, Integer> q = new Queue<>();
     q.extractMax();
     q.extractMin();
-    System.out.println("    Empty test is successful.");
   }
   @Test
   public void nullptrTest(){
     Queue<Integer, Integer> q = new Queue<>();
     q.insert(20, null);
+    Assert.assertFalse(q.empty());
+    Integer obj = q.extractMax();
+    Assert.assertTrue(q.empty());
     q.insert(null, 20);
     q.insert(null,null);
     Assert.assertTrue(q.empty());
-    System.out.println("    \"Null pointer\" test is successful.");
   }
 }
