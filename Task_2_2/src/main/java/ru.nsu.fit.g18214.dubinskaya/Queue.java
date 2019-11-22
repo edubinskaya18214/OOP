@@ -23,79 +23,82 @@ public class Queue<K extends Comparable<K>, O> {
    * @param K key - in order to keys objects are sets in queue, key should be comparable.
    *                if key == null, obj will not be added to queue, queueSize isn't change.
    *                if obj with the same key exist, new object will push before old object.
+   * @throw NullPointerException
    */
-  public void insert(K key, O obj) {
-    if (key == null) return;
+  public void insert(K key, O value) throws NullPointerException{
+    if (key == null) throw new NullPointerException();
     if (head == null) {
-      head = new QueueElement<O, K>(key, obj, null, null);
+      head = new QueueElement<>(key, value, null, null);
       tail = head;
       ++queueSize;
       return;
     }
-    if (key.compareTo(head.key) <= 0) {
-      head = new QueueElement<O, K>(key, obj, null, head);
+    if (key.compareTo(head.getKey()) <= 0) {
+      head = new QueueElement<>(key, value, null, head);
       ++queueSize;
       return;
     }
-    if (key.compareTo(tail.key) > 0) {
-      tail = new QueueElement<O, K>(key, obj, tail, null);
+    if (key.compareTo(tail.getKey()) > 0) {
+      tail = new QueueElement<>(key, value, tail, null);
       ++queueSize;
       return;
     }
-    QueueElement<O, K> nowH = head;
+    QueueElement<O, K> current = head;
     for (int i = 0; i < queueSize - 1; ++i) {
-      K hk = nowH.key;
-      K tk = nowH.getNextElem().key;
-      if (hk.compareTo(key) <= 0 && tk.compareTo(key) >= 0) {
-        QueueElement<O, K> next = nowH.getNextElem();
-        QueueElement<O, K> newTail = new QueueElement<O, K>(key, obj, nowH, next);
+      K currentKey = current.getKey();
+      K nextKey = current.getNextElem().getKey();
+      if (currentKey.compareTo(key) <= 0 && nextKey.compareTo(key) >= 0) {
+        QueueElement<O, K> nextQueueElement = current.getNextElem();
+        // QueueElement constructor save value with it's key between current and next elements
+        new QueueElement<>(key, value, current, nextQueueElement);
         ++queueSize;
         break;
       }
-      nowH = nowH.getNextElem();
+      current = current.getNextElem();
     }
   }
   /*
    * Method extractMax delete and return element with max key from queue, decrease queueSize
-   * @return O obj - obj that have max key, if queue is empty throw IndexOutOfBoundsException
+   * @return O obj - obj that have max key, if queue is empty:
    * @throw NoSuchElementException
    */
   public O extractMax() throws NoSuchElementException {
     queueSize--;
     if (tail!= null && tail == head){
-      QueueElement<O, K> nTail = tail;
+      O returnedValue = tail.getElem();
       tail = null;
       head = null;
-      return nTail.getElem();
+      return returnedValue;
     }
     if (tail != null) {
-      QueueElement<O, K> nTail = tail;
-      if (tail.getPreElem() == null) System.err.print("Out of bound!");
+      O returnedValue = tail.getElem();
+      assert(tail.getPreElem() != null);
       tail = tail.getPreElem();
       tail.setNextElem(null);
-      return nTail.getElem();
+      return returnedValue;
     } else {
       throw new NoSuchElementException("Queue is empty");
     }
   }
   /*
    * Method extractMin delete and return element with max key from queue, decrease queueSize
-   * @return O obj - obj that have min key,  queue is empty throw NoSuchElementException
+   * @return O obj - obj that have min key, if queue is empty:
    * @throw NoSuchElementException
    */
   public O extractMin() {
     queueSize--;
     if (tail!= null && tail == head){
-      QueueElement<O, K> nTail = tail;
+      O returnedValue = tail.getElem();
       tail = null;
       head = null;
-      return nTail.getElem();
+      return returnedValue;
     }
     if (head != null) {
-      QueueElement<O, K> nTail = head;
+      O returnedValue = head.getElem();
+      assert(head.getNextElem() != null);
       head = head.getNextElem();
       head.setPreElem(null);
-      return nTail.getElem();
+      return returnedValue;
     } else {
       throw new NoSuchElementException("Queue is empty");
     }

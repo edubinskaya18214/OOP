@@ -102,8 +102,10 @@ public class QueueTests {
     Assert.assertFalse(q.empty());
     Integer obj = q.extractMax();
     Assert.assertTrue(q.empty());
-    q.insert(null, 20);
-    q.insert(null,null);
+    try{
+      q.insert(null, 20);
+      Assert.fail();
+    } catch (NullPointerException ignored){}
     Assert.assertTrue(q.empty());
   }
 }

@@ -2,16 +2,18 @@ package ru.nsu.fit.g18214.dubinskaya;
 
 class QueueElement<O, K> {
 
-  private O a;
+  private O value;
   private QueueElement<O, K> nextElem;
   private QueueElement<O, K> preElem;
-  K key;
-
+  private K key;
+  K getKey(){
+    return key;
+  }
   QueueElement(K k, O newElem, QueueElement<O, K> pre, QueueElement<O, K> next) {
     preElem = pre;
     if (pre != null) pre.setNextElem(this);
     if (next != null) next.setPreElem(this);
-    a = newElem;
+    value = newElem;
     key = k;
   }
 
@@ -26,7 +28,7 @@ class QueueElement<O, K> {
   }
 
   O getElem() {
-    return a;
+    return value;
   }
 
   QueueElement<O, K> getPreElem() {
