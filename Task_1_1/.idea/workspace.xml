@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="a73f7e8f-83b0-4c31-8c7b-0ed691cba556" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ProjectId" id="1R5uoDmMKwKb06yK4xIl6aGRbby" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="Downloaded.Files.Path.Enabled" value="false" />
+    <property name="Repository.Attach.Annotations" value="false" />
+    <property name="Repository.Attach.JavaDocs" value="false" />
+    <property name="Repository.Attach.Sources" value="false" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/test/java" />
+      <recent name="$PROJECT_DIR$/src/main/java" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="excludedTypes">
+      <set>
+        <option value="#com.intellij.j2ee.web.jsr45.JSR45ConfigurationFactory" />
+        <option value="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" />
+        <option value="GeronimoConfiguration" />
+        <option value="GlassfishConfiguration" />
+        <option value="GoogleAppEngineDevServer" />
+        <option value="JBossConfiguration" />
+        <option value="JettyConfiguration" />
+        <option value="ResinConfigurationType" />
+        <option value="TomeeConfiguration" />
+        <option value="WebLogic Instance" />
+        <option value="WebSphereRunConfigurationType" />
+        <option value="com.intellij.dmserver.run.DMServerRunConfigurationType:id" />
+      </set>
+    </option>
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="Application.main (1)">
+    <configuration name="main (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="ru.nsu.fit.g18214.dubinskaya.main" />
+      <module name="task_1.1_v2.main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ru.nsu.fit.g18214.dubinskaya.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="ru.nsu.fit.g18214.dubinskaya.main" />
+      <module name="Task_1_1" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ru.nsu.fit.g18214.dubinskaya.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="tests" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="--tests &quot;ru.nsu.fit.g18214.dubinskaya.tests&quot;" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":cleanTest" />
+            <option value=":test" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <GradleScriptDebugEnabled>false</GradleScriptDebugEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="tests.test1" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="--tests &quot;java.ru.nsu.fit.g18214.dubinskaya.tests.test1&quot;" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":cleanTest" />
+            <option value=":test" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <GradleScriptDebugEnabled>false</GradleScriptDebugEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="tests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Task_1_1" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ru.nsu.fit.g18214.dubinskaya.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="ru.nsu.fit.g18214.dubinskaya" />
+      <option name="MAIN_CLASS_NAME" value="ru.nsu.fit.g18214.dubinskaya.tests" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.main (1)" />
+        <item itemvalue="Application.main" />
+        <item itemvalue="JUnit.tests" />
+        <item itemvalue="Gradle.tests" />
+        <item itemvalue="Gradle.tests" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="a73f7e8f-83b0-4c31-8c7b-0ed691cba556" name="Default Changelist" comment="" />
+      <created>1568969450211</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1568969450211</updated>
+      <workItem from="1568969454329" duration="431000" />
+      <workItem from="1569164021319" duration="943000" />
+      <workItem from="1569165623829" duration="207000" />
+      <workItem from="1569168043406" duration="258000" />
+      <workItem from="1569168371327" duration="145000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="311" y="58" width="800" height="677" key="#Project_Structure" timestamp="1569164687993">
+      <screen x="67" y="27" width="1299" height="741" />
+    </state>
+    <state x="311" y="58" width="800" height="677" key="#Project_Structure/67.27.1299.741@67.27.1299.741" timestamp="1569164687993" />
+    <state x="376" y="52" width="671" height="688" key="#main" timestamp="1569168450527">
+      <screen x="67" y="27" width="1299" height="741" />
+    </state>
+    <state x="376" y="52" width="671" height="688" key="#main/67.27.1299.741@67.27.1299.741" timestamp="1569168450527" />
+    <state x="499" y="154" width="424" height="484" key="FileChooserDialogImpl" timestamp="1569164073015">
+      <screen x="67" y="27" width="1299" height="741" />
+    </state>
+    <state x="499" y="154" width="424" height="484" key="FileChooserDialogImpl/67.27.1299.741@67.27.1299.741" timestamp="1569164073015" />
+    <state width="1253" height="175" key="GridCell.Tab.0.bottom" timestamp="1569168515977">
+      <screen x="67" y="27" width="1299" height="741" />
+    </state>
+    <state width="1253" height="175" key="GridCell.Tab.0.bottom/67.27.1299.741@67.27.1299.741" timestamp="1569168515977" />
+    <state width="1253" height="175" key="GridCell.Tab.0.center" timestamp="1569168515976">
+      <screen x="67" y="27" width="1299" height="741" />
+    </state>
+    <state width="1253" height="175" key="GridCell.Tab.0.center/67.27.1299.741@67.27.1299.741" timestamp="1569168515976" />
+    <state width="1253" height="175" key="GridCell.Tab.0.left" timestamp="1569168515976">
+      <screen x="67" y="27" width="1299" height="741" />
+    </state>
+    <state width="1253" height="175" key="GridCell.Tab.0.left/67.27.1299.741@67.27.1299.741" timestamp="1569168515976" />
+    <state width="1253" height="175" key="GridCell.Tab.0.right" timestamp="1569168515976">
+      <screen x="67" y="27" width="1299" height="741" />
+    </state>
+    <state width="1253" height="175" key="GridCell.Tab.0.right/67.27.1299.741@67.27.1299.741" timestamp="1569168515976" />
+    <state x="189" y="27" width="1024" height="741" key="SettingsEditor" timestamp="1569168396982">
+      <screen x="67" y="27" width="1299" height="741" />
+    </state>
+    <state x="189" y="27" width="1024" height="741" key="SettingsEditor/67.27.1299.741@67.27.1299.741" timestamp="1569168396982" />
+    <state x="372" y="224" key="com.intellij.ide.util.TipDialog" timestamp="1569165696160">
+      <screen x="67" y="27" width="1299" height="741" />
+    </state>
+    <state x="372" y="224" key="com.intellij.ide.util.TipDialog/67.27.1299.741@67.27.1299.741" timestamp="1569165696160" />
+    <state x="388" y="292" width="646" height="209" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD" timestamp="1569168126307">
+      <screen x="67" y="27" width="1299" height="741" />
+    </state>
+    <state x="388" y="292" width="646" height="209" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD/67.27.1299.741@67.27.1299.741" timestamp="1569168126307" />
+  </component>
+</project>
