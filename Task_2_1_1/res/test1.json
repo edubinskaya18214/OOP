@@ -1,0 +1,19 @@
+﻿{
+  "workTime": 7500,
+  "wareHouseSize": 8,
+  "queueSize": 12,
+  "bagSize": 8,
+  "minWaitingClient": 100,
+  "maxWaitingClient": 1200,
+  "cookingTime": {
+    "Vanya": 500,
+    "Maria": 1400,
+    "Ploter": 6000,
+    "Varya": 1750
+  },
+  "deliveryTime": {
+    "Leha": 2200,
+    "Artur": 1500,
+    "Sonic": 550
+  }
+}

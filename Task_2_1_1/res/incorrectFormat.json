@@ -1,0 +1,13 @@
+{
+  "workTime": 7500,
+  "wareHouseSize": 8,
+  "queueSize": 12,
+  "bagSize": 8,
+  "minWaitingClient": 100,
+  "maxWaitingClient": 1200,
+  "deliveryTime": {
+    "Leha": 2200,
+    "Artur": 1500,
+    "Sonic": 550
+  }
+}
