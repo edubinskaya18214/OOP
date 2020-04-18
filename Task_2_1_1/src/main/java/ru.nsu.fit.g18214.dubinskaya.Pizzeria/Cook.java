@@ -15,22 +15,13 @@ public class Cook extends Staff {
   private BlockingQueue<Integer> orders;
   private BlockingQueue<Integer> wareHouse;
 
-  /**
-   * this method create new cook.
-   *
-   * @param cookingTime - time that cook need to make pizza
-   * @param ID          - cooker ID which need for journal
-   * @param workPlace   - Pizzeria where cook works
-   */
-  public Cook(long cookingTime, String ID, Pizzeria workPlace) {
-    this.cookingTime = cookingTime;
-    this.journal = workPlace.getJournal();
-    this.ID = ID;
-    this.orders = workPlace.getOrders();
-    this.wareHouse = workPlace.getWareHouse();
+  Cook(long cookingTime, String ID, Pizzeria workPlace) {
+    this(cookingTime, workPlace.getJournal(), ID, workPlace.getOrders(), workPlace.getWareHouse());
   }
 
-  Cook(long cookingTime,Journal journal, String ID, BlockingQueue<Integer> orders, BlockingQueue<Integer> wareHouse) {
+  Cook(long cookingTime, Journal journal, String ID, BlockingQueue<Integer> orders, BlockingQueue<Integer> wareHouse) {
+    if(journal == null || orders == null || wareHouse == null) throw new NullPointerException();
+    if (ID == null || ID.equals("")) throw new NullPointerException("json file has empty strings");
     this.cookingTime = cookingTime;
     this.journal = journal;
     this.ID = ID;

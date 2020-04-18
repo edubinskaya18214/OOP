@@ -18,24 +18,14 @@ public class Courier extends Staff {
   private BlockingQueue<Integer> wareHouse;
   private int timeout;
 
-  /**
-   * this method create new courier.
-   *
-   * @param deliveryTime - time of delivering one pizza.
-   * @param capacity     - max number of pizza courier can take.
-   * @param courierID    - courier's name or id.
-   * @param workPlace    - Pizzeria where courier work.
-   */
-  public Courier(long deliveryTime, int capacity, String courierID, Pizzeria workPlace) {
-    this.journal = workPlace.getJournal();
-    this.courierID = courierID;
-    this.wareHouse = workPlace.getWareHouse();
-    this.capacity = capacity;
-    this.time = deliveryTime;
+  Courier(long deliveryTime, int capacity, String courierID, Pizzeria workPlace) {
+    this(deliveryTime, capacity, workPlace.getJournal(), courierID, workPlace.getWareHouse());
   }
-  Courier(long deliveryTime, int capacity, Journal journal, String courierID, BlockingQueue<Integer> wareHouse) {
+  Courier(long deliveryTime, int capacity, Journal journal, String ID, BlockingQueue<Integer> wareHouse) {
+    if (journal == null || wareHouse == null) throw new NullPointerException();
+    if (ID == null || ID.equals("")) throw new NullPointerException("json file has empty strings");
     this.journal = journal;
-    this.courierID = courierID;
+    this.courierID = ID;
     this.wareHouse = wareHouse;
     this.capacity = capacity;
     this.time = deliveryTime;

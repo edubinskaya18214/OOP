@@ -36,6 +36,6 @@ public class CourierTests {
     Assert.assertFalse(wareHouse.contains(41));
     Assert.assertFalse(wareHouse.contains(500));
     Assert.assertEquals(0, journal.getDeliveredOrders());
-    Assert.assertEquals(4, journal.startDeliveringOrders);
+    Assert.assertEquals(4, journal.getStartDeliveringOrders());
   }
 }

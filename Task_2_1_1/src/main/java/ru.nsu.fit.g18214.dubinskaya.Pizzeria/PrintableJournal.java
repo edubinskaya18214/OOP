@@ -5,7 +5,7 @@ import java.util.Date;
 /**
  * This class is used to print messages about pizzeria's work.
  */
-public class PrintJournal implements Journal {
+public class PrintableJournal implements Journal {
   private int takenOrders = 0;
   private int cookedOrders = 0;
   private int deliveredOrders = 0;
@@ -119,7 +119,7 @@ public class PrintJournal implements Journal {
    * @return String with info about new orders, cooked and delivered orders;
    */
   @Override
-  public String toString() {
+  public synchronized String toString() {
     return String.format("     %d new orders today.\n     %d orders was cooked.\n     " +
             "%d orders was delivered.\n",
         takenOrders, cookedOrders, deliveredOrders);

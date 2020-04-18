@@ -13,9 +13,10 @@ public abstract class Staff implements Runnable {
     thisThread.interrupt();
     try {
       thisThread.join();
-    } catch (InterruptedException ignored){}
-    if (thisThread.isAlive())
-      System.out.println("Process isn't stop");
+    } catch (InterruptedException e){
+      if (thisThread.isAlive())
+        System.out.printf("Can't stop process %d\n", thisThread.getId());
+    }
   }
 }
 

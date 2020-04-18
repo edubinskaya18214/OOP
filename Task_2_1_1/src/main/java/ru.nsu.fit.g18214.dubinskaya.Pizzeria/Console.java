@@ -25,7 +25,7 @@ public class Console {
           if (!createPizzeria()) return;
           break;
         case("3"):
-          alternativePath = takeWayToOpenFile();
+          alternativePath = getPathToOpenFile();
           if (alternativePath.equals("stop"))
             return;
           useAlternativePath = true;
@@ -34,14 +34,14 @@ public class Console {
     }
   }
 
-  private static String takeWayToOpenFile() {
+  private static String getPathToOpenFile() {
     Scanner scan = new Scanner(System.in);
     String out = "     Input path to correct json file\n     Or input \"stop\" to finish using application \n";
     System.out.println(out);
     return scan.nextLine();
   }
 
-  private static final String definePath = "./res/test2.json";
+  private static final String definePath = "./res/test.json";
   private static boolean useAlternativePath = false;
   private static String alternativePath = null;
   private static boolean createPizzeria() throws InterruptedException {
@@ -57,11 +57,14 @@ public class Console {
     Gson gson = new Gson();
     String currPath;
     PizzeriaConfig config = null;
-    if (useAlternativePath)
+    if (useAlternativePath) {
       currPath = alternativePath;
-    else currPath = definePath;
-    boolean error = true;
-    while (error) {
+    }
+    else{
+      currPath = definePath;
+    }
+    boolean error = false;
+    do {
       if (!(new File(currPath).exists())) {
         System.out.println("     file not exist");
         error = true;
@@ -77,14 +80,14 @@ public class Console {
         error = true;
       }
       if (error) {
-        String input = takeWayToOpenFile();
+        String input = getPathToOpenFile();
         if (input.equals("stop"))
           return null;
         currPath = input;
         alternativePath = input;
         useAlternativePath = true;
       }
-    }
+    } while (error);
     return config;
   }
 }

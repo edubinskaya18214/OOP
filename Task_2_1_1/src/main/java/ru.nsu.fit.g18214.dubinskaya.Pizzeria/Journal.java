@@ -18,6 +18,4 @@ public interface Journal {
   void cookGoHome(String ID);
 
   void orderDropped(int order);
-
-  String toString();
 }
