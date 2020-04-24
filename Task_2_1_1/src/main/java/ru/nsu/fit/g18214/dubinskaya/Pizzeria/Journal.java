@@ -13,9 +13,9 @@ public interface Journal {
 
   void newOrder(int order);
 
-  void courierGoHome(String ID);
+  void courierGoHome(String id);
 
-  void cookGoHome(String ID);
+  void cookGoHome(String id);
 
   void orderDropped(int order);
 }

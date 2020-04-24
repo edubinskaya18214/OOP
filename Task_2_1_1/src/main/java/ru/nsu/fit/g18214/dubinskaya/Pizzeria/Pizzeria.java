@@ -12,8 +12,8 @@ import java.util.concurrent.BlockingQueue;
  * This class imitate work of pizzeria.
  */
 public class Pizzeria implements Runnable {
-  private double minWaitingClient;
-  private double maxWaitingClient;
+  private int minWaitingClient;
+  private int maxWaitingClient;
   private Map<String, Integer> cookingTime;
   private Map<String, Integer> deliveryTime;
   private int bagSize;
@@ -23,7 +23,6 @@ public class Pizzeria implements Runnable {
   private BlockingQueue<Integer> orders;
   private BlockingQueue<Integer> wareHouse;
   private Journal journal;
-  private boolean isWork = true;
 
   /**
    * this method create new pizzeria
@@ -32,7 +31,9 @@ public class Pizzeria implements Runnable {
    * @throws IllegalArgumentException - if config incorrect
    */
   public Pizzeria(PizzeriaConfig config) throws IllegalArgumentException {
-    if (!config.isCorrect()) throw new IllegalArgumentException();
+    if (!config.isCorrect()) {
+      throw new IllegalArgumentException();
+    }
     this.workTime = config.getWorkTime();
     this.queueSize = config.getQueueSize();
     this.wareHouseSize = config.getWareHouseSize();
@@ -65,15 +66,15 @@ public class Pizzeria implements Runnable {
         Staff courier = new Courier((long) (item.getValue()), bagSize, item.getKey(), this);
         couriers.add(courier);
       }
-      customers = new Customers((int) (minWaitingClient), (int) (maxWaitingClient), orders, journal);
+      customers = new Customers(minWaitingClient, maxWaitingClient, orders, journal);
       customers.work();
       cookers.forEach(Staff::work);
       couriers.forEach(Staff::work);
-      if (workDayEnd.getTime() > (new Date()).getTime())
+      if (workDayEnd.getTime() > (new Date()).getTime()) {
         Thread.sleep(workDayEnd.getTime() - (new Date()).getTime());
+      }
       System.out.println("----------- Work day end -----------");
 
-      isWork = false;
       customers.stop();
       cookers.forEach(Staff::stop);
       couriers.forEach(Staff::stop);
@@ -86,21 +87,23 @@ public class Pizzeria implements Runnable {
       System.out.println("process interrupted");
       stopChildProcesses(customers, cookers, couriers);
       Thread.currentThread().interrupt();
-    }
-    catch (NullPointerException e){
-      System.out.println("Something went wrong. Check your config file doesn't have empty strings or try to use another config file");
+    } catch (NullPointerException e) {
+      System.out.println("Something went wrong. Check your config file doesn't"
+          + " have empty strings or try to use another config file");
       stopChildProcesses(customers, cookers, couriers);
     }
   }
 
-  private void stopChildProcesses(Staff customers, List<Staff> cookers, List<Staff> couriers){
+  private void stopChildProcesses(Staff customers, List<Staff> cookers, List<Staff> couriers) {
     System.out.println("stop child processes...\n");
-    if (customers != null)
+    if (customers != null) {
       customers.stop();
+    }
     cookers.forEach(Staff::stop);
     couriers.forEach(Staff::stop);
     System.out.println("all process stopped\n");
   }
+
   BlockingQueue<Integer> getOrders() {
     return orders;
   }
@@ -111,9 +114,5 @@ public class Pizzeria implements Runnable {
 
   Journal getJournal() {
     return journal;
-  }
-
-  boolean isWork(){
-    return isWork;
   }
 }

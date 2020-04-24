@@ -13,23 +13,23 @@ public class PrintableJournal implements Journal {
   /**
    * This method print message when cook take order.
    *
-   * @param cookID - name or id of cook that take order.
+   * @param id - name or id of cook that take order.
    * @param order  - number of order.
    */
   @Override
-  public synchronized void cookTakeOrder(String cookID, int order) {
-    System.out.printf("[%s]: Order %d is being cooked by %s.\n", new Date().toString(), order, cookID);
+  public synchronized void cookTakeOrder(String id, int order) {
+    System.out.printf("[%s]: Order %d is being cooked by %s.\n", new Date().toString(), order, id);
   }
 
   /**
    * This method print message when cook take order.
    *
-   * @param cookID - name or ID of cook that finish cooking order
+   * @param id - name or ID of cook that finish cooking order
    * @param order  - number of order.
    */
   @Override
-  public synchronized void cookFinishOrder(String cookID, int order) {
-    System.out.printf("[%s]: Order %d is finished by %s.\n", new Date().toString(), order, cookID);
+  public synchronized void cookFinishOrder(String id, int order) {
+    System.out.printf("[%s]: Order %d is finished by %s.\n", new Date().toString(), order, id);
     cookedOrders++;
   }
 
@@ -37,23 +37,23 @@ public class PrintableJournal implements Journal {
   /**
    * This method print message when cook put pizza on the table.
    *
-   * @param cookID - cook's name or id.
+   * @param id - cook's name or id.
    * @param order  - number of order.
    */
   @Override
-  public synchronized void cookPutPizzaOnTable(String cookID, int order) {
-    System.out.printf("[%s]: Order %d was stored by %s.\n", new Date().toString(), order, cookID);
+  public synchronized void cookPutPizzaOnTable(String id, int order) {
+    System.out.printf("[%s]: Order %d was stored by %s.\n", new Date().toString(), order, id);
   }
 
   /**
    * This method print message when courier take pizzas for delivering
    *
-   * @param courierID - courier's name or id.
+   * @param id - courier's name or id.
    * @param order     - id of delivering orders.
    */
   @Override
-  public synchronized void courierTakePizzas(String courierID, Object[] order) {
-    System.out.printf("[%s]: Courier %s take orders ", new Date().toString(), courierID);
+  public synchronized void courierTakePizzas(String id, Object[] order) {
+    System.out.printf("[%s]: Courier %s take orders ", new Date().toString(), id);
     for (Object o : order) {
       System.out.print(o + " ");
     }
@@ -63,12 +63,12 @@ public class PrintableJournal implements Journal {
   /**
    * This method print message when courier finish delivering of one of his orders.
    *
-   * @param courierID - courier's name or id.
+   * @param id - courier's name or id.
    * @param order     - id of delivering order.
    */
   @Override
-  public synchronized void courierFinishDelivering(String courierID, int order) {
-    System.out.printf("[%s]: Order %d was delivered by %s.\n", new Date().toString(), order, courierID);
+  public synchronized void courierFinishDelivering(String id, int order) {
+    System.out.printf("[%s]: Order %d was delivered by %s.\n", new Date().toString(), order, id);
     deliveredOrders++;
   }
 
@@ -86,21 +86,21 @@ public class PrintableJournal implements Journal {
   /**
    * this method print message when courier finish working.
    *
-   * @param ID - courier'ss name or id.
+   * @param id - courier'ss name or id.
    */
   @Override
-  public synchronized void courierGoHome(String ID) {
-    System.out.printf("[%s]: Courier %s finish working.\n", new Date(), ID);
+  public synchronized void courierGoHome(String id) {
+    System.out.printf("[%s]: Courier %s finish working.\n", new Date(), id);
   }
 
   /**
    * this method print message when cook finish working.
    *
-   * @param ID - cook's name or id.
+   * @param id - cook's name or id.
    */
   @Override
-  public synchronized void cookGoHome(String ID) {
-    System.out.printf("[%s]: Cook %s finish working.\n", new Date(), ID);
+  public synchronized void cookGoHome(String id) {
+    System.out.printf("[%s]: Cook %s finish working.\n", new Date(), id);
   }
 
   /**
@@ -120,8 +120,8 @@ public class PrintableJournal implements Journal {
    */
   @Override
   public synchronized String toString() {
-    return String.format("     %d new orders today.\n     %d orders was cooked.\n     " +
-            "%d orders was delivered.\n",
+    return String.format("     %d new orders today.\n     %d orders was cooked.\n     "
+            + "%d orders was delivered.\n",
         takenOrders, cookedOrders, deliveredOrders);
   }
 }

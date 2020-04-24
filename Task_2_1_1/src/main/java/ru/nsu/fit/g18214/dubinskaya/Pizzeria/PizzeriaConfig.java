@@ -2,10 +2,10 @@ package ru.nsu.fit.g18214.dubinskaya.Pizzeria;
 
 import java.util.Map;
 
-public class PizzeriaConfig {
+class PizzeriaConfig {
 
-  private double minWaitingClient = -1;
-  private double maxWaitingClient = -1;
+  private int minWaitingClient = -1;
+  private int maxWaitingClient = -1;
   private Map<String, Integer> cookingTime = null;
   private Map<String, Integer> deliveryTime = null;
   private int bagSize = -1;
@@ -13,17 +13,17 @@ public class PizzeriaConfig {
   private int queueSize = -1;
   private int wareHouseSize = -1;
 
-  public boolean isCorrect() {
-    return !(minWaitingClient < 0 || maxWaitingClient < minWaitingClient ||
-        cookingTime == null || deliveryTime == null || bagSize <= 0 || workTime <= 0 ||
-        queueSize <= 0 || wareHouseSize <= 0);
+  boolean isCorrect() {
+    return !(minWaitingClient < 0 || maxWaitingClient < minWaitingClient
+        || cookingTime == null || deliveryTime == null || bagSize <= 0 || workTime <= 0
+        || queueSize <= 0 || wareHouseSize <= 0);
   }
 
-  double getMinWaitingClient() {
+  int getMinWaitingClient() {
     return minWaitingClient;
   }
 
-  double getMaxWaitingClient() {
+  int getMaxWaitingClient() {
     return maxWaitingClient;
   }
 
