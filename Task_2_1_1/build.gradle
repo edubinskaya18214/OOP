@@ -1,0 +1,33 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+group 'OOP'
+//version '1.0'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'com.google.code.gson:gson:2.8.6'
+    compile 'info.picocli:picocli:4.2.0'
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+jar {
+    archivesBaseName = 'Pizzeria'
+
+    manifest {
+        attributes 'Main-Class': 'ru.nsu.fit.g18214.dubinskaya.Pizzeria.Console'
+    }
+
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
+mainClassName = 'ru.nsu.fit.g18214.dubinskaya.Pizzeria.Console'

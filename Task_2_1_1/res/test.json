@@ -1,0 +1,19 @@
+{
+  "workTime": 10000,
+  "wareHouseSize": 28,
+  "queueSize": 25,
+  "bagSize": 4,
+  "minWaitingClient": 200,
+  "maxWaitingClient": 1200,
+  "cookingTime": {
+    "Vanya": 1000,
+    "Maria": 1400,
+    "Sasha": 2000,
+    "Varya": 1750
+  },
+  "deliveryTime": {
+    "Leonid": 2200,
+    "Artur": 1500,
+    "Sonya": 1000
+  }
+}
