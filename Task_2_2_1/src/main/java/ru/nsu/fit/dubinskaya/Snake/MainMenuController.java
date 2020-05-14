@@ -8,12 +8,18 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-class MainMenuPane {
+class MainMenuController {
 
-    Scene scene;
+    private Scene scene;
+    private SnakeController snake;
+    private HelperController help;
+    private MainMenuView view;
 
-    MainMenuPane(int size, Stage primaryStage) {
+    MainMenuController(Stage primaryStage) {
+        view = new MainMenuView();
         Pane root = new Pane();
+        int size = 500;
+
         Canvas canvas = new Canvas(size, size + 30);
         canvas.setFocusTraversable(true);
 
@@ -21,6 +27,7 @@ class MainMenuPane {
         Button helper = new Button("?");
         helper.setLayoutY(30);
         helper.setLayoutX(30);
+        helper.setPrefSize(30,30);
 
         buttonStartGame.setPrefWidth(100);
         buttonStartGame.setPrefHeight(20);
@@ -31,16 +38,6 @@ class MainMenuPane {
         helper.setLayoutX(size - 5);
         helper.setLayoutX(size - 30);
 
-
-        HelperButtonPane helpPane = new HelperButtonPane(size);
-
-        helper.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                helpPane.setHelperScene(primaryStage, primaryStage.getScene());
-            }
-        });
-
         root.getChildren().add(canvas);
         root.getChildren().add(buttonStartGame);
         root.getChildren().add(helper);
@@ -49,15 +46,34 @@ class MainMenuPane {
         buttonStartGame.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                SnakeGame snake = new SnakeGame(primaryStage, 80);
-                snake.startGame(scene);
+               view.startSnakeGame(primaryStage, snake);
+            }
+        });
+
+        helper.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                view.setHelpPane(primaryStage, help);
             }
         });
     }
 
-    void setMenuScene(Stage primaryStage) {
+    Scene getScene(){
+        return scene;
+    }
 
+    void setSnake(SnakeController snake){
+        this.snake = snake;
+    }
+
+    void setHelper(HelperController help){
+        this.help = help;
+    }
+/*
+    void setMenuScene(Stage primaryStage) {
         primaryStage.setScene(scene);
         primaryStage.show();
     }
+
+ */
 }
