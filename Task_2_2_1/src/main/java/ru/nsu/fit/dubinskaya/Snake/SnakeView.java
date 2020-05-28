@@ -8,11 +8,15 @@ import javafx.util.Pair;
 
 class SnakeView {
     private GraphicsContext gc;
+    private Stage primaryStage;
+    private HelperController help;
+    private MainMenuController menu;
     private Pair[] food;
     private Pair[] snake;
 
-    SnakeView(GraphicsContext gc){
+    SnakeView(GraphicsContext gc, Stage primaryStage){
         this.gc = gc;
+        this.primaryStage = primaryStage;
     }
 
     void setFood(Pair[] food){
@@ -64,13 +68,21 @@ class SnakeView {
         }
     }
 
-    void setMainPane(Stage primary, MainMenuController menu){
-        primary.setScene(menu.getScene());
-        primary.show();
+    void setMenuPaneOnStage(){
+        primaryStage.setScene(menu.getScene());
+        primaryStage.show();
     }
 
-    void setHelperPane(Stage primary, HelperController help){
-        primary.setScene(help.getScene());
-        primary.show();
+    void setHelperPaneOnStage(){
+        primaryStage.setScene(help.getScene());
+        primaryStage.show();
+    }
+
+    void setHelper(HelperController help){
+        this.help = help;
+    }
+
+    void setMenu(MainMenuController menu){
+        this.menu = menu;
     }
 }

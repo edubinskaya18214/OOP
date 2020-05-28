@@ -5,8 +5,8 @@ import javafx.util.Pair;
 import java.util.Random;
 
 class ModelSnake {
-    private final int size = 500;
-    private final int dotSize = 15;
+    static final int size = 500;
+    static final int dotSize = 15;
 
     static final int up = 1, right = 2, down = 3, left = 4;
     private int length;
@@ -16,7 +16,6 @@ class ModelSnake {
     private Pair[] food;
     private Pair[] tail;
     private boolean lost;
-    private int numberOfDots = (size - dotSize)/dotSize;
 
     ModelSnake(int startLen, int winSize, int numberOfFood) {
         length = startLen;
@@ -40,18 +39,22 @@ class ModelSnake {
     }
 
     void move() {
-        checkFood();
-        checkCollision();
         if (lost) {
             return;
         }
+        Pair currHead = tail[0];
+        Pair nextHead = tail[0];
+        if (dir == up) nextHead = new Pair<>(tail[0].getKey(), (Integer) tail[0].getValue() - dotSize);
+        if (dir == down) nextHead = new Pair<>(tail[0].getKey(), (Integer) tail[0].getValue() + dotSize);
+        if (dir == right) nextHead = new Pair<>((Integer) tail[0].getKey() + dotSize, tail[0].getValue());
+        if (dir == left) nextHead = new Pair<>((Integer) tail[0].getKey() - dotSize, tail[0].getValue());
 
+        tail[0] = nextHead;
+        checkFood();
+        tail[0] = currHead;
         if (length - 1 >= 0) System.arraycopy(tail, 0, tail, 1, length - 1);
-
-        if (dir == up) tail[0] = new Pair<>(tail[0].getKey(), (Integer) tail[0].getValue() - dotSize);
-        if (dir == down) tail[0] = new Pair<>(tail[0].getKey(), (Integer) tail[0].getValue() + dotSize);
-        if (dir == right) tail[0] = new Pair<>((Integer) tail[0].getKey() + dotSize, tail[0].getValue());
-        if (dir == left) tail[0] = new Pair<>((Integer) tail[0].getKey() - dotSize, tail[0].getValue());
+        tail[0] = nextHead;
+        checkCollision();
     }
 
     boolean isLost() {
@@ -105,10 +108,15 @@ class ModelSnake {
 
     private void locateFood(int k) {
         Random rand = new Random();
+        int numberOfDots = (size - dotSize) / dotSize;
         food[k] = new Pair<>(rand.nextInt(numberOfDots - 3)*dotSize + 21, rand.nextInt(numberOfDots - 3)*dotSize + 20);
-        for (int i = 0; i < 7; ++i) {
+        checkFoodCollision(k);
+    }
+
+    private void checkFoodCollision(int k){
+        for (int i = 0; i < numberOfFood; ++i) {
             if (i == k || food[i] == null)
-              continue;
+                continue;
             if (food[i].equals(food[k]))
                 locateFood(k);
         }
@@ -116,5 +124,10 @@ class ModelSnake {
             if (tail[i].equals(food[k]))
                 locateFood(k);
         }
+    }
+
+    void locateFood(int k, int x, int y){
+        food[k] = new Pair<>(x, y);
+        checkFoodCollision(k);
     }
 }

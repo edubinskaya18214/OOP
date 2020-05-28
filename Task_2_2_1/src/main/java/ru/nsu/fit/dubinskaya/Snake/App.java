@@ -1,13 +1,12 @@
 package ru.nsu.fit.dubinskaya.Snake;
 
-/**
- * this class is used to start playing snake
- */
-
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
-public class SnakeGameApplication extends javafx.application.Application {
+/**
+ * this class is used to start playing snake
+ */
+public class App extends javafx.application.Application {
 
     @Override
     public void start(Stage primaryStage) {

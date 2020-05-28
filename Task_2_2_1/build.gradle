@@ -8,11 +8,24 @@ repositories {
 }
 
 dependencies {
+    testCompile 'junit:junit:4.12'
 }
 
+
 javafx {
-    version = "14"
+    version = "11.0.2"
     modules = [ 'javafx.controls', 'javafx.fxml' ]
 }
 
 mainClassName = 'ru.nsu.fit.dubinskaya.Snake.App'
+
+jar {
+    manifest {
+        attributes(
+                'Main-Class': mainClassName
+        )
+    }
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}

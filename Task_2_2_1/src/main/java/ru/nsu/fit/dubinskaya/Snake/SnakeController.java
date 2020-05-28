@@ -15,16 +15,13 @@ class SnakeController {
     private ModelSnake currSnake;
     private Thread game;
     private Stage primaryStage;
-    private int delay;
-    private HelperController helpPane;
-    private MainMenuController mainPane;
+    private final int delay = 60;
     private Scene scene;
     private Canvas canvas;
     private SnakeView view;
 
     SnakeController(Stage primaryStage) {
         this.primaryStage = primaryStage;
-        this.delay = 50;
 
         Pane root = new Pane();
         int size = 500;
@@ -65,13 +62,13 @@ class SnakeController {
 
         scene = (new Scene(root, size, size + 40));
 
-        view = new SnakeView(canvas.getGraphicsContext2D());
+        view = new SnakeView(canvas.getGraphicsContext2D(), primaryStage);
 
         stop.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 game.interrupt();
-                view.setMainPane(primaryStage, mainPane);
+                view.setMenuPaneOnStage();
             }
         });
 
@@ -79,7 +76,7 @@ class SnakeController {
             @Override
             public void handle(ActionEvent event) {
                 game.interrupt();
-                view.setHelperPane(primaryStage, helpPane);
+                view.setHelperPaneOnStage();
             }
         });
 
@@ -126,11 +123,11 @@ class SnakeController {
     }
 
     void setHelpPane(HelperController helpPane){
-        this.helpPane = helpPane;
+        view.setHelper(helpPane);
     }
 
     void setMainPane(MainMenuController mainPane){
-        this.mainPane = mainPane;
+        view.setMenu(mainPane);
     }
 
     Scene getScene(){

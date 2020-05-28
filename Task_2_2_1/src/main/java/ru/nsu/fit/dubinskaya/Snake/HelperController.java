@@ -14,7 +14,7 @@ import javafx.stage.Stage;
 class HelperController {
 
     private Scene helpScene;
-    private MainMenuController menu;
+    private HelperView view;
 
     HelperController(Stage primaryStage) {
         Pane root = new Pane();
@@ -76,12 +76,12 @@ class HelperController {
         helpScene = new Scene(root, size, size + 30);
         helpScene.getStylesheets().add("/help/helperStyle.css");
 
-        HelperView view = new HelperView();
+        view = new HelperView(primaryStage);
 
         helper.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                view.setMainMenuPane(primaryStage, menu);
+                view.setMenuPaneOnStage();
             }
         });
     }
@@ -90,7 +90,11 @@ class HelperController {
         return helpScene;
     }
 
+    HelperView getView(){
+        return view;
+    }
+
     void setMainPane(MainMenuController menu){
-        this.menu = menu;
+        view.setMainMenu(menu);
     }
 }

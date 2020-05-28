@@ -69,11 +69,4 @@ class MainMenuController {
     void setHelper(HelperController help){
         this.help = help;
     }
-/*
-    void setMenuScene(Stage primaryStage) {
-        primaryStage.setScene(scene);
-        primaryStage.show();
-    }
-
- */
 }
