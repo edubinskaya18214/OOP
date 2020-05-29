@@ -27,6 +27,7 @@ class HelperController {
 
         Button helper = new Button("?");
         helper.setLayoutX(size - 30);
+        helper.setLayoutY(5);
         helper.setPrefWidth(30);
         helper.setPrefHeight(30);
 
@@ -63,7 +64,7 @@ class HelperController {
         restart.setPrefHeight(30);
         restart.setLayoutY((int) (size / 3) + 25 + 31);
         restart.setLayoutX((int) (size / 3) + 16);
-        restart.getStylesheets().add("./Buttons/restart.css");
+        restart.getStylesheets().add("/Buttons/restart.css");
         restart.setFocusTraversable(false);
 
         root.getChildren().add(instruction);

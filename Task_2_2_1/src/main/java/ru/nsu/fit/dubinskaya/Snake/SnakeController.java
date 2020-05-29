@@ -42,7 +42,7 @@ class SnakeController {
         stop.setPrefHeight(30);
         stop.setLayoutY(5);
         stop.setLayoutX(size - 61);
-        stop.getStylesheets().add("./Buttons/Stop_button_config.css");
+        stop.getStylesheets().add("/Buttons/Stop_button_config.css");
         stop.setFocusTraversable(false);
 
         Button restart = new Button();
@@ -50,7 +50,7 @@ class SnakeController {
         restart.setPrefHeight(30);
         restart.setLayoutY(5);
         restart.setLayoutX(size - 92);
-        restart.getStylesheets().add("./Buttons/restart.css");
+        restart.getStylesheets().add("/Buttons/restart.css");
         restart.setFocusTraversable(false);
 
         root.getChildren().add(canvas);
