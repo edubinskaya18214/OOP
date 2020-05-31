@@ -1,4 +1,4 @@
-package ru.nsu.fit.dubinskaya.Snake;
+package ru.nsu.fit.dubinskaya.Snake.Controllers;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -9,18 +9,21 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import ru.nsu.fit.dubinskaya.Snake.ModelSnake;
+import ru.nsu.fit.dubinskaya.Snake.Views.SnakeView;
+import ru.nsu.fit.dubinskaya.Snake.Views.View;
 
-class SnakeController {
+public class SnakeController extends Controller{
 
     private ModelSnake currSnake;
     private Thread game;
     private Stage primaryStage;
     private final int delay = 60;
-    private Scene scene;
     private Canvas canvas;
+    private Scene scene;
     private SnakeView view;
 
-    SnakeController(Stage primaryStage) {
+    public SnakeController(Stage primaryStage) {
         this.primaryStage = primaryStage;
 
         Pane root = new Pane();
@@ -61,8 +64,10 @@ class SnakeController {
         canvas.setFocusTraversable(true);
 
         scene = (new Scene(root, size, size + 40));
+        setScene(scene);
 
         view = new SnakeView(canvas.getGraphicsContext2D(), primaryStage);
+        setView(view);
 
         stop.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -76,7 +81,7 @@ class SnakeController {
             @Override
             public void handle(ActionEvent event) {
                 game.interrupt();
-                view.setHelperPaneOnStage();
+                view.setHelpPaneOnStage();
             }
         });
 
@@ -89,12 +94,13 @@ class SnakeController {
         });
     }
 
-    void createNewGame() {
+    public void createNewGame() {
         primaryStage.setScene(scene);
         primaryStage.show();
 
         int foodNumber = 7;
-        currSnake = new ModelSnake(3, 25, foodNumber);
+        int fieldSize = 30;
+        currSnake = new ModelSnake(3, 25, foodNumber, fieldSize);
         view.setFood(currSnake.getFood());
         view.setSnake(currSnake.getTail());
 
@@ -120,18 +126,6 @@ class SnakeController {
                 setDir(e.getCode());
             }
         });
-    }
-
-    void setHelpPane(HelperController helpPane){
-        view.setHelper(helpPane);
-    }
-
-    void setMainPane(MainMenuController mainPane){
-        view.setMenu(mainPane);
-    }
-
-    Scene getScene(){
-        return scene;
     }
 
     private void setDir(KeyCode key) {

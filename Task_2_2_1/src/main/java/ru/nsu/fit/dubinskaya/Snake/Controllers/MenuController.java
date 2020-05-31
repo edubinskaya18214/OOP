@@ -1,4 +1,4 @@
-package ru.nsu.fit.dubinskaya.Snake;
+package ru.nsu.fit.dubinskaya.Snake.Controllers;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -7,16 +7,16 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import ru.nsu.fit.dubinskaya.Snake.Views.MenuView;
+import ru.nsu.fit.dubinskaya.Snake.Views.View;
 
-class MainMenuController {
+public class MenuController extends Controller{
 
-    private Scene scene;
-    private SnakeController snake;
-    private HelperController help;
-    private MainMenuView view;
+    private View view;
 
-    MainMenuController(Stage primaryStage) {
-        view = new MainMenuView();
+    public MenuController(Stage primaryStage) {
+        view = new MenuView(primaryStage);
+        setView(view);
         Pane root = new Pane();
         int size = 500;
 
@@ -41,32 +41,21 @@ class MainMenuController {
         root.getChildren().add(canvas);
         root.getChildren().add(buttonStartGame);
         root.getChildren().add(helper);
-        scene = new Scene(root, size, size + 30);
+        Scene scene = new Scene(root, size, size + 30);
+        setScene(scene);
 
         buttonStartGame.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-               view.startSnakeGame(primaryStage, snake);
+               view.setSnakePaneOnStage();
             }
         });
 
         helper.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                view.setHelpPane(primaryStage, help);
+                view.setHelpPaneOnStage();
             }
         });
-    }
-
-    Scene getScene(){
-        return scene;
-    }
-
-    void setSnake(SnakeController snake){
-        this.snake = snake;
-    }
-
-    void setHelper(HelperController help){
-        this.help = help;
     }
 }

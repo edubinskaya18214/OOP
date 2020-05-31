@@ -2,6 +2,9 @@ package ru.nsu.fit.dubinskaya.Snake;
 
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import ru.nsu.fit.dubinskaya.Snake.Controllers.HelperController;
+import ru.nsu.fit.dubinskaya.Snake.Controllers.MenuController;
+import ru.nsu.fit.dubinskaya.Snake.Controllers.SnakeController;
 
 /**
  * this class is used to start playing snake
@@ -10,17 +13,17 @@ public class App extends javafx.application.Application {
 
     @Override
     public void start(Stage primaryStage) {
-        MainMenuController main = new MainMenuController(primaryStage);
+        MenuController main = new MenuController(primaryStage);
         HelperController help = new HelperController(primaryStage);
         SnakeController snake = new SnakeController(primaryStage);
 
-        main.setHelper(help);
+        main.setHelp(help);
         main.setSnake(snake);
 
-        help.setMainPane(main);
+        help.setMenu(main);
 
-        snake.setHelpPane(help);
-        snake.setMainPane(main);
+        snake.setHelp(help);
+        snake.setMenu(main);
 
         primaryStage.setScene(main.getScene());
         primaryStage.getIcons().add(new Image("snake2.png"));

@@ -4,11 +4,9 @@ import javafx.util.Pair;
 
 import java.util.Random;
 
-class ModelSnake {
-    static final int size = 500;
-    static final int dotSize = 15;
+public class ModelSnake {
+    public static final int up = 1, right = 2, down = 3, left = 4;
 
-    static final int up = 1, right = 2, down = 3, left = 4;
     private int length;
     private int winLength;
     private int dir = right;
@@ -16,15 +14,17 @@ class ModelSnake {
     private Pair[] food;
     private Pair[] tail;
     private boolean lost;
+    private int fieldSize = 33;
 
-    ModelSnake(int startLen, int winSize, int numberOfFood) {
+    public ModelSnake(int startLen, int winSize, int numberOfFood, int fieldSize) {
         length = startLen;
+        this.fieldSize = fieldSize;
         winLength = winSize;
         tail = new Pair[winSize];
         food = new Pair[numberOfFood];
         this.numberOfFood = numberOfFood;
         for (int i = 0; i < length; i++) {
-            tail[i] = (new Pair<>((size / dotSize * 7 - i * dotSize), 50));
+            tail[i] = (new Pair<>((fieldSize/2) - i, 3));
         }
 
         for (int i = 0; i < numberOfFood; ++i) {
@@ -33,21 +33,21 @@ class ModelSnake {
         checkCollision();
     }
 
-    void setDir(int code) {
+    public void setDir(int code) {
         if (code % 2 != dir % 2)
             dir = code;
     }
 
-    void move() {
+    public void move() {
         if (lost) {
             return;
         }
         Pair currHead = tail[0];
         Pair nextHead = tail[0];
-        if (dir == up) nextHead = new Pair<>(tail[0].getKey(), (Integer) tail[0].getValue() - dotSize);
-        if (dir == down) nextHead = new Pair<>(tail[0].getKey(), (Integer) tail[0].getValue() + dotSize);
-        if (dir == right) nextHead = new Pair<>((Integer) tail[0].getKey() + dotSize, tail[0].getValue());
-        if (dir == left) nextHead = new Pair<>((Integer) tail[0].getKey() - dotSize, tail[0].getValue());
+        if (dir == up) nextHead = new Pair<>(tail[0].getKey(), (Integer) tail[0].getValue() - 1);
+        if (dir == down) nextHead = new Pair<>(tail[0].getKey(), (Integer) tail[0].getValue() + 1);
+        if (dir == right) nextHead = new Pair<>((Integer) tail[0].getKey() + 1, tail[0].getValue());
+        if (dir == left) nextHead = new Pair<>((Integer) tail[0].getKey() - 1, tail[0].getValue());
 
         tail[0] = nextHead;
         checkFood();
@@ -57,25 +57,25 @@ class ModelSnake {
         checkCollision();
     }
 
-    boolean isLost() {
+    public boolean isLost() {
         checkCollision();
         return lost;
     }
 
-    boolean isWin() {
+    public boolean isWin() {
         checkCollision();
         return length == winLength && !lost;
     }
 
-    Pair[] getTail() {
+    public Pair[] getTail() {
         return tail;
     }
 
-    Pair[] getFood() {
+    public Pair[] getFood() {
         return food;
     }
 
-    int getLength(){
+    public int getLength(){
         return length;
     }
 
@@ -91,14 +91,17 @@ class ModelSnake {
     private void checkCollision() {
         if (lost)
             return;
-        if ((Integer) tail[0].getKey() >= size - 24 || (Integer) tail[0].getValue() >= size - 25) {
+
+        if ((Integer) tail[0].getKey() >= fieldSize || (Integer) tail[0].getValue() >= fieldSize) {
             lost = true;
             return;
         }
-        if ((Integer) tail[0].getKey() < dotSize || (Integer) tail[0].getValue() < dotSize) {
+
+        if ((Integer) tail[0].getKey() < 0 || (Integer) tail[0].getValue() < 0) {
             lost = true;
             return;
         }
+
         for (int i = 1; i < length; i++)
             if (tail[0].equals(tail[i])) {
                 lost = true;
@@ -108,8 +111,7 @@ class ModelSnake {
 
     private void locateFood(int k) {
         Random rand = new Random();
-        int numberOfDots = (size - dotSize) / dotSize;
-        food[k] = new Pair<>(rand.nextInt(numberOfDots - 3)*dotSize + 21, rand.nextInt(numberOfDots - 3)*dotSize + 20);
+        food[k] = new Pair<>(rand.nextInt(fieldSize - 1), rand.nextInt(fieldSize - 1));
         checkFoodCollision(k);
     }
 

@@ -1,4 +1,4 @@
-package ru.nsu.fit.dubinskaya.Snake;
+package ru.nsu.fit.dubinskaya.Snake.Controllers;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -11,12 +11,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-class HelperController {
+import ru.nsu.fit.dubinskaya.Snake.Views.HelpView;
+import ru.nsu.fit.dubinskaya.Snake.Views.View;
 
-    private Scene helpScene;
-    private HelperView view;
+public class HelperController extends Controller {
 
-    HelperController(Stage primaryStage) {
+    public HelperController(Stage primaryStage) {
         Pane root = new Pane();
         int size = 500;
         Canvas canvas = new Canvas(size, size);
@@ -74,10 +74,13 @@ class HelperController {
         root.getChildren().add(stop);
         root.getChildren().add(restart);
 
-        helpScene = new Scene(root, size, size + 30);
-        helpScene.getStylesheets().add("/help/helperStyle.css");
+        setScene(new Scene(root, size, size + 30));
+        Scene scene = getScene();
 
-        view = new HelperView(primaryStage);
+        scene.getStylesheets().add("/help/helperStyle.css");
+
+        View view = new HelpView(primaryStage);
+        setView(view);
 
         helper.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -85,17 +88,5 @@ class HelperController {
                 view.setMenuPaneOnStage();
             }
         });
-    }
-
-    Scene getScene(){
-        return helpScene;
-    }
-
-    HelperView getView(){
-        return view;
-    }
-
-    void setMainPane(MainMenuController menu){
-        view.setMainMenu(menu);
     }
 }
