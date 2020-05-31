@@ -8,20 +8,23 @@ import javafx.scene.control.Button;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import ru.nsu.fit.dubinskaya.Snake.ModelSnake;
 import ru.nsu.fit.dubinskaya.Snake.Views.SnakeView;
 import ru.nsu.fit.dubinskaya.Snake.Views.View;
+
 
 public class SnakeController extends Controller{
 
     private ModelSnake currSnake;
     private Thread game;
     private Stage primaryStage;
-    private final int delay = 60;
+    private int delay = 60;
     private Canvas canvas;
     private Scene scene;
     private SnakeView view;
+    int currLevel;
 
     public SnakeController(Stage primaryStage) {
         this.primaryStage = primaryStage;
@@ -29,7 +32,7 @@ public class SnakeController extends Controller{
         Pane root = new Pane();
         int size = 500;
         canvas = new Canvas(size, size);
-        canvas.setLayoutX(0);
+        canvas.setLayoutX(5);
         canvas.setLayoutY(40);
 
         Button helper = new Button("?");
@@ -89,18 +92,38 @@ public class SnakeController extends Controller{
             @Override
             public void handle(ActionEvent event) {
                 game.interrupt();
-                createNewGame();
+                createNewGame(currLevel);
             }
         });
     }
 
-    public void createNewGame() {
+    public void createNewGame(int level) {
         primaryStage.setScene(scene);
         primaryStage.show();
+        currLevel = level;
+        Color fieldColor;
+        int fieldSize;
 
-        int foodNumber = 7;
-        int fieldSize = 30;
-        currSnake = new ModelSnake(3, 25, foodNumber, fieldSize);
+        switch (level) {
+            case 2:
+                fieldSize = 20;
+                fieldColor = new Color(0.7,0.7,0.8, 1);
+                currSnake = new ModelSnake(2, 25, 5, fieldSize);
+                delay = 60;
+                break;
+            case 3:
+                fieldSize = 30;
+                fieldColor = new Color(0.9,0.8,0.8, 1);
+                currSnake = new ModelSnake(2, 50, 1, fieldSize);
+                delay = 50;
+                break;
+            default:
+                fieldSize = 11;
+                fieldColor = new Color(0.68,0.8,0.48, 1);
+                currSnake = new ModelSnake(2, 5, 2, fieldSize);
+                delay = 85;
+                break;
+        }
         view.setFood(currSnake.getFood());
         view.setSnake(currSnake.getTail());
 
@@ -109,7 +132,7 @@ public class SnakeController extends Controller{
             public void run() {
                 while (!currSnake.isWin() && !currSnake.isLost() && !Thread.interrupted()) {
                     currSnake.move();
-                    view.draw(currSnake.getLength(), currSnake.isWin(), currSnake.isLost());
+                    view.draw(currSnake.getLength(), currSnake.isWin(), currSnake.isLost(), fieldSize, fieldColor);
                     try {
                         Thread.sleep(delay);
                     } catch (InterruptedException e) {

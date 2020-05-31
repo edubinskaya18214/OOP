@@ -28,43 +28,56 @@ public class SnakeView extends View {
     }
 
 
-    public void draw(int snakeLen, boolean isWin, boolean isLost) {
+    public void draw(int snakeLen, boolean isWin, boolean isLost, int fieldSize, Color color) {
         gc.setFont(Font.font("Verdana", 12));
         final int size = 500;
         gc.clearRect(0, 0, size, size);
-        gc.setFill(Color.FORESTGREEN);
-        int dotSize = 15;
-        int delta = 5;
+        int dotSize = (size - size*2/fieldSize)/fieldSize + 1;
+
+        gc.setStroke(color);
+        for (int i = 0; i < fieldSize; i += 2){
+            for (int j = 1; j <=  fieldSize ; j += 1){
+                gc.strokeRect(i*dotSize+2, j*dotSize, dotSize, dotSize);
+            }
+        }
+
+        gc.setFill(new Color(1, 0.3, 0.3, 1));
         for (Pair<Integer, Integer> pair : food) {
-            gc.fillOval((2 + pair.getKey()) * dotSize - delta, (2 + pair.getValue()) * dotSize - delta, dotSize, dotSize);
+            gc.fillOval( 2 + (pair.getKey()) * dotSize, (1 + pair.getValue()) * dotSize, dotSize, dotSize);
         }
 
-        gc.setFill(Color.BLUE);
-        gc.fillOval((2 + snake[0].getKey()) * dotSize - delta, (2 + snake[0].getValue()) * dotSize - delta, dotSize, dotSize);
-        gc.setFill(Color.DEEPSKYBLUE);
+        if (isLost) {
+            gc.setFill(new Color(0.88, 0.8, 0.309, 1));
+            for (int i = 1; i < snakeLen; i += 1) {
+                gc.fillOval(2 + (snake[i].getKey()) * dotSize, (1 + snake[i].getValue()) * dotSize, dotSize, dotSize);
+            }
+
+            gc.setStroke(Color.GREEN);
+            gc.setFont(Font.font("Verdana", 22));
+            gc.strokeText("You die", 200, 250 - 15);
+
+            gc.setFont(Font.font("Verdana", 12));
+        }
+        else {
+            gc.setFill(new Color(0.74, 0.74, 1, 1));
+            gc.setStroke(new Color(0.79, 0.79, 0.9, 1));
+            gc.fillOval(2 + (snake[0].getKey()) * dotSize, (1 + snake[0].getValue()) * dotSize, dotSize, dotSize);
+            gc.setFill(new Color(0.85, 0.75, 0.9, 0.9));
+            for (int i = 1; i < snakeLen; i += 1) {
+                gc.fillOval(2 + (snake[i].getKey()) * dotSize, (1 + snake[i].getValue()) * dotSize, dotSize, dotSize);
+                gc.strokeOval(2 + (snake[i].getKey()) * dotSize, (1 + snake[i].getValue()) * dotSize, dotSize, dotSize);
+            }
+        }
+
         gc.setStroke(Color.CORNFLOWERBLUE);
-
-        for (int i = 1; i < snakeLen; i += 2) {
-            gc.fillOval((2 + snake[i].getKey()) * dotSize - delta, (2 + snake[i].getValue()) * dotSize - delta, dotSize, dotSize);
-        }
-        for (int i = 2; i < snakeLen; i += 2) {
-            gc.strokeOval((2 + snake[i].getKey()) * dotSize - delta, (2 + snake[i].getValue()) * dotSize - delta, dotSize, dotSize);
-        }
-
-        gc.strokeRect(dotSize, dotSize, size - dotSize * 2, size - dotSize * 2);
-        gc.strokeText(String.format("%d/%d", snakeLen, 25), 220, 10);
+        gc.strokeRect(2, dotSize, dotSize * fieldSize, dotSize * fieldSize);
+        gc.strokeText(String.format("%d/%d", snakeLen, snake.length), 220, 10);
 
         if (isWin) {
             gc.setStroke(Color.GREEN);
             gc.setFont(Font.font("Verdana", 20));
             gc.strokeText("You win", 250 - 50, 250 - 15);
-            return;
         }
 
-        if (isLost) {
-            gc.setStroke(Color.GREEN);
-            gc.setFont(Font.font("Verdana", 22));
-            gc.strokeText("You die", 200, 250 - 15);
-        }
     }
 }

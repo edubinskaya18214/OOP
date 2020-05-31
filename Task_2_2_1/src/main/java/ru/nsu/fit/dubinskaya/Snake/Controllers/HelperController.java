@@ -22,7 +22,7 @@ public class HelperController extends Controller {
         Canvas canvas = new Canvas(size, size);
         canvas.setFocusTraversable(true);
 
-        Button buttonStartGame = new Button("Start");
+        Button buttonStartGame = new Button("Level 1");
         buttonStartGame.setPrefWidth(80);
 
         Button helper = new Button("?");

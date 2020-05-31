@@ -20,9 +20,9 @@ public abstract class View {
         primaryStage.show();
     }
 
-    public void setSnakePaneOnStage(){
+    public void setSnakePaneOnStage(int level){
         primaryStage.setScene(snake.getScene());
-        snake.createNewGame();
+        snake.createNewGame(level);
         primaryStage.show();
     }
 
