@@ -2,19 +2,19 @@ package ru.nsu.fit.dubinskaya.Snake;
 
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import ru.nsu.fit.dubinskaya.Snake.Controllers.HelperController;
+import ru.nsu.fit.dubinskaya.Snake.Controllers.HelpController;
 import ru.nsu.fit.dubinskaya.Snake.Controllers.MenuController;
 import ru.nsu.fit.dubinskaya.Snake.Controllers.SnakeController;
 
 /**
  * this class is used to start playing snake
  */
-public class App extends javafx.application.Application {
+public class SnakeGame extends javafx.application.Application {
 
     @Override
     public void start(Stage primaryStage) {
         MenuController main = new MenuController(primaryStage);
-        HelperController help = new HelperController(primaryStage);
+        HelpController help = new HelpController(primaryStage);
         SnakeController snake = new SnakeController(primaryStage);
 
         main.setHelp(help);

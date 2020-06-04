@@ -37,7 +37,7 @@ javafx {
     version = '11.0.2'
 }
 
-mainClassName = 'ru.nsu.fit.dubinskaya.Snake.App'
+mainClassName = 'ru.nsu.fit.dubinskaya.Snake.Main'
 
 jar {
     manifest {

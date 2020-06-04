@@ -4,39 +4,41 @@ package ru.nsu.fit.dubinskaya.Snake;
 import javafx.util.Pair;
 import org.junit.Assert;
 import org.junit.Test;
+import ru.nsu.fit.dubinskaya.Snake.SnakeModel.Cell;
+import ru.nsu.fit.dubinskaya.Snake.SnakeModel.SnakeGameModel;
 
 public class SnakeTests {
 
     @Test
     public void eatApples(){
-        ModelSnake snake = new ModelSnake(3, 4, 1, 30);
-        Pair[] tail = snake.getTail();
+        SnakeGameModel snake = new SnakeGameModel(3, 4, 1, 30);
+        Cell[] tail = snake.getTail();
 
-        int x = (int)tail[0].getKey();
-        int y = (int)tail[0].getValue();
+        int x = (int)tail[0].getCoordinates().getKey();
+        int y = (int)tail[0].getCoordinates().getValue();
 
-        snake.setDir(ModelSnake.right);
+        snake.setDir(SnakeGameModel.right);
         snake.locateFood(0, x+1, y);
 
-        Pair[] food = snake.getFood();
-        Assert.assertEquals(x+1, food[0].getKey());
-        Assert.assertEquals(y, food[0].getValue());
+        Cell[] food = snake.getFood();
+        Assert.assertEquals(x+1, (int)food[0].getCoordinates().getKey());
+        Assert.assertEquals(y, (int)food[0].getCoordinates().getValue());
         snake.move();
         Assert.assertNotEquals(food[0], new Pair<Integer, Integer>(x + 1, y));
     }
 
     @Test
     public void growAndWin(){
-        ModelSnake snake = new ModelSnake(3, 4, 1, 30);
-        Pair[] tail = snake.getTail();
+        SnakeGameModel snake = new SnakeGameModel(3, 4, 1, 30);
+        Cell[] tail = snake.getTail();
 
-        int x = (int)tail[0].getKey();
-        int y = (int)tail[0].getValue();
+        int x = (int)tail[0].getCoordinates().getKey();
+        int y = (int)tail[0].getCoordinates().getValue();
 
-        snake.setDir(ModelSnake.right);
+        snake.setDir(SnakeGameModel.right);
         snake.locateFood(0, x+1, y);
 
-        Pair[] food = snake.getFood();
+        Cell[] food = snake.getFood();
 
         Assert.assertEquals(3, snake.getLength());
         snake.move();
@@ -48,39 +50,39 @@ public class SnakeTests {
     public void bumpIntoTheWalls(){
 
         //Up
-        ModelSnake snake = new ModelSnake(3, 4, 0, 30);
-        snake.setDir(ModelSnake.up);
-        while((int)(snake.getTail())[0].getValue() >= 0){
+        SnakeGameModel snake = new SnakeGameModel(3, 4, 0, 30);
+        snake.setDir(SnakeGameModel.up);
+        while((int)(snake.getTail())[0].getCoordinates().getValue() >= 0){
             Assert.assertFalse(snake.isLost());
             snake.move();
         }
         Assert.assertTrue(snake.isLost());
 
         //Down
-        snake = new ModelSnake(3, 4, 0, 30);
-        snake.setDir(ModelSnake.down);
-        while((int)(snake.getTail())[0].getValue() < 30){
+        snake = new SnakeGameModel(3, 4, 0, 30);
+        snake.setDir(SnakeGameModel.down);
+        while((int)(snake.getTail())[0].getCoordinates().getValue() < 30){
             Assert.assertFalse(snake.isLost());
             snake.move();
         }
         Assert.assertTrue(snake.isLost());
 
         //right
-        snake = new ModelSnake(3, 4, 0, 30);
-        snake.setDir(ModelSnake.right);
-        while((int)(snake.getTail())[0].getKey() < 30){
+        snake = new SnakeGameModel(3, 4, 0, 30);
+        snake.setDir(SnakeGameModel.right);
+        while((int)(snake.getTail())[0].getCoordinates().getKey() < 30){
             Assert.assertFalse(snake.isLost());
             snake.move();
         }
         Assert.assertTrue(snake.isLost());
 
         //left
-        snake = new ModelSnake(3, 4, 0, 0);
-        snake.setDir(ModelSnake.down);
+        snake = new SnakeGameModel(3, 4, 0, 0);
+        snake.setDir(SnakeGameModel.down);
         snake.move();
-        snake.setDir(ModelSnake.left);
+        snake.setDir(SnakeGameModel.left);
         snake.move();
-        while((int)(snake.getTail())[0].getKey() > 0){
+        while((int)(snake.getTail())[0].getCoordinates().getKey() > 0){
             Assert.assertFalse(snake.isLost());
             snake.move();
         }
@@ -89,18 +91,18 @@ public class SnakeTests {
 
     @Test
     public void eatItsTail(){
-        ModelSnake snake = new ModelSnake(8, 55, 0, 30);
+        SnakeGameModel snake = new SnakeGameModel(8, 55, 0, 30);
 
         Assert.assertFalse(snake.isLost());
-        snake.setDir(ModelSnake.down);
+        snake.setDir(SnakeGameModel.down);
         snake.move();
         Assert.assertFalse(snake.isLost());
 
-        snake.setDir(ModelSnake.left);
+        snake.setDir(SnakeGameModel.left);
         snake.move();
         Assert.assertFalse(snake.isLost());
 
-        snake.setDir(ModelSnake.up);
+        snake.setDir(SnakeGameModel.up);
         snake.move();
         Assert.assertTrue(snake.isLost());
     }

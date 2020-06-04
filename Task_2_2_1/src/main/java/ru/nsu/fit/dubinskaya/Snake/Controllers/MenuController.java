@@ -13,7 +13,10 @@ import ru.nsu.fit.dubinskaya.Snake.Views.View;
 public class MenuController extends Controller{
 
     private View view;
-
+    /**
+     * This class create and show Menu Pane
+     * @param primaryStage stage where pane will be shown
+     */
     public MenuController(Stage primaryStage) {
         view = new MenuView(primaryStage);
         setView(view);
@@ -61,28 +64,28 @@ public class MenuController extends Controller{
         level1.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-               view.setSnakePaneOnStage(1);
+               view.setSnakeSceneOnStage(1);
             }
         });
 
         level2.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                view.setSnakePaneOnStage(2);
+                view.setSnakeSceneOnStage(2);
             }
         });
 
         level3.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                view.setSnakePaneOnStage(3);
+                view.setSnakeSceneOnStage(3);
             }
         });
 
         helper.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                view.setHelpPaneOnStage();
+                view.setHelpSceneOnStage();
             }
         });
     }

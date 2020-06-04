@@ -14,9 +14,12 @@ import javafx.stage.Stage;
 import ru.nsu.fit.dubinskaya.Snake.Views.HelpView;
 import ru.nsu.fit.dubinskaya.Snake.Views.View;
 
-public class HelperController extends Controller {
-
-    public HelperController(Stage primaryStage) {
+public class HelpController extends Controller {
+    /**
+     * This class create and show Help Pane
+     * @param primaryStage stage where pane will be shown
+     */
+    public HelpController(Stage primaryStage) {
         Pane root = new Pane();
         int size = 500;
         Canvas canvas = new Canvas(size, size);
@@ -85,7 +88,7 @@ public class HelperController extends Controller {
         helper.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                view.setMenuPaneOnStage();
+                view.setMenuSceneOnStage();
             }
         });
     }

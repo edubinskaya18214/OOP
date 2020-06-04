@@ -10,22 +10,24 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import ru.nsu.fit.dubinskaya.Snake.ModelSnake;
+import ru.nsu.fit.dubinskaya.Snake.SnakeModel.SnakeGameModel;
 import ru.nsu.fit.dubinskaya.Snake.Views.SnakeView;
-import ru.nsu.fit.dubinskaya.Snake.Views.View;
 
 
 public class SnakeController extends Controller{
 
-    private ModelSnake currSnake;
+    private SnakeGameModel currSnake;
     private Thread game;
     private Stage primaryStage;
     private int delay = 60;
     private Canvas canvas;
     private Scene scene;
     private SnakeView view;
-    int currLevel;
-
+    private int currLevel;
+    /**
+     * This class create and show Snake Pane
+     * @param primaryStage stage where pane will be shown
+     */
     public SnakeController(Stage primaryStage) {
         this.primaryStage = primaryStage;
 
@@ -76,7 +78,7 @@ public class SnakeController extends Controller{
             @Override
             public void handle(ActionEvent event) {
                 game.interrupt();
-                view.setMenuPaneOnStage();
+                view.setMenuSceneOnStage();
             }
         });
 
@@ -84,7 +86,7 @@ public class SnakeController extends Controller{
             @Override
             public void handle(ActionEvent event) {
                 game.interrupt();
-                view.setHelpPaneOnStage();
+                view.setHelpSceneOnStage();
             }
         });
 
@@ -108,19 +110,19 @@ public class SnakeController extends Controller{
             case 2:
                 fieldSize = 20;
                 fieldColor = new Color(0.7,0.7,0.8, 1);
-                currSnake = new ModelSnake(2, 25, 5, fieldSize);
+                currSnake = new SnakeGameModel(2, 25, 5, fieldSize);
                 delay = 60;
                 break;
             case 3:
                 fieldSize = 30;
                 fieldColor = new Color(0.9,0.8,0.8, 1);
-                currSnake = new ModelSnake(2, 50, 1, fieldSize);
+                currSnake = new SnakeGameModel(2, 50, 1, fieldSize);
                 delay = 50;
                 break;
             default:
                 fieldSize = 11;
                 fieldColor = new Color(0.68,0.8,0.48, 1);
-                currSnake = new ModelSnake(2, 5, 2, fieldSize);
+                currSnake = new SnakeGameModel(2, 5, 2, fieldSize);
                 delay = 85;
                 break;
         }
@@ -154,16 +156,16 @@ public class SnakeController extends Controller{
     private void setDir(KeyCode key) {
         switch (key) {
             case UP:
-                currSnake.setDir(ModelSnake.up);
+                currSnake.setDir(SnakeGameModel.up);
                 break;
             case DOWN:
-                currSnake.setDir(ModelSnake.down);
+                currSnake.setDir(SnakeGameModel.down);
                 break;
             case RIGHT:
-                currSnake.setDir(ModelSnake.right);
+                currSnake.setDir(SnakeGameModel.right);
                 break;
             case LEFT:
-                currSnake.setDir(ModelSnake.left);
+                currSnake.setDir(SnakeGameModel.left);
                 break;
         }
     }
