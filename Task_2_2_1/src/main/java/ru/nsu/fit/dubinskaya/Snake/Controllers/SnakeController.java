@@ -114,10 +114,10 @@ public class SnakeController extends Controller{
                 delay = 60;
                 break;
             case 3:
-                fieldSize = 30;
+                fieldSize = 20;
                 fieldColor = new Color(0.9,0.8,0.8, 1);
-                currSnake = new SnakeGameModel(2, 50, 1, fieldSize);
-                delay = 50;
+                currSnake = new SnakeGameModel(2, 50, 2, fieldSize);
+                delay = 55;
                 break;
             default:
                 fieldSize = 11;

@@ -5,6 +5,8 @@ import javafx.util.Pair;
 
 import java.util.Random;
 
+import static java.lang.StrictMath.abs;
+
 /**
  * This class is used in SnakeGameModel and SnakeView
  * for containing coordinates and colors of food and snake's tail
@@ -45,8 +47,8 @@ public class Cell {
     public void generateColor(){
         Random rand = new Random();
         float r = rand.nextInt(255);
-        float g = rand.nextInt(255/2);
-        float b = rand.nextInt(255/2);
+        float g = rand.nextInt(255);
+        float b = rand.nextInt(255);
         color = new Color(r/255, g/255, b/255, 1);
     }
 
