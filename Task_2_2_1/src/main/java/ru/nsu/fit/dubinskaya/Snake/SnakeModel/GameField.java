@@ -4,89 +4,131 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class GameField {
-    private Snake snake;
-    private int fieldSize;
-    private int numberOfFood;
-    private ArrayList<Cell> food;
+  private Snake snake;
+  private int fieldSize;
+  private int numberOfFood;
+  private ArrayList<Cell> food;
 
-    public GameField(int numberOfFood, int snakeStartLen, int fieldSize){
-        snake = new Snake(snakeStartLen, fieldSize);
+  /**
+   * GameField constructor.
+   *
+   * @param numberOfFood  - number of food on the field. When snakes eat a food
+   *                      number of food doesn't decrease - new food generates on the field.
+   * @param snakeStartLen - length of snake's tail in the beginning of the game.
+   * @param fieldSize     - width and height of generated field.
+   */
+  public GameField(int numberOfFood, int snakeStartLen, int fieldSize) {
+    snake = new Snake(snakeStartLen, fieldSize);
 
-        food = new ArrayList<>();
-        this.numberOfFood = numberOfFood;
-        this.fieldSize = fieldSize;
+    food = new ArrayList<>();
+    this.numberOfFood = numberOfFood;
+    this.fieldSize = fieldSize;
 
-        for (int i = 0; i < numberOfFood; ++i) {
-            food.add(i, new Cell());
-            food.get(i).generateCoordinates(0, fieldSize);
-            checkFoodCorrectness(i);
-        }
+    for (int i = 0; i < numberOfFood; ++i) {
+      food.add(i, new Cell());
+      food.get(i).generateCoordinates(0, fieldSize);
+      checkFoodCorrectness(i);
     }
+  }
 
-    public void move(){
-        snake.move();
-        int k = checkSnakeEatFood();
-        if (k >= 0){
-            snake.grow();
-            locateFood(k);
-        }
+  /**
+   * This method used to move snake on the field.
+   */
+  public void move() {
+    snake.move();
+    int k = checkSnakeEatFood();
+    if (k >= 0) {
+      snake.grow();
+      locateFood(k);
     }
+  }
 
-    public Snake getSnake(){
-        return snake;
+  /**
+   * this method used to get snake from the current field.
+   *
+   * @return generated snake.
+   */
+  public Snake getSnake() {
+    return snake;
+  }
+
+  /**
+   * This method used to set food's coordinates on the field.
+   *
+   * @param k - food id.
+   * @param x - x coordinate.
+   * @param y - y coordinate.
+   */
+  public void locateFood(int k, int x, int y) {
+    food.get(k).setCoordinates(x, y);
+    for (int i = 0; i < numberOfFood; ++i) {
+      if (i == k) {
+        continue;
+      }
+      checkFoodCorrectness(i);
     }
+  }
 
-    private int checkSnakeEatFood() {
-        Iterator iter = snake.iterator();
-        Cell head = (Cell) iter.next();
-        for (int i = 0; i < numberOfFood; ++i)
-            if (head.equals(food.get(i))) {
-                return i;
-            }
-        return -1;
+  /**
+   * This method used to get food.
+   *
+   * @return Iterator with current food.
+   */
+  public Iterator<Cell> getFoodIterator() {
+    return new Iterator<Cell>() {
+      int pos = 0;
+
+      @Override
+      public boolean hasNext() {
+        return pos < food.size();
+      }
+
+      @Override
+      public Cell next() {
+        return food.get(pos++);
+      }
+    };
+  }
+
+    /**
+     * This method used to get snake's tail.
+     *
+     * @return Iterator with current snake's tail.
+     */
+  public Iterator getSnakeIterator() {
+    return snake.iterator();
+  }
+
+  private int checkSnakeEatFood() {
+    Iterator iter = snake.iterator();
+    Cell head = (Cell) iter.next();
+    for (int i = 0; i < numberOfFood; ++i) {
+      if (head.equals(food.get(i))) {
+        return i;
+      }
     }
+    return -1;
+  }
 
-    private void locateFood(int k) {
-        food.get(k).generateCoordinates(0, fieldSize);
-        checkFoodCorrectness(k);
+  private void locateFood(int k) {
+    food.get(k).generateCoordinates(0, fieldSize);
+    checkFoodCorrectness(k);
+  }
+
+  private void checkFoodCorrectness(int k) {
+
+    for (int i = 0; i < food.size(); ++i) {
+      if (i == k) {
+        continue;
+      }
+      if (food.get(i).equals(food.get(k))) {
+        locateFood(k);
+      }
     }
-
-    private void checkFoodCorrectness(int k) {
-
-        for (int i = 0; i < food.size(); ++i) {
-            if (i == k)
-                continue;
-            if (food.get(i).equals(food.get(k)))
-                locateFood(k);
-        }
-        Iterator iter = snake.iterator();
-        while(iter.hasNext()){
-            if (iter.next().equals(food.get(k)))
-                locateFood(k);
-        }
+    for (Object o : snake) {
+      if (o.equals(food.get(k))) {
+        locateFood(k);
+      }
     }
-
-    public void locateFood(int k, int x, int y) {
-        food.get(k).setCoordinates(x, y);
-        checkFoodCorrectness(k);
-    }
-
-    public Iterator<Cell> getFoodIterator(){
-        return new Iterator<Cell>(){
-            int pos = 0;
-            @Override
-            public boolean hasNext() {
-                return pos < food.size();
-            }
-
-            @Override
-            public Cell next() {
-                return food.get(pos++);
-            }
-        };
-    }
-
-    public Iterator getSnakeIterator(){
-        return snake.iterator();
-    }
+  }
 }

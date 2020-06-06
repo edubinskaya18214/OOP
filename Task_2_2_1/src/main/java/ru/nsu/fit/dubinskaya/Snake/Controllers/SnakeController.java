@@ -8,170 +8,177 @@ import javafx.scene.control.Button;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import ru.nsu.fit.dubinskaya.Snake.SnakeModel.Cell;
 import ru.nsu.fit.dubinskaya.Snake.SnakeModel.GameField;
 import ru.nsu.fit.dubinskaya.Snake.SnakeModel.Snake;
 import ru.nsu.fit.dubinskaya.Snake.Views.SnakeView;
 
+import java.util.Iterator;
 
-public class SnakeController extends Controller{
 
-    private GameField field;
-    private Snake currSnake;
-    private Thread game;
-    private Stage primaryStage;
-    private int delay = 60;
-    private Canvas canvas;
-    private Scene scene;
-    private SnakeView view;
-    private int currLevel;
-    /**
-     * This class create and show Snake Pane
-     * @param primaryStage stage where pane will be shown
-     */
-    public SnakeController(Stage primaryStage) {
-        this.primaryStage = primaryStage;
+public class SnakeController extends Controller {
 
-        Pane root = new Pane();
-        int size = 500;
-        canvas = new Canvas(size, size);
-        canvas.setLayoutX(5);
-        canvas.setLayoutY(40);
+  private GameField field;
+  private Snake currSnake;
+  private Thread game;
+  private Stage primaryStage;
+  private int delay = 60;
+  private Canvas canvas;
+  private Scene scene;
+  private SnakeView view;
+  private int currLevel;
 
-        Button helper = new Button("?");
-        helper.setLayoutY(5);
-        helper.setLayoutX(size - 30);
-        helper.setPrefHeight(30);
-        helper.setPrefWidth(30);
+  /**
+   * This class create and show Snake Pane
+   *
+   * @param primaryStage stage where pane will be shown
+   */
+  public SnakeController(Stage primaryStage) {
+    this.primaryStage = primaryStage;
 
-        helper.setFocusTraversable(false);
+    Pane root = new Pane();
+    int size = 500;
+    canvas = new Canvas(size, size);
+    canvas.setLayoutX(5);
+    canvas.setLayoutY(40);
 
-        Button stop = new Button();
-        stop.setPrefWidth(30);
-        stop.setPrefHeight(30);
-        stop.setLayoutY(5);
-        stop.setLayoutX(size - 61);
-        stop.getStylesheets().add("/Buttons/Stop_button_config.css");
-        stop.setFocusTraversable(false);
+    Button helper = new Button("?");
+    helper.setLayoutY(5);
+    helper.setLayoutX(size - 30);
+    helper.setPrefHeight(30);
+    helper.setPrefWidth(30);
 
-        Button restart = new Button();
-        restart.setPrefWidth(30);
-        restart.setPrefHeight(30);
-        restart.setLayoutY(5);
-        restart.setLayoutX(size - 92);
-        restart.getStylesheets().add("/Buttons/restart.css");
-        restart.setFocusTraversable(false);
+    helper.setFocusTraversable(false);
 
-        root.getChildren().add(canvas);
-        root.getChildren().add(helper);
-        root.getChildren().add(stop);
-        root.getChildren().add(restart);
+    Button stop = new Button();
+    stop.setPrefWidth(30);
+    stop.setPrefHeight(30);
+    stop.setLayoutY(5);
+    stop.setLayoutX(size - 61);
+    stop.getStylesheets().add("/Buttons/Stop_button_config.css");
+    stop.setFocusTraversable(false);
 
-        canvas.setFocusTraversable(true);
+    Button restart = new Button();
+    restart.setPrefWidth(30);
+    restart.setPrefHeight(30);
+    restart.setLayoutY(5);
+    restart.setLayoutX(size - 92);
+    restart.getStylesheets().add("/Buttons/restart.css");
+    restart.setFocusTraversable(false);
 
-        scene = (new Scene(root, size, size + 40));
-        setScene(scene);
+    root.getChildren().add(canvas);
+    root.getChildren().add(helper);
+    root.getChildren().add(stop);
+    root.getChildren().add(restart);
 
-        view = new SnakeView(canvas.getGraphicsContext2D(), primaryStage);
-        setView(view);
+    canvas.setFocusTraversable(true);
 
-        stop.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                game.interrupt();
-                view.setMenuSceneOnStage();
-            }
-        });
+    scene = (new Scene(root, size, size + 40));
+    setScene(scene);
 
-        helper.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                game.interrupt();
-                view.setHelpSceneOnStage();
-            }
-        });
+    view = new SnakeView(canvas.getGraphicsContext2D(), primaryStage);
+    setView(view);
 
-        restart.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                game.interrupt();
-                createNewGame(currLevel);
-            }
-        });
+    stop.setOnAction(new EventHandler<ActionEvent>() {
+      @Override
+      public void handle(ActionEvent event) {
+        game.interrupt();
+        view.setMenuSceneOnStage();
+      }
+    });
+
+    helper.setOnAction(new EventHandler<ActionEvent>() {
+      @Override
+      public void handle(ActionEvent event) {
+        game.interrupt();
+        view.setHelpSceneOnStage();
+      }
+    });
+
+    restart.setOnAction(new EventHandler<ActionEvent>() {
+      @Override
+      public void handle(ActionEvent event) {
+        game.interrupt();
+        createNewGame(currLevel);
+      }
+    });
+  }
+
+  public void createNewGame(int level) {
+    primaryStage.setScene(scene);
+    primaryStage.show();
+    currLevel = level;
+    int fieldSize;
+    int winLen;
+
+    switch (level) {
+      case 2:
+        fieldSize = 20;
+        winLen = 25;
+        field = new GameField(5, 2, fieldSize);
+        delay = 60;
+        break;
+      case 3:
+        fieldSize = 20;
+        winLen = 50;
+        field = new GameField(2, 2, fieldSize);
+        delay = 55;
+        break;
+      default:
+        fieldSize = 11;
+        winLen = 5;
+        field = new GameField(2, 2, fieldSize);
+        delay = 85;
+        break;
     }
 
-    public void createNewGame(int level) {
-        primaryStage.setScene(scene);
-        primaryStage.show();
-        currLevel = level;
-        int fieldSize;
-        int winLen;
+    currSnake = field.getSnake();
 
-        switch (level) {
-            case 2:
-                fieldSize = 20;
-                winLen = 25;
-                field = new GameField(5, 2,  fieldSize);
-                delay = 60;
-                break;
-            case 3:
-                fieldSize = 20;
-                winLen = 50;
-                field = new GameField(2, 2,  fieldSize);
-                delay = 55;
-                break;
-            default:
-                fieldSize = 11;
-                winLen = 5;
-                field = new GameField(2, 2,  fieldSize);
-                delay = 85;
-                break;
+    game = new Thread(new Runnable() {
+      @Override
+      public void run() {
+        while (currSnake.getLength() != winLen && !currSnake.isDead() && !Thread.interrupted()) {
+          field.move();
+          view.setWinSize(winLen);
+
+          boolean isWin = currSnake.getLength() == winLen;
+          Iterator<Cell> snake = (Iterator<Cell>) field.getSnakeIterator();
+          Iterator<Cell> food = field.getFoodIterator();
+          view.draw(isWin, currSnake.isDead(), fieldSize, snake, food);
+          try {
+            Thread.sleep(delay);
+          } catch (InterruptedException e) {
+            break;
+          }
+          ;
         }
+      }
+    });
+    game.start();
 
-        currSnake = field.getSnake();
+    canvas.setOnKeyPressed(new EventHandler<KeyEvent>() {
+      @Override
+      public void handle(KeyEvent e) {
+        setDir(e.getCode());
+      }
+    });
+  }
 
-        game = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (currSnake.getLength() !=  winLen && !currSnake.isDead() && !Thread.interrupted()) {
-                    field.move();
-                    view.setWinSize(winLen);
-
-                    boolean isWin = currSnake.getLength() == winLen;
-                    view.draw(isWin , currSnake.isDead(), fieldSize, field.getSnakeIterator(), field.getFoodIterator());
-                    try {
-                        Thread.sleep(delay);
-                    } catch (InterruptedException e) {
-                        break;
-                    };
-                }
-            }
-        });
-        game.start();
-
-        canvas.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent e) {
-                setDir(e.getCode());
-            }
-        });
+  private void setDir(KeyCode key) {
+    switch (key) {
+      case UP:
+        currSnake.setDir(Snake.Direction.up);
+        break;
+      case DOWN:
+        currSnake.setDir(Snake.Direction.down);
+        break;
+      case RIGHT:
+        currSnake.setDir(Snake.Direction.right);
+        break;
+      case LEFT:
+        currSnake.setDir(Snake.Direction.left);
+        break;
     }
-
-    private void setDir(KeyCode key) {
-        switch (key) {
-            case UP:
-                currSnake.setDir(Snake.direction.up);
-                break;
-            case DOWN:
-                currSnake.setDir(Snake.direction.down);
-                break;
-            case RIGHT:
-                currSnake.setDir(Snake.direction.right);
-                break;
-            case LEFT:
-                currSnake.setDir(Snake.direction.left);
-                break;
-        }
-    }
+  }
 }
