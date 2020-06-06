@@ -26,6 +26,12 @@ public class SnakeView extends View {
     setPrimaryStage(primaryStage);
   }
 
+  /**
+   * This method used to set win size of snake.
+   *
+   * @param winSize - new winSize. This parameter effects only on showing the score
+   *                - in the top of the window.
+   */
   public void setWinSize(int winSize) {
     this.winSize = winSize;
   }
@@ -33,18 +39,18 @@ public class SnakeView extends View {
   /**
    * Used to draw current game on the canvas.
    *
-   * @param isWin     - is user win
-   * @param isLost    - is user fail
-   * @param size - size of the field on the canvas
-   * @param tail      - Cell iterator with snake's tail
-   * @param food      - Cell iterator with food on the game's field
+   * @param isWin  - is user win
+   * @param isLost - is user fail
+   * @param size   - size of the field on the canvas
+   * @param tail   - Cell iterator with snake's tail
+   * @param food   - Cell iterator with food on the game's field
    */
-  public void draw(boolean isWin, boolean isLost, int size, Iterator<Cell> tail, Iterator<Cell> food) {
+  public synchronized void draw(boolean isWin, boolean isLost, int size, Iterator<Cell> tail, Iterator<Cell> food) {
     int snakeSize = 1;
     gc.setFont(Font.font("Verdana", 12));
     gc.clearRect(0, 0, 500, 500);
 
-    final int dotSize =  (500 - 2 * 500 / size) / size + 1;
+    final int dotSize = (500 - 2 * 500 / size) / size + 1;
     final int halfDotSize = dotSize / 2;
     //this value we will use to set field in the center
     int delta = (495 - 2 - dotSize * size) / 2 + 2;

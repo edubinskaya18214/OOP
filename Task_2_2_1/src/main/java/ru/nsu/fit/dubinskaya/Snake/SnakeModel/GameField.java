@@ -34,7 +34,7 @@ public class GameField {
   /**
    * This method used to move snake on the field.
    */
-  public void move() {
+  public synchronized void move() {
     snake.move();
     int k = checkSnakeEatFood();
     if (k >= 0) {
@@ -48,25 +48,13 @@ public class GameField {
    *
    * @return generated snake.
    */
-  public Snake getSnake() {
+  public synchronized Snake getSnake() {
     return snake;
   }
 
-  /**
-   * This method used to set food's coordinates on the field.
-   *
-   * @param k - food id.
-   * @param x - x coordinate.
-   * @param y - y coordinate.
-   */
-  public void locateFood(int k, int x, int y) {
-    food.get(k).setCoordinates(x, y);
-    for (int i = 0; i < numberOfFood; ++i) {
-      if (i == k) {
-        continue;
-      }
-      checkFoodCorrectness(i);
-    }
+  private synchronized void locateFood(int k) {
+    food.get(k).generateCoordinates(0, fieldSize);
+    checkFoodCorrectness(k);
   }
 
   /**
@@ -90,16 +78,16 @@ public class GameField {
     };
   }
 
-    /**
-     * This method used to get snake's tail.
-     *
-     * @return Iterator with current snake's tail.
-     */
+  /**
+   * This method used to get snake's tail.
+   *
+   * @return Iterator with current snake's tail.
+   */
   public Iterator getSnakeIterator() {
     return snake.iterator();
   }
 
-  private int checkSnakeEatFood() {
+  private synchronized int checkSnakeEatFood() {
     Iterator iter = snake.iterator();
     Cell head = (Cell) iter.next();
     for (int i = 0; i < numberOfFood; ++i) {
@@ -110,12 +98,7 @@ public class GameField {
     return -1;
   }
 
-  private void locateFood(int k) {
-    food.get(k).generateCoordinates(0, fieldSize);
-    checkFoodCorrectness(k);
-  }
-
-  private void checkFoodCorrectness(int k) {
+  private synchronized void checkFoodCorrectness(int k) {
 
     for (int i = 0; i < food.size(); ++i) {
       if (i == k) {

@@ -1,7 +1,8 @@
 package ru.nsu.fit.dubinskaya.Snake.SnakeModel;
 
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Snake implements Iterable {
 

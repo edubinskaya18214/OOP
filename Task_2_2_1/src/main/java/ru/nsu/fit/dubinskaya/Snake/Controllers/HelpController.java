@@ -20,7 +20,7 @@ public class HelpController extends Controller {
    * @param primaryStage stage where pane will be shown
    */
   public HelpController(Stage primaryStage) {
-    Pane root = new Pane();
+    final Pane root = new Pane();
     int size = 500;
     Canvas canvas = new Canvas(size, size);
     canvas.setFocusTraversable(true);
