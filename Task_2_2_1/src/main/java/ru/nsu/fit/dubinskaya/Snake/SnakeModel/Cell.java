@@ -1,19 +1,14 @@
 package ru.nsu.fit.dubinskaya.Snake.SnakeModel;
 
-import javafx.scene.paint.Color;
-import javafx.util.Pair;
-
 import java.util.Random;
-
-import static java.lang.StrictMath.abs;
 
 /**
  * This class is used in SnakeGameModel and SnakeView
  * for containing coordinates and colors of food and snake's tail
  */
 public class Cell {
-    private Pair<Integer, Integer> coordinates;
-    private Color color;
+    private int x;
+    private int y;
 
     /**
      * generate random coordinates for this sell.
@@ -22,49 +17,37 @@ public class Cell {
      */
     public void generateCoordinates(int from, int to){
         Random rand = new Random();
-        coordinates = new Pair<Integer, Integer>(rand.nextInt(to-from) + from, rand.nextInt(to-from) + from);
+        x = rand.nextInt(to-from) + from;
+        y = rand.nextInt(to-from) + from;
     }
 
     /**
      * set new coordinates as coordinates of this sell
-     * @param newCoordinates - pair which will be setted as coordinates, not copy of this Pair.
+     * @param newX - new value for x coordinate.
+     * @param newY - new value for y coordinate.
      */
-    public void setCoordinates(Pair<Integer, Integer> newCoordinates){
-        coordinates = newCoordinates;
+    public void setCoordinates(int newX, int newY) {
+        x = newX;
+        y = newY;
     }
 
     /**
-     * this method used to get private field "coordinates"
-     * @return field coordinates;
+     * this method used to get x coordinate of this cell.
+     * @return field coordinate;
      */
-    public Pair<Integer, Integer> getCoordinates(){
-        return coordinates;
+    public int getX(){
+        return x;
     }
 
     /**
-     * generate random Color for this cell
+     * this method used to get y coordinate of this cell.
+     * @return field coordinate;
      */
-    public void generateColor(){
-        Random rand = new Random();
-        float r = rand.nextInt(255);
-        float g = rand.nextInt(255);
-        float b = rand.nextInt(255);
-        color = new Color(r/255, g/255, b/255, 1);
+    public int getY(){
+        return y;
     }
 
-    /**
-     * this method used to set private field "color"
-     * @param color - new value for field "color"
-     */
-    public void setColor(Color color){
-        this.color = color;
-    }
-
-    /**
-     * this method used to get private field "Color"
-     * @return Color
-     */
-    public Color getColor(){
-        return color;
+    public boolean equals(Cell cell){
+        return (x == cell.getX() && y == cell.getY());
     }
 }

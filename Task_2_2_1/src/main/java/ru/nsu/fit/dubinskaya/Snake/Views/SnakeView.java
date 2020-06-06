@@ -7,13 +7,16 @@ import javafx.stage.Stage;
 import javafx.util.Pair;
 import ru.nsu.fit.dubinskaya.Snake.SnakeModel.Cell;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Map;
+
 /**
  * This class is used to show Snake Game on the Stage
  */
 public class SnakeView extends View {
     private GraphicsContext gc;
-    private Cell[] food;
-    private Cell[] snake;
+    private int winSize;
 
     /**
      * This is SnakeView Constructor
@@ -25,32 +28,19 @@ public class SnakeView extends View {
         setPrimaryStage(primaryStage);
     }
 
-    /**
-     * Used to set food of current snake
-     * @param food - food on the field
-     */
-    public void setFood(Cell[] food) {
-        this.food = food;
-    }
-
-    /**
-     * Used to set tail of current snake
-     * @param snake - snake on the field
-     */
-    public void setSnake(Cell[] snake) {
-        this.snake = snake;
+    public void setWinSize(int winSize){
+        this.winSize = winSize;
     }
 
     /**
      * Used to draw current game on the canvas
-     * @param snakeLen - length of the current snake
      * @param isWin - is user win
      * @param isLost - is user fail
      * @param fieldSize - size of the field on the canvas
-     * @param color - color of current field
      */
-    public void draw(int snakeLen, boolean isWin, boolean isLost, int fieldSize, Color color) {
+    public void draw(boolean isWin, boolean isLost, int fieldSize, Iterator<Cell> tail, Iterator<Cell> food) {
         final int size = 500;
+        int snakeSize = 1;
         gc.setFont(Font.font("Verdana", 12));
         gc.clearRect(0, 0, size, size);
 
@@ -58,56 +48,72 @@ public class SnakeView extends View {
         //this value we will use to set field in the center
         int delta = (495 - 2 - dotSize * fieldSize)/2 + 2;
 
-        gc.setStroke(color);
-        for (int i = 0; i < fieldSize; i += 2){
+        for (int i = 0; i < fieldSize; i += 1){
             for (int j = 1; j <=  fieldSize ; j += 1){
-                gc.strokeRect(i*dotSize + delta, j*dotSize, dotSize, dotSize);
+                if ((j+i)%2 == 1) gc.setFill(new Color(0.968, 0.968, 0.8, 0.7));
+                else gc.setFill(new Color(0.8, 0.9, 0.75, 0.7));
+                gc.fillRect(i*dotSize + delta, j*dotSize, dotSize, dotSize);
             }
         }
 
-        for (Cell f : food) {
-            gc.setFill(f.getColor());
-            gc.fillOval( delta + (f.getCoordinates().getKey()) * dotSize,
-                (1 + f.getCoordinates().getValue()) * dotSize, dotSize, dotSize);
+        gc.setFill(Color.FORESTGREEN);
+        while(food.hasNext()) {
+            Cell curr = food.next();
+            gc.fillOval( delta + (curr.getX()) * dotSize,
+                (1 + curr.getY()) * dotSize, dotSize, dotSize);
         }
 
         if (isLost) {
             gc.setFill(new Color(0.88, 0.8, 0.309, 1));
-            for (int i = 1; i < snakeLen; i += 1) {
-                gc.fillOval(delta + (snake[i].getCoordinates().getKey()) * dotSize,
-                    (1 + snake[i].getCoordinates().getValue()) * dotSize, dotSize, dotSize);
+            //skip head
+            tail.next();
+            while(tail.hasNext()){
+                snakeSize++;
+                Cell curr = (Cell) tail.next();
+                gc.fillOval(delta + (curr.getX()) * dotSize,
+                    (1 + curr.getY()) * dotSize, dotSize, dotSize);
             }
 
-            gc.setStroke(Color.GREEN);
-            gc.setFont(Font.font("Verdana", 22));
+            gc.setStroke(Color.ALICEBLUE);
+            gc.setFont(Font.font("Verdana", 30));
+            gc.setFill(Color.DARKSLATEBLUE);
+            gc.fillText("You die", 200, 250 - 15);
             gc.strokeText("You die", 200, 250 - 15);
 
             gc.setFont(Font.font("Verdana", 12));
         }
         else {
-            gc.setFill(new Color(0.74, 0.74, 1, 1));
+            gc.setFill(Color.GREENYELLOW);
             gc.setStroke(new Color(0.79, 0.79, 0.9, 1));
+            Cell curr = (Cell) tail.next();
+            gc.fillOval(delta + (curr.getX()) * dotSize,
+                (1 + curr.getY()) * dotSize, dotSize, dotSize);
 
-            gc.fillOval(delta + (snake[0].getCoordinates().getKey()) * dotSize,
-                (1 + snake[0].getCoordinates().getValue()) * dotSize, dotSize, dotSize);
+            gc.setFill(Color.DARKOLIVEGREEN);
+            gc.fillOval(delta + (0.25 +curr.getX()) * dotSize,
+                (1.25 + curr.getY()) * dotSize, dotSize/2, dotSize/2);
 
-            for (int i = 1; i < snakeLen; i ++) {
-                gc.setFill(snake[i].getColor());
-                Pair<Integer, Integer> curr = snake[i].getCoordinates();
-                if (snakeLen > 2)
-                    curr = snake[i].getCoordinates();
-                gc.fillOval(delta + (curr.getKey()) * dotSize, (1 + curr.getValue()) * dotSize, dotSize, dotSize);
-                gc.strokeOval(delta + (curr.getKey()) * dotSize, (1 + curr.getValue()) * dotSize, dotSize, dotSize);
+            while(tail.hasNext()) {
+                snakeSize++;
+                curr = (Cell) tail.next();
+                gc.setFill(Color.DARKOLIVEGREEN);
+                int x = curr.getX();
+                int y = curr.getY();
+                gc.fillOval(delta + x * dotSize, (1 + y) * dotSize, dotSize, dotSize);
+                gc.setFill(Color.GREENYELLOW);
+                gc.fillOval(delta + (x + 0.25) * dotSize, (1.25 + y) * dotSize, dotSize/2, dotSize/2);
             }
         }
 
         gc.setStroke(Color.CORNFLOWERBLUE);
         gc.strokeRect( delta, dotSize, dotSize * fieldSize, dotSize * fieldSize);
-        gc.strokeText(String.format("%d/%d", snakeLen, snake.length), 220 + delta/2, 10);
+        gc.strokeText(String.format("%d/%d", snakeSize, winSize), 220 + delta/2, 10);
 
         if (isWin) {
-            gc.setStroke(Color.GREEN);
-            gc.setFont(Font.font("Verdana", 20));
+            gc.setFill(Color.DARKSLATEBLUE);
+            gc.setStroke(Color.ALICEBLUE);
+            gc.setFont(Font.font("Verdana", 30));
+            gc.fillText("You win", 250 - 50, 250 - 15);
             gc.strokeText("You win", 250 - 50, 250 - 15);
         }
 

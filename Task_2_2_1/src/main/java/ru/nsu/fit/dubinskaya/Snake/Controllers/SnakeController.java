@@ -10,13 +10,15 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import ru.nsu.fit.dubinskaya.Snake.SnakeModel.SnakeGameModel;
+import ru.nsu.fit.dubinskaya.Snake.SnakeModel.GameField;
+import ru.nsu.fit.dubinskaya.Snake.SnakeModel.Snake;
 import ru.nsu.fit.dubinskaya.Snake.Views.SnakeView;
 
 
 public class SnakeController extends Controller{
 
-    private SnakeGameModel currSnake;
+    private GameField field;
+    private Snake currSnake;
     private Thread game;
     private Stage primaryStage;
     private int delay = 60;
@@ -103,38 +105,41 @@ public class SnakeController extends Controller{
         primaryStage.setScene(scene);
         primaryStage.show();
         currLevel = level;
-        Color fieldColor;
         int fieldSize;
+        int winLen;
 
         switch (level) {
             case 2:
                 fieldSize = 20;
-                fieldColor = new Color(0.7,0.7,0.8, 1);
-                currSnake = new SnakeGameModel(2, 25, 5, fieldSize);
+                winLen = 25;
+                field = new GameField(5, 2,  fieldSize);
                 delay = 60;
                 break;
             case 3:
                 fieldSize = 20;
-                fieldColor = new Color(0.9,0.8,0.8, 1);
-                currSnake = new SnakeGameModel(2, 50, 2, fieldSize);
+                winLen = 50;
+                field = new GameField(2, 2,  fieldSize);
                 delay = 55;
                 break;
             default:
                 fieldSize = 11;
-                fieldColor = new Color(0.68,0.8,0.48, 1);
-                currSnake = new SnakeGameModel(2, 5, 2, fieldSize);
+                winLen = 5;
+                field = new GameField(2, 2,  fieldSize);
                 delay = 85;
                 break;
         }
-        view.setFood(currSnake.getFood());
-        view.setSnake(currSnake.getTail());
+
+        currSnake = field.getSnake();
 
         game = new Thread(new Runnable() {
             @Override
             public void run() {
-                while (!currSnake.isWin() && !currSnake.isLost() && !Thread.interrupted()) {
-                    currSnake.move();
-                    view.draw(currSnake.getLength(), currSnake.isWin(), currSnake.isLost(), fieldSize, fieldColor);
+                while (currSnake.getLength() !=  winLen && !currSnake.isDead() && !Thread.interrupted()) {
+                    field.move();
+                    view.setWinSize(winLen);
+
+                    boolean isWin = currSnake.getLength() == winLen;
+                    view.draw(isWin , currSnake.isDead(), fieldSize, field.getSnakeIterator(), field.getFoodIterator());
                     try {
                         Thread.sleep(delay);
                     } catch (InterruptedException e) {
@@ -156,16 +161,16 @@ public class SnakeController extends Controller{
     private void setDir(KeyCode key) {
         switch (key) {
             case UP:
-                currSnake.setDir(SnakeGameModel.up);
+                currSnake.setDir(Snake.direction.up);
                 break;
             case DOWN:
-                currSnake.setDir(SnakeGameModel.down);
+                currSnake.setDir(Snake.direction.down);
                 break;
             case RIGHT:
-                currSnake.setDir(SnakeGameModel.right);
+                currSnake.setDir(Snake.direction.right);
                 break;
             case LEFT:
-                currSnake.setDir(SnakeGameModel.left);
+                currSnake.setDir(Snake.direction.left);
                 break;
         }
     }
