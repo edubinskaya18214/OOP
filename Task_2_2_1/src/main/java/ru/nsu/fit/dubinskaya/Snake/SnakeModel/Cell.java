@@ -28,8 +28,9 @@ public class Cell {
     return coordinateY;
   }
 
-  boolean equals(Cell cell) {
-    return (coordinateX == cell.getX() && coordinateY == cell.getY());
+  @Override
+  public boolean equals(Object cell) {
+    return (coordinateX == ((Cell)(cell)).getX() && coordinateY == ((Cell)(cell)).getY());
   }
 
   void setCoordinates(int newX, int newY) {

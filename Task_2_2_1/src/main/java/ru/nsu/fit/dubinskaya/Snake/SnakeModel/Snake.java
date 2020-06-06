@@ -30,7 +30,7 @@ public class Snake implements Iterable {
 
     for (int i = 0; i < length; i++) {
       tail.add(i, new Cell());
-      tail.get(i).setCoordinates((int) (fieldSize / 2) - i, 3);
+      tail.get(i).setCoordinates((int) (fieldSize / 2) - i, (int) (fieldSize / 2));
     }
 
     isDead();
@@ -75,14 +75,8 @@ public class Snake implements Iterable {
     return false;
   }
 
-  /**
-   * This function move snake in order to direction.
-   * If on the snake's way will be an apple, it grows up.
-   */
-  public void move() {
-    if (lost) {
-      return;
-    }
+  void move() {
+
     int nextHeadX = tail.get(0).getX();
     int nextHeadY = tail.get(0).getY();
     switch (dir) {
