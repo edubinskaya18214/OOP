@@ -7,11 +7,14 @@ import java.util.Iterator;
 public class Snake implements Iterable {
 
   public enum Direction {
-    left, right, up, down
+    LEFT,
+    RIGHT,
+    UP,
+    DOWN
   }
 
   private int length;
-  private Direction dir = Direction.right;
+  private Direction dir = Direction.RIGHT;
   private ArrayList<Cell> tail;
   private boolean lost;
   private int fieldSize;
@@ -23,17 +26,15 @@ public class Snake implements Iterable {
    * @param startLen  - minimal length of the snake. Game will start with this snake's length.
    * @param fieldSize - size of the game's field
    */
-  public Snake(int startLen, int fieldSize) {
+  public Snake(int startLen, int fieldSize, int startX, int startY) {
     length = startLen;
     this.fieldSize = fieldSize;
     tail = new ArrayList<>();
 
     for (int i = 0; i < length; i++) {
       tail.add(i, new Cell());
-      tail.get(i).setCoordinates((int) (fieldSize / 2) - i, (int) (fieldSize / 2));
+      tail.get(i).setCoordinates(startX - i, startY);
     }
-
-    isDead();
   }
 
   /**
@@ -49,23 +50,23 @@ public class Snake implements Iterable {
 
   private boolean isOpposite(Direction dir1) {
     switch (dir1) {
-      case up:
-        if (dir == Direction.down) {
+      case UP:
+        if (dir == Direction.DOWN) {
           return true;
         }
         break;
-      case down:
-        if (dir == Direction.up) {
+      case DOWN:
+        if (dir == Direction.UP) {
           return true;
         }
         break;
-      case right:
-        if (dir == Direction.left) {
+      case RIGHT:
+        if (dir == Direction.LEFT) {
           return true;
         }
         break;
-      case left:
-        if (dir == Direction.right) {
+      case LEFT:
+        if (dir == Direction.RIGHT) {
           return true;
         }
         break;
@@ -80,16 +81,16 @@ public class Snake implements Iterable {
     int nextHeadX = tail.get(0).getX();
     int nextHeadY = tail.get(0).getY();
     switch (dir) {
-      case up:
+      case UP:
         nextHeadY--;
         break;
-      case down:
+      case DOWN:
         nextHeadY++;
         break;
-      case right:
+      case RIGHT:
         nextHeadX++;
         break;
-      case left:
+      case LEFT:
         nextHeadX--;
         break;
       default:

@@ -17,8 +17,8 @@ public class GameField {
    * @param snakeStartLen - length of snake's tail in the beginning of the game.
    * @param fieldSize     - width and height of generated field.
    */
-  public GameField(int numberOfFood, int snakeStartLen, int fieldSize) {
-    snake = new Snake(snakeStartLen, fieldSize);
+  public GameField(int numberOfFood, int snakeStartLen, int fieldSize, int startSnakeX, int startSnakeY) {
+    snake = new Snake(snakeStartLen, fieldSize, startSnakeX, startSnakeY);
 
     food = new ArrayList<>();
     this.numberOfFood = numberOfFood;

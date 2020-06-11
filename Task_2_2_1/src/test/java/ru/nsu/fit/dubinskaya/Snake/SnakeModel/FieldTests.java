@@ -9,7 +9,7 @@ public class FieldTests {
 
   @Test
   public void eatApples() {
-    GameField field = new GameField(3 * 3 - 2, 1, 3);
+    GameField field = new GameField(3 * 3 - 2, 1, 3, 1,1);
     Snake snake = field.getSnake();
     Iterator food = field.getFoodIterator();
 
@@ -43,7 +43,7 @@ public class FieldTests {
 
   @Test
   public void isGrow() {
-    GameField field = new GameField(5 * 5 - 2, 1, 5);
+    GameField field = new GameField(5 * 5 - 2, 1, 5, 2,2);
     Snake snake = field.getSnake();
 
     Iterator iter = snake.iterator();

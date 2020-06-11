@@ -124,19 +124,19 @@ public class SnakeController extends Controller {
       case 2:
         fieldSize = 20;
         winLen = 25;
-        field = new GameField(5, 2, fieldSize);
+        field = new GameField(5, 2, fieldSize, fieldSize/2, fieldSize/2);
         delay = 60;
         break;
       case 3:
         fieldSize = 20;
         winLen = 50;
-        field = new GameField(2, 2, fieldSize);
+        field = new GameField(2, 2, fieldSize, fieldSize/2, fieldSize/2);
         delay = 55;
         break;
       default:
         fieldSize = 11;
         winLen = 5;
-        field = new GameField(2, 2, fieldSize);
+        field = new GameField(2, 1, fieldSize, fieldSize/2, fieldSize/2);
         delay = 85;
         break;
     }
@@ -146,10 +146,18 @@ public class SnakeController extends Controller {
     game = new Thread(new Runnable() {
       @Override
       public void run() {
+        canvas.setOnKeyPressed(new EventHandler<KeyEvent>() {
+          @Override
+          public void handle(KeyEvent e) {
+            addDirToQueue(e.getCode());
+          }
+        });
+
+        view.setWinSize(winLen);
+
         while (currSnake.getLength() != winLen && !currSnake.isDead() && !Thread.interrupted()) {
           setDir();
           field.move();
-          view.setWinSize(winLen);
 
           boolean isWin = currSnake.getLength() == winLen;
           Iterator<Cell> snake = field.getSnakeIterator();
@@ -159,19 +167,11 @@ public class SnakeController extends Controller {
             Thread.sleep(delay);
           } catch (InterruptedException e) {
             break;
-          }
-          ;
+          };
         }
       }
     });
     game.start();
-
-    canvas.setOnKeyPressed(new EventHandler<KeyEvent>() {
-      @Override
-      public void handle(KeyEvent e) {
-        addDirToQueue(e.getCode());
-      }
-    });
   }
 
   private void addDirToQueue(KeyCode key) {
@@ -182,16 +182,16 @@ public class SnakeController extends Controller {
 
     switch (key) {
       case UP:
-        dirQueue.add(Snake.Direction.up);
+        dirQueue.add(Snake.Direction.UP);
         break;
       case DOWN:
-        dirQueue.add(Snake.Direction.down);
+        dirQueue.add(Snake.Direction.DOWN);
         break;
       case RIGHT:
-        dirQueue.add(Snake.Direction.right);
+        dirQueue.add(Snake.Direction.RIGHT);
         break;
       case LEFT:
-        dirQueue.add(Snake.Direction.left);
+        dirQueue.add(Snake.Direction.LEFT);
         break;
       default:
         break;

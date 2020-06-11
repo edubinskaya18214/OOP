@@ -9,7 +9,7 @@ public class SnakeTests {
 
   @Test
   public void isMove() {
-    Snake snake = new Snake(1, 5);
+    Snake snake = new Snake(1, 5,2,2);
 
     Iterator<Cell> iter = snake.iterator();
     Cell head = iter.next();
@@ -26,8 +26,8 @@ public class SnakeTests {
   public void bumpIntoTheWalls() {
 
     //Up
-    Snake snake = new Snake(3, 4);
-    snake.setDir(Snake.Direction.up);
+    Snake snake = new Snake(3, 4,2,2);
+    snake.setDir(Snake.Direction.UP);
     Iterator iter = snake.iterator();
     Cell head = (Cell) iter.next();
 
@@ -38,8 +38,8 @@ public class SnakeTests {
     Assert.assertTrue(snake.isDead());
 
     //Down
-    snake = new Snake(3, 4);
-    snake.setDir(Snake.Direction.down);
+    snake = new Snake(3, 4,2,2);
+    snake.setDir(Snake.Direction.DOWN);
     iter = snake.iterator();
     head = (Cell) iter.next();
 
@@ -50,8 +50,8 @@ public class SnakeTests {
     Assert.assertTrue(snake.isDead());
 
     //right
-    snake = new Snake(3, 4);
-    snake.setDir(Snake.Direction.right);
+    snake = new Snake(3, 4,2,2);
+    snake.setDir(Snake.Direction.RIGHT);
     iter = snake.iterator();
     head = (Cell) iter.next();
 
@@ -64,18 +64,18 @@ public class SnakeTests {
 
   @Test
   public void eatItsTail() {
-    Snake snake = new Snake(8, 55);
+    Snake snake = new Snake(8, 55,2,2);
 
     Assert.assertFalse(snake.isDead());
-    snake.setDir(Snake.Direction.down);
+    snake.setDir(Snake.Direction.DOWN);
     snake.move();
     Assert.assertFalse(snake.isDead());
 
-    snake.setDir(Snake.Direction.left);
+    snake.setDir(Snake.Direction.LEFT);
     snake.move();
     Assert.assertFalse(snake.isDead());
 
-    snake.setDir(Snake.Direction.up);
+    snake.setDir(Snake.Direction.UP);
     snake.move();
     Assert.assertTrue(snake.isDead());
   }

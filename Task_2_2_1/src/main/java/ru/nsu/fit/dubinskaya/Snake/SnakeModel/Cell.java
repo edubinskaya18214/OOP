@@ -30,6 +30,9 @@ public class Cell {
 
   @Override
   public boolean equals(Object cell) {
+    if (cell == null || cell.getClass() != this.getClass()) {
+      return false;
+    }
     return (coordinateX == ((Cell)(cell)).getX() && coordinateY == ((Cell)(cell)).getY());
   }
 
