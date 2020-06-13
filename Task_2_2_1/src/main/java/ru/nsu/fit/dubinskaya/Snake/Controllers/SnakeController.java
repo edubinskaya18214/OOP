@@ -176,10 +176,6 @@ public class SnakeController extends Controller {
 
   private void addDirToQueue(KeyCode key) {
 
-    if (dirQueue.size() == 4) {
-      return;
-    }
-
     switch (key) {
       case UP:
         dirQueue.add(Snake.Direction.UP);
