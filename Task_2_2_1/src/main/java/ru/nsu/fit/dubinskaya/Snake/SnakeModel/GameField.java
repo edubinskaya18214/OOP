@@ -48,7 +48,7 @@ public class GameField {
    *
    * @return generated snake.
    */
-  public synchronized Snake getSnake() {
+  public Snake getSnake() {
     return snake;
   }
 
@@ -62,7 +62,7 @@ public class GameField {
    *
    * @return Iterator with current food.
    */
-  public Iterator<Cell> getFoodIterator() {
+  public synchronized Iterator<Cell> getFoodIterator() {
     return new Iterator<Cell>() {
       int pos = 0;
 
@@ -83,11 +83,11 @@ public class GameField {
    *
    * @return Iterator with current snake's tail.
    */
-  public Iterator getSnakeIterator() {
+  public synchronized Iterator getSnakeIterator() {
     return snake.iterator();
   }
 
-  private synchronized int checkSnakeEatFood() {
+  private int checkSnakeEatFood() {
     Iterator iter = snake.iterator();
     Cell head = (Cell) iter.next();
     for (int i = 0; i < numberOfFood; ++i) {
@@ -98,7 +98,7 @@ public class GameField {
     return -1;
   }
 
-  private synchronized void checkFoodCorrectness(int k) {
+  private void checkFoodCorrectness(int k) {
 
     for (int i = 0; i < food.size(); ++i) {
       if (i == k) {

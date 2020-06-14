@@ -1,6 +1,7 @@
 package ru.nsu.fit.dubinskaya.Snake.Controllers;
 
 import com.sun.jmx.remote.internal.ArrayQueue;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -16,7 +17,7 @@ import ru.nsu.fit.dubinskaya.Snake.SnakeModel.Snake;
 import ru.nsu.fit.dubinskaya.Snake.Views.SnakeView;
 
 import java.util.Iterator;
-
+import java.util.concurrent.ArrayBlockingQueue;
 
 public class SnakeController extends Controller {
 
@@ -29,7 +30,7 @@ public class SnakeController extends Controller {
   private Scene scene;
   private SnakeView view;
   private int currLevel;
-  private ArrayQueue<Snake.Direction> dirQueue;
+  private ArrayBlockingQueue<Snake.Direction> dirQueue;
 
   /**
    * This class create and show Snake Pane.
@@ -37,7 +38,7 @@ public class SnakeController extends Controller {
    * @param primaryStage stage where pane will be shown
    */
   public SnakeController(Stage primaryStage) {
-    dirQueue = new ArrayQueue<>(4);
+    dirQueue = new ArrayBlockingQueue<>(16);
     this.primaryStage = primaryStage;
 
     final Pane root = new Pane();
@@ -146,12 +147,6 @@ public class SnakeController extends Controller {
     game = new Thread(new Runnable() {
       @Override
       public void run() {
-        canvas.setOnKeyPressed(new EventHandler<KeyEvent>() {
-          @Override
-          public void handle(KeyEvent e) {
-            addDirToQueue(e.getCode());
-          }
-        });
 
         view.setWinSize(winLen);
 
@@ -162,15 +157,27 @@ public class SnakeController extends Controller {
           boolean isWin = currSnake.getLength() == winLen;
           Iterator<Cell> snake = field.getSnakeIterator();
           Iterator<Cell> food = field.getFoodIterator();
-          view.draw(isWin, currSnake.isDead(), fieldSize, snake, food);
+
+          Runnable draw = () -> view.draw(isWin, currSnake.isDead(), fieldSize, snake, food);
+          Platform.runLater(draw);
+
           try {
             Thread.sleep(delay);
           } catch (InterruptedException e) {
             break;
-          };
+          }
+
         }
       }
     });
+
+    canvas.setOnKeyPressed(new EventHandler<KeyEvent>() {
+      @Override
+      public void handle(KeyEvent e) {
+        addDirToQueue(e.getCode());
+      }
+    });
+
     game.start();
   }
 
@@ -198,7 +205,6 @@ public class SnakeController extends Controller {
     if (dirQueue.size() == 0) {
       return;
     }
-    currSnake.setDir(dirQueue.remove(0));
-
+    currSnake.setDir(dirQueue.remove());
   }
 }

@@ -76,7 +76,7 @@ public class Snake implements Iterable {
     return false;
   }
 
-  void move() {
+  synchronized void move() {
 
     int nextHeadX = tail.get(0).getX();
     int nextHeadY = tail.get(0).getY();
@@ -143,12 +143,12 @@ public class Snake implements Iterable {
    *
    * @return snake's length
    */
-  public int getLength() {
+  public synchronized int getLength() {
     return length;
   }
 
   @Override
-  public Iterator iterator() {
+  public synchronized Iterator iterator() {
     return new Iterator() {
       int pos = 0;
 
@@ -164,7 +164,7 @@ public class Snake implements Iterable {
     };
   }
 
-  void grow() {
+  synchronized void grow() {
     if (savedTail != null) {
       tail.add(savedTail);
       savedTail = null;
