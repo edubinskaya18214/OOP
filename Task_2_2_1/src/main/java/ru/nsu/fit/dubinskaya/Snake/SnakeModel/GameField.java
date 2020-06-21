@@ -34,7 +34,7 @@ public class GameField {
   /**
    * This method used to move snake on the field.
    */
-  public synchronized void move() {
+  public void move() {
     snake.move();
     int k = checkSnakeEatFood();
     if (k >= 0) {
@@ -52,7 +52,7 @@ public class GameField {
     return snake;
   }
 
-  private synchronized void locateFood(int k) {
+  private void locateFood(int k) {
     food.get(k).generateCoordinates(0, fieldSize);
     checkFoodCorrectness(k);
   }

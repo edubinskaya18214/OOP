@@ -76,7 +76,7 @@ public class Snake implements Iterable {
     return false;
   }
 
-  synchronized void move() {
+  void move() {
 
     int nextHeadX = tail.get(0).getX();
     int nextHeadY = tail.get(0).getY();
@@ -164,7 +164,7 @@ public class Snake implements Iterable {
     };
   }
 
-  synchronized void grow() {
+  void grow() {
     if (savedTail != null) {
       tail.add(savedTail);
       savedTail = null;
