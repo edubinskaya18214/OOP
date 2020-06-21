@@ -143,12 +143,12 @@ public class Snake implements Iterable {
    *
    * @return snake's length
    */
-  public synchronized int getLength() {
+  public int getLength() {
     return length;
   }
 
   @Override
-  public synchronized Iterator iterator() {
+  public Iterator iterator() {
     return new Iterator() {
       int pos = 0;
 

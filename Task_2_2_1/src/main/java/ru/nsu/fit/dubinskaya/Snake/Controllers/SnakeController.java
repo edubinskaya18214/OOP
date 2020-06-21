@@ -157,9 +157,7 @@ public class SnakeController extends Controller {
           boolean isWin = currSnake.getLength() == winLen;
           Iterator<Cell> snake = field.getSnakeIterator();
           Iterator<Cell> food = field.getFoodIterator();
-
-          Runnable draw = () -> view.draw(isWin, currSnake.isDead(), fieldSize, snake, food);
-          Platform.runLater(draw);
+          Platform.runLater(() -> view.draw(isWin, currSnake.isDead(), fieldSize, snake, food));
 
           try {
             Thread.sleep(delay);

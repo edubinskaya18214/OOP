@@ -62,7 +62,7 @@ public class GameField {
    *
    * @return Iterator with current food.
    */
-  public synchronized Iterator<Cell> getFoodIterator() {
+  public Iterator<Cell> getFoodIterator() {
     return new Iterator<Cell>() {
       int pos = 0;
 
@@ -83,7 +83,7 @@ public class GameField {
    *
    * @return Iterator with current snake's tail.
    */
-  public synchronized Iterator getSnakeIterator() {
+  public Iterator getSnakeIterator() {
     return snake.iterator();
   }
 
