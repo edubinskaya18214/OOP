@@ -179,7 +179,7 @@ public class SnakeController extends Controller {
     game.start();
   }
 
-  private void addDirToQueue(KeyCode key) {
+  private synchronized void addDirToQueue(KeyCode key) {
 
     switch (key) {
       case UP:
@@ -199,7 +199,7 @@ public class SnakeController extends Controller {
     }
   }
 
-  private void setDir() {
+  private synchronized void setDir() {
     if (dirQueue.size() == 0) {
       return;
     }
