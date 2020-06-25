@@ -147,6 +147,7 @@ public class SnakeController extends Controller {
     game = new Thread(new Runnable() {
       @Override
       public void run() {
+        dirQueue = new ArrayBlockingQueue<Snake.Direction>(16);
 
         view.setWinSize(winLen);
 
@@ -155,9 +156,11 @@ public class SnakeController extends Controller {
           field.move();
 
           boolean isWin = currSnake.getLength() == winLen;
-          Iterator<Cell> snake = field.getSnakeIterator();
-          Iterator<Cell> food = field.getFoodIterator();
-          Platform.runLater(() -> view.draw(isWin, currSnake.isDead(), fieldSize, snake, food));
+          Iterable<Cell> snake = field.getTail();
+          Iterable<Cell> food = field.getFood();
+          boolean isDead = currSnake.isDead();
+
+          Platform.runLater(() -> view.draw(isWin, isDead, fieldSize, snake, food));
 
           try {
             Thread.sleep(delay);

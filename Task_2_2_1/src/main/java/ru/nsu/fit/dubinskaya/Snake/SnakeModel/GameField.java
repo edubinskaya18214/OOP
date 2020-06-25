@@ -1,5 +1,6 @@
 package ru.nsu.fit.dubinskaya.Snake.SnakeModel;
 
+
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -34,7 +35,7 @@ public class GameField {
   /**
    * This method used to move snake on the field.
    */
-  public void move() {
+  public synchronized void move() {
     snake.move();
     int k = checkSnakeEatFood();
     if (k >= 0) {
@@ -52,7 +53,7 @@ public class GameField {
     return snake;
   }
 
-  private void locateFood(int k) {
+  private synchronized void locateFood(int k) {
     food.get(k).generateCoordinates(0, fieldSize);
     checkFoodCorrectness(k);
   }
@@ -60,20 +61,22 @@ public class GameField {
   /**
    * This method used to get food.
    *
-   * @return Iterator with current food.
+   * @return Iterable with current food.
    */
-  public Iterator<Cell> getFoodIterator() {
-    return new Iterator<Cell>() {
+  public synchronized Iterable<Cell> getFood() {
+    ArrayList<Cell> currentFood = (ArrayList<Cell>)food.clone();
+
+    return () -> new Iterator<Cell>() {
       int pos = 0;
 
       @Override
       public boolean hasNext() {
-        return pos < food.size();
+        return pos < currentFood.size();
       }
 
       @Override
       public Cell next() {
-        return food.get(pos++);
+        return currentFood.get(pos++);
       }
     };
   }
@@ -81,10 +84,14 @@ public class GameField {
   /**
    * This method used to get snake's tail.
    *
-   * @return Iterator with current snake's tail.
+   * @return Iterable Cell with current snake's tail.
    */
-  public Iterator getSnakeIterator() {
-    return snake.iterator();
+  public Iterable<Cell> getTail() {
+    return new Iterable<Cell>() {
+      public Iterator<Cell> iterator() {
+        return snake.iterator();
+      }
+    };
   }
 
   private int checkSnakeEatFood() {

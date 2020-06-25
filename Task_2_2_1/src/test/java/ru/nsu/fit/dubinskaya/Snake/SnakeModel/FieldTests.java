@@ -11,7 +11,7 @@ public class FieldTests {
   public void eatApples() {
     GameField field = new GameField(3 * 3 - 2, 1, 3, 1,1);
     Snake snake = field.getSnake();
-    Iterator food = field.getFoodIterator();
+    Iterator food = field.getFood().iterator();
 
     Iterator iter = snake.iterator();
     Cell head = (Cell) iter.next();

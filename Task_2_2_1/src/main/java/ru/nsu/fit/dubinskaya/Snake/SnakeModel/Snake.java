@@ -76,7 +76,7 @@ public class Snake implements Iterable {
     return false;
   }
 
-  void move() {
+  synchronized void move() {
 
     int nextHeadX = tail.get(0).getX();
     int nextHeadY = tail.get(0).getY();
@@ -148,23 +148,24 @@ public class Snake implements Iterable {
   }
 
   @Override
-  public Iterator iterator() {
+  public synchronized Iterator iterator() {
+    ArrayList<Cell> currTail = (ArrayList<Cell>)tail.clone();
     return new Iterator() {
       int pos = 0;
 
       @Override
       public boolean hasNext() {
-        return pos < tail.size();
+        return pos < currTail.size();
       }
 
       @Override
       public Cell next() {
-        return tail.get(pos++);
+        return currTail.get(pos++);
       }
     };
   }
 
-  void grow() {
+  synchronized void grow() {
     if (savedTail != null) {
       tail.add(savedTail);
       savedTail = null;
