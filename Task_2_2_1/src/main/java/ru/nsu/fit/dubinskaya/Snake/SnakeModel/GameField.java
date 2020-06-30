@@ -26,8 +26,7 @@ public class GameField {
 
     for (int i = 0; i < numberOfFood; ++i) {
       food.add(i, new Cell());
-      food.get(i).generateCoordinates(0, fieldSize);
-      checkFoodCorrectness(i);
+      locateFood(i);
     }
   }
 
@@ -54,7 +53,9 @@ public class GameField {
 
   private synchronized void locateFood(int k) {
     food.get(k).generateCoordinates(0, fieldSize);
-    checkFoodCorrectness(k);
+    while (!isFoodCorrect(k)) {
+      food.get(k).generateCoordinates(0, fieldSize);
+    }
   }
 
   /**
@@ -72,11 +73,7 @@ public class GameField {
    * @return Iterable Cell with current snake's tail.
    */
   public Iterable<Cell> getTail() {
-    return new Iterable<Cell>() {
-      public Iterator<Cell> iterator() {
-        return snake.iterator();
-      }
-    };
+    return () -> snake.iterator();
   }
 
   private int checkSnakeEatFood() {
@@ -90,20 +87,21 @@ public class GameField {
     return -1;
   }
 
-  private void checkFoodCorrectness(int k) {
+  private boolean isFoodCorrect(int k) {
 
     for (int i = 0; i < food.size(); ++i) {
       if (i == k) {
         continue;
       }
       if (food.get(i).equals(food.get(k))) {
-        locateFood(k);
+        return false;
       }
     }
     for (Object o : snake) {
       if (o.equals(food.get(k))) {
-        locateFood(k);
+        return false;
       }
     }
+    return true;
   }
 }

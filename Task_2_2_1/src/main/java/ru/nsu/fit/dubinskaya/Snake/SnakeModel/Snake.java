@@ -148,7 +148,7 @@ public class Snake implements Iterable {
   }
 
   @Override
-  public synchronized Iterator iterator() {
+  public synchronized Iterator<Cell> iterator() {
     ArrayList<Cell> currTail = (ArrayList<Cell>)tail.clone();
     return currTail.iterator();
   }
