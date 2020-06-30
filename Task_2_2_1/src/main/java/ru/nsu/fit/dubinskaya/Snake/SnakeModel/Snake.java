@@ -2,9 +2,8 @@ package ru.nsu.fit.dubinskaya.Snake.SnakeModel;
 
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
-public class Snake implements Iterable {
+public class Snake {
 
   public enum Direction {
     LEFT,
@@ -19,7 +18,6 @@ public class Snake implements Iterable {
   private boolean lost;
   private int fieldSize;
   private Cell savedTail;
-  private final Boolean tailLock = true;
 
   /**
    * This is class constructor.
@@ -32,12 +30,11 @@ public class Snake implements Iterable {
     this.fieldSize = fieldSize;
     tail = new ArrayList<>();
 
-    synchronized (tailLock) {
-      for (int i = 0; i < length; i++) {
-        tail.add(i, new Cell());
-        tail.get(i).setCoordinates(startX - i, startY);
-      }
+    for (int i = 0; i < length; i++) {
+      tail.add(i, new Cell());
+      tail.get(i).setCoordinates(startX - i, startY);
     }
+
   }
 
   /**
@@ -149,16 +146,13 @@ public class Snake implements Iterable {
     return length;
   }
 
-  @Override
-  public Iterator<Cell> iterator() {
-    synchronized (tailLock) {
-      ArrayList<Cell> currTail = (ArrayList<Cell>) tail.clone();
-      return currTail.iterator();
-    }
-  }
-
-  Boolean getTailLock() {
-    return tailLock;
+  /**
+   * This method used to take snake's tail.
+   *
+   * @return Iterable current tail.
+   */
+  public Iterable<Cell> getTail() {
+    return (Iterable<Cell>) tail.clone();
   }
 
   void grow() {

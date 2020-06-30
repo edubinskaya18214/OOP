@@ -3,7 +3,7 @@ package ru.nsu.fit.dubinskaya.Snake.SnakeModel;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.Iterator;
+import java.util.List;
 
 public class FieldTests {
 
@@ -12,9 +12,8 @@ public class FieldTests {
     GameField field = new GameField(3 * 3 - 2, 1, 3, 1,1);
     Snake snake = field.getSnake();
     Iterable<Cell> food = field.getFood();
-    Iterator iter = snake.iterator();
-
-    Cell head = (Cell) iter.next();
+    List<Cell> tail = (List<Cell>)snake.getTail();
+    Cell head = tail.get(0);
     int x = (int) head.getX();
     int y = (int) head.getY();
     boolean hasFoodOnTheWay = false;
@@ -46,8 +45,8 @@ public class FieldTests {
   public void isGrow() {
     GameField field = new GameField(5 * 5 - 2, 1, 5, 2,2);
     Snake snake = field.getSnake();
-    Iterator iter = snake.iterator();
-    Cell head = (Cell) iter.next();
+    List<Cell> tail = (List<Cell>)snake.getTail();
+    Cell head = tail.get(0);
 
     int x = (int) head.getX();
     int y = (int) head.getY();

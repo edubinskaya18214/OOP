@@ -2,9 +2,9 @@ package ru.nsu.fit.dubinskaya.Snake.SnakeModel;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 public class GameField {
-  private final Boolean foodLock = true;
   private Snake snake;
   private int fieldSize;
   private int numberOfFood;
@@ -25,11 +25,11 @@ public class GameField {
     this.numberOfFood = numberOfFood;
     this.fieldSize = fieldSize;
 
-    synchronized (foodLock) {
-      for (int i = 0; i < numberOfFood; ++i) {
-        food.add(i, new Cell());
-        locateFood(i);
-      }
+
+    for (int i = 0; i < numberOfFood; ++i) {
+      food.add(i, new Cell());
+      locateFood(i);
+
     }
   }
 
@@ -37,16 +37,13 @@ public class GameField {
    * This method used to move snake on the field.
    */
   public void move() {
-    /* if we will set synchronized block only in snake itself, it will be useless, because UI thread can take
-    tail iterator before snake grows.*/
-    synchronized (snake.getTailLock()) {
-      snake.move();
-      int k = checkSnakeEatFood();
-      if (k >= 0) {
-        snake.grow();
-        locateFood(k);
-      }
+    snake.move();
+    int k = checkSnakeEatFood();
+    if (k >= 0) {
+      snake.grow();
+      locateFood(k);
     }
+
   }
 
   /**
@@ -59,12 +56,9 @@ public class GameField {
   }
 
   private void locateFood(int k) {
-    synchronized (foodLock) {
+    do {
       food.get(k).generateCoordinates(0, fieldSize);
-      while (!isFoodCorrect(k)) {
-        food.get(k).generateCoordinates(0, fieldSize);
-      }
-    }
+    } while (!isFoodCorrect(k));
   }
 
   /**
@@ -73,9 +67,7 @@ public class GameField {
    * @return Iterable with current food.
    */
   public Iterable<Cell> getFood() {
-    synchronized (foodLock) {
       return (ArrayList<Cell>) food.clone();
-    }
   }
 
   /**
@@ -84,12 +76,12 @@ public class GameField {
    * @return Iterable Cell with current snake's tail.
    */
   public Iterable<Cell> getTail() {
-    return () -> snake.iterator();
+    return snake.getTail();
   }
 
   private int checkSnakeEatFood() {
-    Iterator iter = snake.iterator();
-    Cell head = (Cell) iter.next();
+    List<Cell> tail = (List<Cell>)snake.getTail();
+    Cell head = tail.get(0);
     for (int i = 0; i < numberOfFood; ++i) {
       if (head.equals(food.get(i))) {
         return i;
@@ -108,7 +100,7 @@ public class GameField {
         return false;
       }
     }
-    for (Object o : snake) {
+    for (Cell o : snake.getTail()) {
       if (o.equals(food.get(k))) {
         return false;
       }

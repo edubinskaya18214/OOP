@@ -3,7 +3,7 @@ package ru.nsu.fit.dubinskaya.Snake.SnakeModel;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.Iterator;
+import java.util.List;
 
 public class SnakeTests {
 
@@ -11,8 +11,8 @@ public class SnakeTests {
   public void isMove() {
     Snake snake = new Snake(1, 5,2,2);
 
-    Iterator<Cell> iter = snake.iterator();
-    Cell head = iter.next();
+    List<Cell> tail = (List<Cell>)snake.getTail();
+    Cell head = tail.get(0);
     final int x = head.getX();
     final int y = head.getY();
 
@@ -28,8 +28,8 @@ public class SnakeTests {
     //Up
     Snake snake = new Snake(3, 4,2,2);
     snake.setDir(Snake.Direction.UP);
-    Iterator iter = snake.iterator();
-    Cell head = (Cell) iter.next();
+    List<Cell> tail = (List<Cell>)snake.getTail();
+    Cell head = tail.get(0);
 
     while ((int) (head.getY()) >= 0) {
       Assert.assertFalse(snake.isDead());
@@ -40,8 +40,8 @@ public class SnakeTests {
     //Down
     snake = new Snake(3, 4,2,2);
     snake.setDir(Snake.Direction.DOWN);
-    iter = snake.iterator();
-    head = (Cell) iter.next();
+    tail = (List<Cell>)snake.getTail();
+    head = tail.get(0);
 
     while ((int) (head.getY()) < 4) {
       Assert.assertFalse(snake.isDead());
@@ -52,8 +52,8 @@ public class SnakeTests {
     //right
     snake = new Snake(3, 4,2,2);
     snake.setDir(Snake.Direction.RIGHT);
-    iter = snake.iterator();
-    head = (Cell) iter.next();
+    tail = (List<Cell>)snake.getTail();
+    head = tail.get(0);
 
     while ((int) head.getX() < 4) {
       Assert.assertFalse(snake.isDead());
