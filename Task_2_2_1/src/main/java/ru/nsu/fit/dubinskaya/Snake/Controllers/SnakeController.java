@@ -1,6 +1,5 @@
 package ru.nsu.fit.dubinskaya.Snake.Controllers;
 
-import com.sun.jmx.remote.internal.ArrayQueue;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -16,7 +15,6 @@ import ru.nsu.fit.dubinskaya.Snake.SnakeModel.GameField;
 import ru.nsu.fit.dubinskaya.Snake.SnakeModel.Snake;
 import ru.nsu.fit.dubinskaya.Snake.Views.SnakeView;
 
-import java.util.Iterator;
 import java.util.concurrent.ArrayBlockingQueue;
 
 public class SnakeController extends Controller {

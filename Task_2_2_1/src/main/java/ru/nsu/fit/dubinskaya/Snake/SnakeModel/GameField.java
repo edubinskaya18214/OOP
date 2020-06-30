@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class GameField {
+  private final Boolean foodLock = true;
   private Snake snake;
   private int fieldSize;
   private int numberOfFood;
@@ -24,21 +25,27 @@ public class GameField {
     this.numberOfFood = numberOfFood;
     this.fieldSize = fieldSize;
 
-    for (int i = 0; i < numberOfFood; ++i) {
-      food.add(i, new Cell());
-      locateFood(i);
+    synchronized (foodLock) {
+      for (int i = 0; i < numberOfFood; ++i) {
+        food.add(i, new Cell());
+        locateFood(i);
+      }
     }
   }
 
   /**
    * This method used to move snake on the field.
    */
-  public synchronized void move() {
-    snake.move();
-    int k = checkSnakeEatFood();
-    if (k >= 0) {
-      snake.grow();
-      locateFood(k);
+  public void move() {
+    /* if we will set synchronized block only in snake itself, it will be useless, because UI thread can take
+    tail iterator before snake grows.*/
+    synchronized (snake.getTailLock()) {
+      snake.move();
+      int k = checkSnakeEatFood();
+      if (k >= 0) {
+        snake.grow();
+        locateFood(k);
+      }
     }
   }
 
@@ -51,10 +58,12 @@ public class GameField {
     return snake;
   }
 
-  private synchronized void locateFood(int k) {
-    food.get(k).generateCoordinates(0, fieldSize);
-    while (!isFoodCorrect(k)) {
+  private void locateFood(int k) {
+    synchronized (foodLock) {
       food.get(k).generateCoordinates(0, fieldSize);
+      while (!isFoodCorrect(k)) {
+        food.get(k).generateCoordinates(0, fieldSize);
+      }
     }
   }
 
@@ -63,8 +72,10 @@ public class GameField {
    *
    * @return Iterable with current food.
    */
-  public synchronized Iterable<Cell> getFood() {
-    return (ArrayList<Cell>)food.clone();
+  public Iterable<Cell> getFood() {
+    synchronized (foodLock) {
+      return (ArrayList<Cell>) food.clone();
+    }
   }
 
   /**

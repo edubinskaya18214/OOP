@@ -19,6 +19,7 @@ public class Snake implements Iterable {
   private boolean lost;
   private int fieldSize;
   private Cell savedTail;
+  private final Boolean tailLock = true;
 
   /**
    * This is class constructor.
@@ -31,9 +32,11 @@ public class Snake implements Iterable {
     this.fieldSize = fieldSize;
     tail = new ArrayList<>();
 
-    for (int i = 0; i < length; i++) {
-      tail.add(i, new Cell());
-      tail.get(i).setCoordinates(startX - i, startY);
+    synchronized (tailLock) {
+      for (int i = 0; i < length; i++) {
+        tail.add(i, new Cell());
+        tail.get(i).setCoordinates(startX - i, startY);
+      }
     }
   }
 
@@ -76,7 +79,7 @@ public class Snake implements Iterable {
     return false;
   }
 
-  synchronized void move() {
+  void move() {
 
     int nextHeadX = tail.get(0).getX();
     int nextHeadY = tail.get(0).getY();
@@ -99,12 +102,11 @@ public class Snake implements Iterable {
 
     savedTail = new Cell();
     savedTail.setCoordinates(tail.get(tail.size() - 1).getX(), tail.get(tail.size() - 1).getY());
-
     for (int i = length - 1; i > 0; --i) {
       tail.get(i).setCoordinates(tail.get(i - 1).getX(), tail.get(i - 1).getY());
     }
     tail.get(0).setCoordinates(nextHeadX, nextHeadY);
-    isDead();
+
   }
 
   /**
@@ -148,12 +150,18 @@ public class Snake implements Iterable {
   }
 
   @Override
-  public synchronized Iterator<Cell> iterator() {
-    ArrayList<Cell> currTail = (ArrayList<Cell>)tail.clone();
-    return currTail.iterator();
+  public Iterator<Cell> iterator() {
+    synchronized (tailLock) {
+      ArrayList<Cell> currTail = (ArrayList<Cell>) tail.clone();
+      return currTail.iterator();
+    }
   }
 
-  synchronized void grow() {
+  Boolean getTailLock() {
+    return tailLock;
+  }
+
+  void grow() {
     if (savedTail != null) {
       tail.add(savedTail);
       savedTail = null;
