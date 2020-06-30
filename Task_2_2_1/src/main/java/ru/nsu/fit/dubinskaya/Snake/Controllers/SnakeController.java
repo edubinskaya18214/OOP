@@ -1,5 +1,6 @@
 package ru.nsu.fit.dubinskaya.Snake.Controllers;
 
+import com.sun.jmx.remote.internal.ArrayQueue;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -15,8 +16,6 @@ import ru.nsu.fit.dubinskaya.Snake.SnakeModel.GameField;
 import ru.nsu.fit.dubinskaya.Snake.SnakeModel.Snake;
 import ru.nsu.fit.dubinskaya.Snake.Views.SnakeView;
 
-import java.util.concurrent.ArrayBlockingQueue;
-
 public class SnakeController extends Controller {
 
   private GameField field;
@@ -28,7 +27,7 @@ public class SnakeController extends Controller {
   private Scene scene;
   private SnakeView view;
   private int currLevel;
-  private ArrayBlockingQueue<Snake.Direction> dirQueue;
+  private ArrayQueue<Snake.Direction> dirQueue;
 
   /**
    * This class create and show Snake Pane.
@@ -36,7 +35,7 @@ public class SnakeController extends Controller {
    * @param primaryStage stage where pane will be shown
    */
   public SnakeController(Stage primaryStage) {
-    dirQueue = new ArrayBlockingQueue<>(16);
+    dirQueue = new ArrayQueue<>(16);
     this.primaryStage = primaryStage;
 
     final Pane root = new Pane();
@@ -145,7 +144,7 @@ public class SnakeController extends Controller {
     game = new Thread(new Runnable() {
       @Override
       public void run() {
-        dirQueue = new ArrayBlockingQueue<Snake.Direction>(16);
+        dirQueue = new ArrayQueue<Snake.Direction>(16);
 
         view.setWinSize(winLen);
 
@@ -204,6 +203,6 @@ public class SnakeController extends Controller {
     if (dirQueue.size() == 0) {
       return;
     }
-    currSnake.setDir(dirQueue.remove());
+    currSnake.setDir(dirQueue.remove(0));
   }
 }
