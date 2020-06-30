@@ -1,6 +1,5 @@
 package ru.nsu.fit.dubinskaya.Snake.SnakeModel;
 
-
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -64,21 +63,7 @@ public class GameField {
    * @return Iterable with current food.
    */
   public synchronized Iterable<Cell> getFood() {
-    ArrayList<Cell> currentFood = (ArrayList<Cell>)food.clone();
-
-    return () -> new Iterator<Cell>() {
-      int pos = 0;
-
-      @Override
-      public boolean hasNext() {
-        return pos < currentFood.size();
-      }
-
-      @Override
-      public Cell next() {
-        return currentFood.get(pos++);
-      }
-    };
+    return (ArrayList<Cell>)food.clone();
   }
 
   /**

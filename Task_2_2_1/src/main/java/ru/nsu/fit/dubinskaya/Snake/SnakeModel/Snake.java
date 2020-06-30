@@ -150,19 +150,7 @@ public class Snake implements Iterable {
   @Override
   public synchronized Iterator iterator() {
     ArrayList<Cell> currTail = (ArrayList<Cell>)tail.clone();
-    return new Iterator() {
-      int pos = 0;
-
-      @Override
-      public boolean hasNext() {
-        return pos < currTail.size();
-      }
-
-      @Override
-      public Cell next() {
-        return currTail.get(pos++);
-      }
-    };
+    return currTail.iterator();
   }
 
   synchronized void grow() {

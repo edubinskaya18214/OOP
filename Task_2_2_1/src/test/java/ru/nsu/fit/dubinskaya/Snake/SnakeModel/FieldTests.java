@@ -11,9 +11,9 @@ public class FieldTests {
   public void eatApples() {
     GameField field = new GameField(3 * 3 - 2, 1, 3, 1,1);
     Snake snake = field.getSnake();
-    Iterator food = field.getFood().iterator();
-
+    Iterable<Cell> food = field.getFood();
     Iterator iter = snake.iterator();
+
     Cell head = (Cell) iter.next();
     int x = (int) head.getX();
     int y = (int) head.getY();
@@ -21,19 +21,20 @@ public class FieldTests {
     Cell onWay = new Cell();
     onWay.setCoordinates(x + 1, y);
 
-    while (food.hasNext()) {
-      if (food.next().equals(onWay)) {
+    for (Cell f : food) {
+      if (f.equals(onWay)) {
         hasFoodOnTheWay = true;
         break;
       }
     }
 
     Assert.assertTrue(hasFoodOnTheWay);
-
     field.move();
     hasFoodOnTheWay = false;
-    while (food.hasNext()) {
-      if (food.next().equals(onWay)) {
+    food = field.getFood();
+
+    for (Cell f : food) {
+      if (f.equals(onWay)) {
         hasFoodOnTheWay = true;
         break;
       }
@@ -45,7 +46,6 @@ public class FieldTests {
   public void isGrow() {
     GameField field = new GameField(5 * 5 - 2, 1, 5, 2,2);
     Snake snake = field.getSnake();
-
     Iterator iter = snake.iterator();
     Cell head = (Cell) iter.next();
 
